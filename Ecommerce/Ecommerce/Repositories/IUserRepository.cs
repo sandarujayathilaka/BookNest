@@ -1,0 +1,12 @@
+﻿using Ecommerce.Models;
+
+namespace Ecommerce.Repositories
+{
+    public interface IUserRepository
+    {
+        Task<ApplicationUser> GetUserByEmail(string email);
+        Task CreateUser(ApplicationUser user);
+        Task UpdateUserApprovalStatus(string userId, bool isApproved);
+
+    }
+}
