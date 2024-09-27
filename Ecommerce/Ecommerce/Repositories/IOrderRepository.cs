@@ -1,4 +1,5 @@
-﻿using Ecommerce.Models;
+﻿using Ecommerce.Dto;
+using Ecommerce.Models;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -14,7 +15,7 @@ namespace Ecommerce.Repositories
 
         Task UpdateOrderStatus(string orderId, string status);
 
-        //Task<List<Order>> GetOrdersByVendorId(string vendorId);
+        Task<List<VendorProductDto>> GetOrdersByVendorId(string vendorId);
 
     }
 }

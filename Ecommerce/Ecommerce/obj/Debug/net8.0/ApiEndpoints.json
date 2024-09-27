@@ -53,6 +53,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "EcommercePlatform.Controllers.OrderController",
+    "Method": "GetProductsByVendorId",
+    "RelativePath": "api/Order/vendor/products/{vendorId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "vendorId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "EcommercePlatform.Controllers.ProductController",
     "Method": "GetProducts",
     "RelativePath": "api/Product",

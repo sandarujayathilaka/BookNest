@@ -23,24 +23,6 @@ namespace EcommercePlatform.Controllers
             _orderService = orderService;
         }
 
-        //// Customer: Place an order
-        //[HttpPost]
-        //[Authorize(Roles = Roles.Customer)]
-        //public async Task<IActionResult> PlaceOrder([FromBody] OrderDto orderDto)
-        //{
-        //    var order = new Order
-        //    {
-        //        ProductID = orderDto.ProductID,
-        //        CustomerID = orderDto.CustomerID,
-        //        VendorID = orderDto.VendorID,
-        //        OrderDate = orderDto.OrderDate,
-        //        Status = orderDto.Status
-        //    };
-
-        //    await _orderService.CreateNewOrder(order);
-        //    return Ok("Order placed.");
-        //}
-
 
         [HttpPost]
         [Authorize(Roles = Roles.Customer)]
@@ -61,14 +43,22 @@ namespace EcommercePlatform.Controllers
             return Ok(orders);
         }
 
-        ////  Get orders by Vender ID
-        //[HttpGet("vendor/{vendorId}")]
-        //[Authorize(Roles = Roles.Customer)]
-        //public async Task<IActionResult> GetOrdersByVendor(string vendorId)
-        //{
-        //    var orders = await _orderRepository.GetOrdersByVendorId(vendorId);
-        //    return Ok(orders);
-        //}
+        //  Get orders by Vender ID
+        [HttpGet("vendor/products/{vendorId}")]
+        [Authorize(Roles = Roles.Customer)]
+        public async Task<IActionResult> GetProductsByVendorId(string vendorId)
+        {
+            var vendorProducts = await _orderService.GetProductsByVendorId(vendorId);
+
+            if (vendorProducts == null || !vendorProducts.Any())
+            {
+                return NotFound("No products found for this vendor.");
+            }
+
+            return Ok(vendorProducts);
+        }
+
+
 
 
         [HttpPut("{orderId}/status")]

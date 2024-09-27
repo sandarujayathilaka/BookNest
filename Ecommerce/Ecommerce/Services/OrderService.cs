@@ -57,5 +57,12 @@ namespace Ecommerce.Services
             await _orderRepository.UpdateOrderStatus(orderId, status);
         }
 
+        public async Task<List<VendorProductDto>> GetProductsByVendorId(string vendorId)
+        {
+            return await _orderRepository.GetOrdersByVendorId(vendorId);
+        }
+
+
+
     }
 }

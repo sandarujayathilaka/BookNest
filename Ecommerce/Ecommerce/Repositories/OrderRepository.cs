@@ -1,4 +1,5 @@
 ﻿using Ecommerce.DataAccess;
+using Ecommerce.Dto;
 using Ecommerce.Models;
 using MongoDB.Driver;
 using System.Collections.Generic;
@@ -29,11 +30,25 @@ namespace Ecommerce.Repositories
             return await _orders.Find(order => order.CustomerID == customerId).ToListAsync();
         }
 
-  
-        //public async Task<List<Order>> GetOrdersByVendorId(string vendorId)
-        //{
-        //    return await _orders.Find(order => order.VendorID == vendorId).ToListAsync();
-        //}
+        public async Task<List<VendorProductDto>> GetOrdersByVendorId(string vendorId)
+        {
+            var orders = await _orders.Find(order => order.Products.Any(product => product.VendorID == vendorId)).ToListAsync();
+
+            var vendorProducts = orders.SelectMany(order => order.Products
+                .Where(product => product.VendorID == vendorId)
+                .Select(product => new VendorProductDto
+                {
+                    OrderID = order.OrderID,
+                    CustomerID = order.CustomerID,
+                    OrderDate = order.OrderDate,
+                    Status = order.Status,
+                    Product = product
+                }))
+                .ToList();
+
+            return vendorProducts;
+        }
+
 
 
         public async Task<Order> GetOrderByOrderId(string orderId)
@@ -48,6 +63,8 @@ namespace Ecommerce.Repositories
 
             await _orders.UpdateOneAsync(filter, update);
         }
+
+
 
     }
 }
