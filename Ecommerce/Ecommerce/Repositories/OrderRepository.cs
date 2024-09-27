@@ -1,4 +1,5 @@
 ﻿using Ecommerce.DataAccess;
+using Ecommerce.Dto;
 using Ecommerce.Models;
 using MongoDB.Driver;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace Ecommerce.Repositories
         {
             await _orders.InsertOneAsync(order);
         }
+     
 
         // Get orders by customer ID
         public async Task<List<Order>> GetOrdersByCustomerId(string customerId)
@@ -28,17 +30,41 @@ namespace Ecommerce.Repositories
             return await _orders.Find(order => order.CustomerID == customerId).ToListAsync();
         }
 
-        // Update the status of an order
+        public async Task<List<VendorProductDto>> GetOrdersByVendorId(string vendorId)
+        {
+            var orders = await _orders.Find(order => order.Products.Any(product => product.VendorID == vendorId)).ToListAsync();
+
+            var vendorProducts = orders.SelectMany(order => order.Products
+                .Where(product => product.VendorID == vendorId)
+                .Select(product => new VendorProductDto
+                {
+                    OrderID = order.OrderID,
+                    CustomerID = order.CustomerID,
+                    OrderDate = order.OrderDate,
+                    Status = order.Status,
+                    Product = product
+                }))
+                .ToList();
+
+            return vendorProducts;
+        }
+
+
+
+        public async Task<Order> GetOrderByOrderId(string orderId)
+        {
+            return await _orders.Find(p => p.OrderID == orderId).FirstOrDefaultAsync();
+        }
+
         public async Task UpdateOrderStatus(string orderId, string status)
         {
-            Console.WriteLine("wwwwwwwwwwwwwwwwwwwww");
-            // Filter to find the order by its ID
             var filter = Builders<Order>.Filter.Eq(o => o.OrderID, orderId);
-            Console.WriteLine("hidf###############");
-            // Update to set the new status
             var update = Builders<Order>.Update.Set(o => o.Status, status);
-            // Perform the update operation
+
             await _orders.UpdateOneAsync(filter, update);
         }
+
+
+
     }
 }
