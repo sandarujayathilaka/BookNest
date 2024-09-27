@@ -16,11 +16,15 @@ namespace Ecommerce.Services
 
         public async Task CreateNewOrder(Order order)
         {
-           order.Id = ObjectId.GenerateNewId().ToString();
+           order.OrderID = ObjectId.GenerateNewId().ToString();
 
            await _orderRepository.CreateOrder(order);
         }
 
-      
+        public async Task UpdateOrderStatus(string orderId, string status)
+        {
+            await _orderRepository.UpdateOrderStatus(orderId, status);
+        }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Ecommerce.Models;
+using Microsoft.AspNetCore.Mvc;
 
 
 namespace Ecommerce.Repositories
@@ -9,8 +10,11 @@ namespace Ecommerce.Repositories
 
         Task<List<Order>> GetOrdersByCustomerId(string customerId);
 
+        Task<Order> GetOrderByOrderId(string orderId);
+
         Task UpdateOrderStatus(string orderId, string status);
 
-       
+        Task<List<Order>> GetOrdersByVendorId(string vendorId);
+
     }
 }

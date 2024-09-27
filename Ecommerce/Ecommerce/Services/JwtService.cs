@@ -28,16 +28,23 @@ namespace Ecommerce.Services
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_secret);
 
+            Console.WriteLine(user.UserId);
+            Console.WriteLine(user.Email);
+            Console.WriteLine(user.Role);
+            Console.WriteLine(key);
+
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]
                 {
+
                     new Claim(ClaimTypes.NameIdentifier, user.UserId),
                     new Claim(ClaimTypes.Name, user.Email),
                     new Claim(ClaimTypes.Role, user.Role)
                 }),
-                NotBefore = DateTime.UtcNow, 
-                Expires = DateTime.UtcNow.AddDays(_expirationDays), 
+                NotBefore = DateTime.UtcNow,
+                Expires = DateTime.UtcNow.AddDays(_expirationDays),
                 Issuer = _issuer,
                 Audience = _audience,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

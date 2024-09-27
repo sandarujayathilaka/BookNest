@@ -49,14 +49,22 @@ namespace EcommercePlatform.Controllers
             return Ok(orders);
         }
 
-        // CSR: Update order status
-        [HttpPatch("{orderId}/status")]
-        [Authorize(Roles = Roles.CSR)]
+        //  Get orders by Vender ID
+        [HttpGet("vendor/{vendorId}")]
+        [Authorize(Roles = Roles.Customer)]
+        public async Task<IActionResult> GetOrdersByVendor(string vendorId)
+        {
+            var orders = await _orderRepository.GetOrdersByVendorId(vendorId);
+            return Ok(orders);
+        }
+
+
+        [HttpPut("{orderId}/status")]
         public async Task<IActionResult> UpdateOrderStatus(string orderId, [FromBody] string status)
         {
-            await _orderRepository.UpdateOrderStatus(orderId, status);
-
+            await _orderService.UpdateOrderStatus(orderId, status);
             return Ok("Order status updated.");
         }
+
     }
 }
