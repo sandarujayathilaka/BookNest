@@ -1,0 +1,7 @@
+// custom.scss
+
+// Override Bootstrap variables
+// $primary: #563d7c;
+
+// Import mixins and then the rest of Bootstrap
+@import "../../node_modules/bootstrap/scss/bootstrap"; // Correct path

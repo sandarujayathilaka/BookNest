@@ -1,41 +1,35 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
-import Footer from "./components/Footer";
+// App.js
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import AdminLayout from "./layouts/AdminLayout";
+import ProductsOverview from "./pages/Products/ProductsOverview";
+import ScrollToTop from "./components/general/ScrollToTop";
+import Signin from "./pages/Login/Signin";
+import Signup from "./pages/Login/Signup";
+import NotFound from "./pages/General/NotFound";
+import AddProduct from "./pages/Products/AddProduct";
 
-function App() {
-  const [count, setCount] = useState(0);
-
+const App = () => {
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-      <div class="container py-4 px-3 mx-auto">
-        <h1>Hello, Bootstrap and Vite!</h1>
-        <button class="btn btn-primary">Primary button</button>
-      </div>
-      <Footer />
-    </>
+    <BrowserRouter>
+      <ScrollToTop>
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/login" element={<Signin />} />
+          <Route path="/signup" element={<Signup />} />
+
+          {/* Admin Layout with Nested Routes */}
+          <Route element={<AdminLayout />}>
+            <Route path="/" element={<ProductsOverview />} />
+            <Route path="/products/new" element={<AddProduct />} />
+          </Route>
+
+          {/* 404 Not Found Page */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </ScrollToTop>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
