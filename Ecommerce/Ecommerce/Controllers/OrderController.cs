@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Ecommerce.Repositories;
 using Ecommerce.Services;
 using Ecommerce.Dto;
+using MongoDB.Bson;
 
 namespace EcommercePlatform.Controllers
 {
@@ -22,23 +23,34 @@ namespace EcommercePlatform.Controllers
             _orderService = orderService;
         }
 
-        // Customer: Place an order
+        //// Customer: Place an order
+        //[HttpPost]
+        //[Authorize(Roles = Roles.Customer)]
+        //public async Task<IActionResult> PlaceOrder([FromBody] OrderDto orderDto)
+        //{
+        //    var order = new Order
+        //    {
+        //        ProductID = orderDto.ProductID,
+        //        CustomerID = orderDto.CustomerID,
+        //        VendorID = orderDto.VendorID,
+        //        OrderDate = orderDto.OrderDate,
+        //        Status = orderDto.Status
+        //    };
+
+        //    await _orderService.CreateNewOrder(order);
+        //    return Ok("Order placed.");
+        //}
+
+
         [HttpPost]
         [Authorize(Roles = Roles.Customer)]
         public async Task<IActionResult> PlaceOrder([FromBody] OrderDto orderDto)
         {
-            var order = new Order
-            {
-                ProductID = orderDto.ProductID,
-                CustomerID = orderDto.CustomerID,
-                VendorID = orderDto.VendorID,
-                OrderDate = orderDto.OrderDate,
-                Status = orderDto.Status
-            };
-
-            await _orderService.CreateNewOrder(order);
-            return Ok("Order placed.");
+            var order = await _orderService.CreateOrder(orderDto);
+            return Ok("Order placed successfully.");
         }
+
+
 
         // Customer: Get orders by customer ID
         [HttpGet("customer/{customerId}")]
@@ -49,14 +61,14 @@ namespace EcommercePlatform.Controllers
             return Ok(orders);
         }
 
-        //  Get orders by Vender ID
-        [HttpGet("vendor/{vendorId}")]
-        [Authorize(Roles = Roles.Customer)]
-        public async Task<IActionResult> GetOrdersByVendor(string vendorId)
-        {
-            var orders = await _orderRepository.GetOrdersByVendorId(vendorId);
-            return Ok(orders);
-        }
+        ////  Get orders by Vender ID
+        //[HttpGet("vendor/{vendorId}")]
+        //[Authorize(Roles = Roles.Customer)]
+        //public async Task<IActionResult> GetOrdersByVendor(string vendorId)
+        //{
+        //    var orders = await _orderRepository.GetOrdersByVendorId(vendorId);
+        //    return Ok(orders);
+        //}
 
 
         [HttpPut("{orderId}/status")]

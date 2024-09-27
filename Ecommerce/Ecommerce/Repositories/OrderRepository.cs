@@ -29,11 +29,11 @@ namespace Ecommerce.Repositories
             return await _orders.Find(order => order.CustomerID == customerId).ToListAsync();
         }
 
-        // Get orders by vendor ID
-        public async Task<List<Order>> GetOrdersByVendorId(string vendorId)
-        {
-            return await _orders.Find(order => order.VendorID == vendorId).ToListAsync();
-        }
+  
+        //public async Task<List<Order>> GetOrdersByVendorId(string vendorId)
+        //{
+        //    return await _orders.Find(order => order.VendorID == vendorId).ToListAsync();
+        //}
 
 
         public async Task<Order> GetOrderByOrderId(string orderId)
