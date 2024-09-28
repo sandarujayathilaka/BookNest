@@ -9,6 +9,7 @@ import Signup from "./pages/Login/Signup";
 import NotFound from "./pages/General/NotFound";
 import AddProduct from "./pages/Products/AddProduct";
 import AccountApproval from "./pages/Csr/AccountApproval";
+import Orders from "./pages/Csr/Orders";
 
 
 
@@ -26,6 +27,7 @@ const App = () => {
             <Route path="/" element={<ProductsOverview />} />
             <Route path="/products/new" element={<AddProduct />} />
             <Route path="/accapprove" element={<AccountApproval />} />
+            <Route path="/orders" element={<Orders />} />
           </Route>
 
           {/* 404 Not Found Page */}
