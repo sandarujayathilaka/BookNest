@@ -51,6 +51,20 @@ const sidebarItems = [
     submenuItems: [],
     link: "/settings", // Add link for Settings
   },
+  {
+    title: "Account Approval",
+    icon: <FaCog />, // Settings icon
+    submenu: false,
+    submenuItems: [],
+    link: "/accapprove", // Add link for Settings
+  },
+  {
+    title: "Orders",
+    icon: <FaCog />, // Settings icon
+    submenu: false,
+    submenuItems: [],
+    link: "/orders", // Add link for Settings
+  },
 ];
 
 // Sidebar content with expandable menu

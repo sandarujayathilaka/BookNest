@@ -16,6 +16,7 @@ namespace Ecommerce.Repositories
         Task UpdateOrderStatus(string orderId, string status);
 
         Task<List<VendorProductDto>> GetOrdersByVendorId(string vendorId);
+        Task<List<Order>> GetAllOrders();
 
     }
 }

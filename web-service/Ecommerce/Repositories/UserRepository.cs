@@ -29,5 +29,11 @@ namespace Ecommerce.Repositories
             var update = Builders<ApplicationUser>.Update.Set(u => u.IsApproved, isApproved);
             await _users.UpdateOneAsync(filter, update);
         }
+
+        // Get all unapproved users
+        public async Task<List<ApplicationUser>> GetUnapprovedUsers()
+        {
+            return await _users.Find(user => user.IsApproved == false).ToListAsync();
+        }
     }
 }
