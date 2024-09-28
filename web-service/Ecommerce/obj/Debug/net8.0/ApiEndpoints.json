@@ -38,6 +38,16 @@
   },
   {
     "ContainingType": "EcommercePlatform.Controllers.OrderController",
+    "Method": "GetAllOrders",
+    "RelativePath": "api/Order/all",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EcommercePlatform.Controllers.OrderController",
     "Method": "GetOrdersByCustomer",
     "RelativePath": "api/Order/customer/{customerId}",
     "HttpMethod": "GET",
@@ -194,5 +204,25 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecommerce.Controllers.UserController",
+    "Method": "GetUnapprovedUsers",
+    "RelativePath": "api/User/unapproved",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Ecommerce.Models.ApplicationUser, Ecommerce, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   }
 ]

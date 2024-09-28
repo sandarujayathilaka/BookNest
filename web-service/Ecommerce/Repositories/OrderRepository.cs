@@ -63,6 +63,10 @@ namespace Ecommerce.Repositories
 
             await _orders.UpdateOneAsync(filter, update);
         }
+        public async Task<List<Order>> GetAllOrders()
+        {
+            return await _orders.Find(order => true).ToListAsync();
+        }
 
 
 

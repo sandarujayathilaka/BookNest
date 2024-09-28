@@ -75,7 +75,20 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        builder =>
+        {
+            builder.AllowAnyOrigin()  // Allow any origin
+                   .AllowAnyMethod()  // Allow any HTTP method
+                   .AllowAnyHeader(); // Allow any header
+        });
+});
+
 var app = builder.Build();
+
+app.UseCors("AllowAll");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -91,6 +104,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapHub<NotificationHub>("/notificationHub");
+
 app.MapControllers();
 
 app.Run();

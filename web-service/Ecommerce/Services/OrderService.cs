@@ -2,6 +2,7 @@
 using Ecommerce.Models;
 using Ecommerce.Repositories;
 using MongoDB.Bson;
+using NanoidDotNet;
 
 namespace Ecommerce.Services
 {
@@ -19,7 +20,7 @@ namespace Ecommerce.Services
         {
             var order = new Order
             {
-                OrderID = ObjectId.GenerateNewId().ToString(), 
+                OrderID = GenerateNanoId(), 
                 CustomerID = orderDto.CustomerID,
                 OrderDate = orderDto.OrderDate,
                 Status = orderDto.Status,
@@ -62,7 +63,14 @@ namespace Ecommerce.Services
             return await _orderRepository.GetOrdersByVendorId(vendorId);
         }
 
+        public async Task<List<Order>> GetAllOrders()
+        {
+            return await _orderRepository.GetAllOrders();
+        }
 
-
+        public string GenerateNanoId()
+        {
+            return Nanoid.Generate(Nanoid.Alphabets.LowercaseLettersAndDigits, 10);
+        }
     }
 }

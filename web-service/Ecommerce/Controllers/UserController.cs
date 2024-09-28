@@ -72,7 +72,7 @@ namespace Ecommerce.Controllers
 
         // CSR: Approve user
         [HttpPatch("approve/{userId}")]
-        [Authorize(Roles = Roles.CSR)]
+        //[Authorize(Roles = Roles.CSR)]
         public async Task<IActionResult> ApproveUser(string userId)
         {
             await _userService.ApproveUser(userId);
@@ -92,6 +92,17 @@ namespace Ecommerce.Controllers
             }
 
             return Ok(user);
+        }
+
+        [HttpGet("unapproved")]
+        public async Task<ActionResult<List<ApplicationUser>>> GetUnapprovedUsers()
+        {
+            var users = await _userService.GetUnapprovedUsers();
+            if (users == null || users.Count == 0)
+            {
+                return NotFound("No unapproved accounts found.");
+            }
+            return Ok(users);
         }
     }
 }

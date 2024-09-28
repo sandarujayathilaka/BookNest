@@ -25,7 +25,7 @@ namespace EcommercePlatform.Controllers
 
 
         [HttpPost]
-        [Authorize(Roles = Roles.Customer)]
+        //[Authorize(Roles = Roles.Customer)]
         public async Task<IActionResult> PlaceOrder([FromBody] OrderDto orderDto)
         {
             var order = await _orderService.CreateOrder(orderDto);
@@ -66,6 +66,17 @@ namespace EcommercePlatform.Controllers
         {
             await _orderService.UpdateOrderStatus(orderId, status);
             return Ok("Order status updated.");
+        }
+
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAllOrders()
+        {
+            var orders = await _orderService.GetAllOrders();
+            if (orders == null || !orders.Any())
+            {
+                return NotFound("No orders found.");
+            }
+            return Ok(orders);
         }
 
     }

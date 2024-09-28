@@ -57,5 +57,10 @@ namespace Ecommerce.Services
         {
             await _userRepository.UpdateUserApprovalStatus(userId, true);
         }
+
+        public async Task<List<ApplicationUser>> GetUnapprovedUsers()
+        {
+            return await _userRepository.GetUnapprovedUsers();
+        }
     }
 }
