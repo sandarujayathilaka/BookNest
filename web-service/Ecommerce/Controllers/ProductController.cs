@@ -1,5 +1,4 @@
 ﻿using Ecommerce.Models;
-using Ecommerce.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
