@@ -1,1 +1,41 @@
+# Ignore build output directories
+bin/
+obj/
+
+# Ignore user-specific files
+*.user
+*.suo
 .vs/
+*.userosscache
+*.userprefs
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+Logs/
+
+# Ignore generated files
+*.g.i.cs
+*.g.cs
+
+# Ignore NuGet and package directories
+packages/
+project.lock.json
+*.nuget.props
+*.nuget.targets
+node_modules/
+
+# Ignore publish output
+publish/
+
+# Ignore build artifacts
+*.exe
+*.dll
+*.pdb
+
+# Ignore secrets (if using dotnet user-secrets)
+secrets.json
+
+# Others to ignore
+*.DS_Store
+*.idea/
