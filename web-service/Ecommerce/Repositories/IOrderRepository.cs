@@ -18,6 +18,10 @@ namespace Ecommerce.Repositories
         Task<List<VendorProductDto>> GetOrdersByVendorId(string vendorId);
         Task<List<Order>> GetAllOrders();
         Task<bool> CancelOrderAsync(string orderId, string cancelationNote);
+        Task<bool> CancelOrderbyOfficer(string orderId, string Status, string cancelationOfficeNote);
+        Task<List<Order>> GetCanceledOrders(); 
+        
+
 
     }
 }
