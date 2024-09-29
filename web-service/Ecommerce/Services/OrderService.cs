@@ -79,5 +79,15 @@ namespace Ecommerce.Services
            
             return await _orderRepository.CancelOrderAsync(orderId, cancelationNote);
         }
+
+        public async Task<bool>  OrderOfficeCancellation(string orderId,string Status, string cancelationOfficeNote)
+        {
+             
+            return await _orderRepository.CancelOrderbyOfficer(orderId, Status, cancelationOfficeNote);
+        }
+        public async Task<List<Order>> GetCanceledOrders()
+        {
+            return await _orderRepository.GetCanceledOrders();
+        }
     }
 }
