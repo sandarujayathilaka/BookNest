@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import OrderDetailsModal from "./OrderDetailModel";
+
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedOrder, setSelectedOrder] = useState(null); 
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -28,19 +31,35 @@ export default function Orders() {
     );
     if (confirm) {
       try {
-       await axios.put(
-         `http://localhost:5271/api/Order/${orderId}/status`,
-         "Delivered", // Send status as plain string, not JSON
-         {
-           headers: {
-             "Content-Type": "text/plain", 
-           },
-         }
-       );
+        await axios.put(
+          `http://localhost:5271/api/Order/${orderId}/status`,
+          { status: "Delivered" },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        setOrders((prevOrders) =>
+          prevOrders.map((order) =>
+            order.orderID === orderId
+              ? { ...order, status: "Delivered" }
+              : order
+          )
+        );
       } catch (error) {
-        alert("Error changing order status.");
+        alert(error);
       }
     }
+  };
+
+  const handlePopup = (order) => {
+    setSelectedOrder(order); // Set the selected order
+  };
+
+  const handleCloseModal = () => {
+    setSelectedOrder(null); // Close the modal
   };
 
   if (loading) {
@@ -76,19 +95,31 @@ export default function Orders() {
                 <td>{new Date(order.orderDate).toLocaleString()}</td>
                 <td>{order.status}</td>
                 <td>
-                  {order.status !== "Delivered" && (
-                    <button
-                      className="btn btn-success"
-                      onClick={() => handleChangeStatus(order.orderID)}
-                    >
-                      Mark as Delivered
-                    </button>
-                  )}
+                  <button
+                    className="btn btn-success"
+                    onClick={() => handleChangeStatus(order.orderID)}
+                    disabled={order.status === "Delivered"}
+                  >
+                    {order.status === "Delivered"
+                      ? "Delivered"
+                      : "Mark as Delivered"}
+                  </button>
+                  <button
+                    className="btn btn-primary ms-2"
+                    onClick={() => handlePopup(order)}
+                  >
+                    View
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+      )}
+
+      {/* Show modal if selectedOrder is not null */}
+      {selectedOrder && (
+        <OrderDetailsModal order={selectedOrder} onClose={handleCloseModal} />
       )}
     </div>
   );
