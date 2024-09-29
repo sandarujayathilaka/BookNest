@@ -62,11 +62,18 @@ namespace EcommercePlatform.Controllers
 
 
         [HttpPut("{orderId}/status")]
-        public async Task<IActionResult> UpdateOrderStatus(string orderId, [FromBody] string status)
+        public async Task<IActionResult> UpdateOrderStatus(string orderId, [FromBody] OrderStatusUpdateDto update)
         {
-            await _orderService.UpdateOrderStatus(orderId, status);
+            if (string.IsNullOrEmpty(update?.Status))
+            {
+                return BadRequest("Status is required.");
+            }
+
+            await _orderService.UpdateOrderStatus(orderId, update.Status);
+
             return Ok("Order status updated.");
         }
+
 
         [HttpGet("all")]
         public async Task<IActionResult> GetAllOrders()
@@ -77,6 +84,19 @@ namespace EcommercePlatform.Controllers
                 return NotFound("No orders found.");
             }
             return Ok(orders);
+        }
+
+        [HttpPut("{orderId}/cancel")]
+        public async Task<IActionResult> RequestOrderCancellation(string orderId, [FromBody] CancelOrderDto cancelOrderDto)
+        {
+            var result = await _orderService.RequestOrderCancellationAsync(orderId, cancelOrderDto.CancelationNote);
+
+            if (!result)
+            {
+                return BadRequest("Failed to cancel the order or order not found.");
+            }
+
+            return Ok("Order cancellation request has been successfully made.");
         }
 
     }

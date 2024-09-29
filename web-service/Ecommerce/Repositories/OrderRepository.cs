@@ -59,16 +59,30 @@ namespace Ecommerce.Repositories
         public async Task UpdateOrderStatus(string orderId, string status)
         {
             var filter = Builders<Order>.Filter.Eq(o => o.OrderID, orderId);
-            var update = Builders<Order>.Update.Set(o => o.Status, status);
 
+            var update = Builders<Order>.Update
+                .Set(o => o.Status, status)
+                .Set(o => o.LastStatusChange, DateTime.UtcNow); 
+            
             await _orders.UpdateOneAsync(filter, update);
         }
+
         public async Task<List<Order>> GetAllOrders()
         {
             return await _orders.Find(order => true).ToListAsync();
         }
 
+        public async Task<bool> CancelOrderAsync(string orderId, string cancelationNote)
+        {
+            var filter = Builders<Order>.Filter.Eq(o => o.OrderID, orderId);
+            var update = Builders<Order>.Update
+                .Set(o => o.OrderCancelation, true)
+                .Set(o => o.cancelationNote, cancelationNote);
 
+            var result = await _orders.UpdateOneAsync(filter, update);
+
+            return result.ModifiedCount > 0;
+        }
 
     }
 }

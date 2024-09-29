@@ -17,6 +17,27 @@
   },
   {
     "ContainingType": "EcommercePlatform.Controllers.OrderController",
+    "Method": "RequestOrderCancellation",
+    "RelativePath": "api/Order/{orderId}/cancel",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "orderId",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "cancelOrderDto",
+        "Type": "Ecommerce.Dto.CancelOrderDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EcommercePlatform.Controllers.OrderController",
     "Method": "UpdateOrderStatus",
     "RelativePath": "api/Order/{orderId}/status",
     "HttpMethod": "PUT",
@@ -29,8 +50,8 @@
         "IsRequired": true
       },
       {
-        "Name": "status",
-        "Type": "System.String",
+        "Name": "update",
+        "Type": "Ecommerce.Dto.OrderStatusUpdateDto",
         "IsRequired": true
       }
     ],
