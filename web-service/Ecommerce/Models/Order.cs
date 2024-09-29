@@ -25,6 +25,7 @@ namespace Ecommerce.Models
         public string cancelationNote { get; set; } = "NOT PROVIDED";
         public decimal TotalAmount { get; set; }
         public DateTime LastStatusChange { get; set; }
+        public string CancelationOfficerNote { get; set; }
     }
 
     public class ProductOrder

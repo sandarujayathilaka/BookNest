@@ -38,6 +38,27 @@
   },
   {
     "ContainingType": "EcommercePlatform.Controllers.OrderController",
+    "Method": "OrderCancellationByOfficer",
+    "RelativePath": "api/Order/{orderId}/cancelbyofficer",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "orderId",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "cancelOrderCsrDto",
+        "Type": "Ecommerce.Dto.CancelOrderCsrDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EcommercePlatform.Controllers.OrderController",
     "Method": "UpdateOrderStatus",
     "RelativePath": "api/Order/{orderId}/status",
     "HttpMethod": "PUT",
@@ -61,6 +82,16 @@
     "ContainingType": "EcommercePlatform.Controllers.OrderController",
     "Method": "GetAllOrders",
     "RelativePath": "api/Order/all",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EcommercePlatform.Controllers.OrderController",
+    "Method": "GetCanceledOrders",
+    "RelativePath": "api/Order/cancele_order_req",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -180,6 +211,22 @@
   },
   {
     "ContainingType": "Ecommerce.Controllers.UserController",
+    "Method": "ActivateUserProfile",
+    "RelativePath": "api/User/{userId}/activate",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecommerce.Controllers.UserController",
     "Method": "ApproveUser",
     "RelativePath": "api/User/approve/{userId}",
     "HttpMethod": "PATCH",
@@ -189,6 +236,11 @@
       {
         "Name": "userId",
         "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "userDto",
+        "Type": "Ecommerce.Dto.UserApproveDto",
         "IsRequired": true
       }
     ],
@@ -225,6 +277,26 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecommerce.Controllers.UserController",
+    "Method": "GetUnactivatedUserProfiles",
+    "RelativePath": "api/User/unactivated",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Ecommerce.Models.ApplicationUser, Ecommerce, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "Ecommerce.Controllers.UserController",
