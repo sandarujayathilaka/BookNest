@@ -1,5 +1,37 @@
 [
   {
+    "ContainingType": "Ecommerce.Controllers.ImageController",
+    "Method": "DeleteImage",
+    "RelativePath": "api/Image/delete/{publicId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "publicId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecommerce.Controllers.ImageController",
+    "Method": "UploadImage",
+    "RelativePath": "api/Image/upload",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "file",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "EcommercePlatform.Controllers.OrderController",
     "Method": "PlaceOrder",
     "RelativePath": "api/Order",
@@ -99,6 +131,27 @@
       {
         "Name": "productDto",
         "Type": "Ecommerce.Dto.ProductDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EcommercePlatform.Controllers.ProductController",
+    "Method": "DeleteProductById",
+    "RelativePath": "api/Product/{pId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "productId",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "pId",
+        "Type": "",
         "IsRequired": true
       }
     ],
