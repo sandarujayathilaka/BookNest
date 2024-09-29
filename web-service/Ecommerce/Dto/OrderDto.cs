@@ -8,6 +8,7 @@
         public string Status { get; set; }
         public Boolean orderCancelation { get; set; }
         public string cancelationNote { get; set; }
+        public string CancelationOfficerNote { get; set; }
     }
 
     public class ProductOrderDto
