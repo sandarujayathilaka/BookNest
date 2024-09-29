@@ -4,6 +4,7 @@ import DashboardOverview from "../../components/products/DashboardOverview";
 import ProductList from "../../components/products/ProductList";
 import Orders from "../../components/products/Orders";
 import Analytics from "../../components/products/Analytics";
+import ImageUploadForm from "../../components/products/ImageUploadForm";
 
 const ProductsOverview = () => {
   return (
@@ -18,6 +19,8 @@ const ProductsOverview = () => {
         </Col>
       </Row>
       <Analytics />
+
+      <ImageUploadForm />
     </div>
   );
 };
