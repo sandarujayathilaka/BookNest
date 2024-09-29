@@ -42,10 +42,9 @@ namespace Ecommerce.Controllers
                 Email = registerUserDto.Email,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(registerUserDto.PasswordHash),
                 Role = registerUserDto.Role,
-                IsApproved = registerUserDto.IsApproved
             };
 
-            await _userService.RegisterUser(user);
+            await _userService.RegisterUser(user, registerUserDto.PasswordHash);
             return Ok("User registration successful. Please wait for approval.");
         }
 
@@ -73,9 +72,9 @@ namespace Ecommerce.Controllers
         // CSR: Approve user
         [HttpPatch("approve/{userId}")]
         //[Authorize(Roles = Roles.CSR)]
-        public async Task<IActionResult> ApproveUser(string userId)
+        public async Task<IActionResult> ApproveUser(string userId, UserApproveDto userDto)
         {
-            await _userService.ApproveUser(userId);
+            await _userService.ApproveUser(userId,userDto.FullName,userDto.Email);
             return Ok("User approved.");
         }
 
@@ -103,6 +102,32 @@ namespace Ecommerce.Controllers
                 return NotFound("No unapproved accounts found.");
             }
             return Ok(users);
+        }
+
+        // GET: api/User/unactivated
+        [HttpGet("unactivated")]
+        public async Task<ActionResult<List<ApplicationUser>>> GetUnactivatedUserProfiles()
+        {
+            var users = await _userService.GetUnactivatedUserProfilesAsync();
+            if (users == null || users.Count == 0)
+            {
+                return NotFound("No unactivated user profiles found.");
+            }
+
+            return Ok(users);
+        }
+
+        [HttpPut("{userId}/activate")]
+        public async Task<IActionResult> ActivateUserProfile(string userId)
+        {
+            bool result = await _userService.ActivateUserProfileAsync(userId);
+
+            if (result)
+            {
+                return Ok(new { message = "User profile activated successfully" });
+            }
+
+            return NotFound(new { message = "User not found" });
         }
     }
 }
