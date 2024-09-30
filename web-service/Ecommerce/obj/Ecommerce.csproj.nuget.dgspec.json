@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Asus\\Desktop\\EAD Project\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj": {}
+    "E:\\ead\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Asus\\Desktop\\EAD Project\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj": {
+    "E:\\ead\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Asus\\Desktop\\EAD Project\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj",
+        "projectUniqueName": "E:\\ead\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj",
         "projectName": "Ecommerce",
-        "projectPath": "C:\\Users\\Asus\\Desktop\\EAD Project\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj",
-        "packagesPath": "C:\\Users\\Asus\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Asus\\Desktop\\EAD Project\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\obj\\",
+        "projectPath": "E:\\ead\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj",
+        "packagesPath": "C:\\Users\\isuru\\.nuget\\packages\\",
+        "outputPath": "E:\\ead\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Asus\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\isuru\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -49,6 +52,10 @@
             "BCrypt.Net-Next": {
               "target": "Package",
               "version": "[4.0.3, )"
+            },
+            "CloudinaryDotNet": {
+              "target": "Package",
+              "version": "[1.26.2, )"
             },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",

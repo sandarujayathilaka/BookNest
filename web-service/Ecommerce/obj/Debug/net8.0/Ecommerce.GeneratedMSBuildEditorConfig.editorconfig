@@ -9,11 +9,19 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Ecommerce
 build_property.RootNamespace = Ecommerce
-build_property.ProjectDir = C:\Users\Asus\Desktop\EAD Project\EAD-Ecommerce-Project\web-service\Ecommerce\
+<<<<<<< HEAD
+build_property.ProjectDir = C:\Users\94764\OneDrive\Desktop\EAD aaign Final\EAD-Ecommerce-Project\web-service\Ecommerce\
+=======
+build_property.ProjectDir = E:\ead\EAD-Ecommerce-Project\web-service\Ecommerce\
+>>>>>>> 6cd6ee367ac9a596dd5b02d7d987be27fb903292
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\Asus\Desktop\EAD Project\EAD-Ecommerce-Project\web-service\Ecommerce
+<<<<<<< HEAD
+build_property.MSBuildProjectDirectory = C:\Users\94764\OneDrive\Desktop\EAD aaign Final\EAD-Ecommerce-Project\web-service\Ecommerce
+=======
+build_property.MSBuildProjectDirectory = E:\ead\EAD-Ecommerce-Project\web-service\Ecommerce
+>>>>>>> 6cd6ee367ac9a596dd5b02d7d987be27fb903292
 build_property._RazorSourceGeneratorDebug = 

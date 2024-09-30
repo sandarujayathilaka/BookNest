@@ -51,48 +51,6 @@ const sidebarItems = [
     submenuItems: [],
     link: "/settings", // Add link for Settings
   },
-  // {
-  //   title: "Account Approval",
-  //   icon: <FaCog />, // Settings icon
-  //   submenu: false,
-  //   submenuItems: [],
-  //   link: "/accapprove", // Add link for Settings
-  // },
-  {
-    title: "Orders",
-    icon: <FaCog />, // Settings icon
-    submenu: false,
-    submenuItems: [],
-    link: "/orders", // Add link for Settings
-  },
-  {
-    title: "Cancel Request",
-    icon: <FaCog />, // Settings icon
-    submenu: false,
-    submenuItems: [],
-    link: "/cancelreq", // Add link for Settings
-  },
-  {
-    title: "Pending Approvel Account",
-    icon: <FaCog />, // Settings icon
-    submenu: false,
-    submenuItems: [],
-    link: "/unapprovedUser", // Add link for Settings
-  },
-  {
-    title: "Deactivated Account",
-    icon: <FaCog />, // Settings icon
-    submenu: false,
-    submenuItems: [],
-    link: "/deactivatedacc", // Add link for Settings
-  },
-  {
-    title: "User Accounts",
-    icon: <FaCog />, // Settings icon
-    submenu: false,
-    submenuItems: [],
-    link: "/useracc", // Add link for Settings
-  },
 ];
 
 // Sidebar content with expandable menu

@@ -1,6 +1,7 @@
 ﻿using Ecommerce.Models;
 using Ecommerce.Repositories;
 using MongoDB.Bson;
+using MongoDB.Driver;
 
 namespace Ecommerce.Services
 {
@@ -32,5 +33,25 @@ namespace Ecommerce.Services
             Console.WriteLine(product.Id);
             await _productRepository.UpdateProduct(product);
         }
+
+        public async Task<Product> UpdateProductStatusAsync(string productId, string status, string deniedMessage)
+        {
+            // Retrieve the product
+            var product = (await _productRepository.GetAllProducts()).FirstOrDefault(p => p.ProductID == productId);
+
+            if (product != null)
+            {
+                product.Status = status;
+                product.DeniedMessage = deniedMessage;
+
+                // Call the repository update method
+                await _productRepository.UpdateProduct(product);
+                return product;
+            }
+
+            return null;
+        }
+
+
     }
 }

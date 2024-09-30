@@ -8,6 +8,9 @@ import Signin from "./pages/Login/Signin";
 import Signup from "./pages/Login/Signup";
 import NotFound from "./pages/General/NotFound";
 import AddProduct from "./pages/Products/AddProduct";
+import InventoryList from "./components/inventory/InventoryList";
+import InventoryAdd from "./pages/Inventory/InventoryAdd";
+import ProductApproval from "./components/inventory/ProductApproval";
 // import AccountApproval from "./pages/Csr/AccountApproval";
 import Orders from "./pages/Csr/Orders";
 import CancelOrder from "./pages/Csr/CancelOrder";
@@ -29,6 +32,10 @@ const App = () => {
           <Route element={<AdminLayout />}>
             <Route path="/" element={<ProductsOverview />} />
             <Route path="/products/new" element={<AddProduct />} />
+            <Route path="/inventory" element={<InventoryList />} />
+          <Route path="/inventory/new" element={<InventoryAdd />} />
+          <Route path="/approval" element={<ProductApproval />} />
+          
             {/* <Route path="/accapprove" element={<AccountApproval />} /> */}
             <Route path="/orders" element={<Orders />} />
             <Route path="/cancelreq" element={<CancelOrder />} />
