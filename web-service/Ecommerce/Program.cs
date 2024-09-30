@@ -57,6 +57,8 @@ builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddSignalR();
+builder.Services.AddScoped<IVendorRepository, VendorRepository>();
+builder.Services.AddScoped<VendorService>();
 builder.Services.AddScoped<IVendorFeedbackRepository, VendorFeedbackRepository>();
 builder.Services.AddScoped<VendorFeedbackService>();
 

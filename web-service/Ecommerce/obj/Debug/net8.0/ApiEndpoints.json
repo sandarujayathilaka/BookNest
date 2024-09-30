@@ -279,6 +279,69 @@
     ]
   },
   {
+    "ContainingType": "Ecommerce.Controllers.VendorController",
+    "Method": "GetVendors",
+    "RelativePath": "api/Vendor",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecommerce.Controllers.VendorController",
+    "Method": "CreateVendorProfile",
+    "RelativePath": "api/Vendor",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "vendorDto",
+        "Type": "Ecommerce.Dto.VendorDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecommerce.Controllers.VendorController",
+    "Method": "UpdateVendorProfile",
+    "RelativePath": "api/Vendor/{vendorUserId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "vendorUserId",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "vendorDto",
+        "Type": "Ecommerce.Dto.VendorDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecommerce.Controllers.VendorController",
+    "Method": "DeleteVendorProfile",
+    "RelativePath": "api/Vendor/{vendorUserId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "vendorUserId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "VendorFeedbackController",
     "Method": "CreateFeedback",
     "RelativePath": "api/VendorFeedback",
