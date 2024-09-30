@@ -33,7 +33,7 @@ namespace EcommercePlatform.Controllers
 
         // Vendor: Create a new product
         [HttpPost]
-        [Authorize(Roles = Roles.Vendor)]
+        //[Authorize(Roles = Roles.Vendor)]
         public async Task<IActionResult> CreateProduct([FromBody] ProductDto productDto)
         {
             var product = new Product
@@ -43,8 +43,11 @@ namespace EcommercePlatform.Controllers
                 Name = productDto.Name,
                 Price = productDto.Price,
                 StockQuantity = productDto.StockQuantity,
-                IsActive=productDto.IsActive,
-                VendorID = productDto.VendorID
+                UserId = productDto.UserId,
+                IsActive = productDto.IsActive,
+                VendorID = productDto.VendorID,
+                Status = productDto.Status,
+                DeniedMessage = productDto.DeniedMessage
             };
 
             await _productService.CreateNewProduct(product);
@@ -53,7 +56,7 @@ namespace EcommercePlatform.Controllers
 
         // Vendor: Update product
         [HttpPut("{productId}")]
-        [Authorize(Roles = Roles.Vendor)]
+        //[Authorize(Roles = Roles.Vendor)]
         public async Task<IActionResult> UpdateProduct(string productId, [FromBody] ProductDto productDto)
         {
             var existingProduct = await _productRepository.GetProductByProductId(productId);
@@ -80,5 +83,44 @@ namespace EcommercePlatform.Controllers
             await _productRepository.DeleteProduct(productId);
             return Ok("Product deleted.");
         }
+
+        // PUT: api/Product/updateStatus
+        [HttpPut("updateStatus")]
+        public async Task<IActionResult> UpdateProductStatus([FromQuery] string productID, [FromQuery] string status, [FromBody] string deniedMessage = null)
+        {
+            if (string.IsNullOrEmpty(productID) || string.IsNullOrEmpty(status))
+            {
+                Console.WriteLine("Invalid product data");
+                return BadRequest("Product ID and status are required.");
+            }
+
+            try
+            {
+                // Handle product approval or denial
+                string finalStatus = status.ToLower() == "denied" && !string.IsNullOrEmpty(deniedMessage)
+                    ? "Denied"
+                    : status;
+
+                // Update product status and set deniedMessage only if the status is "Denied"
+                var updatedProduct = await _productService.UpdateProductStatusAsync(productID, finalStatus, finalStatus == "Denied" ? deniedMessage : null);
+
+                if (updatedProduct == null)
+                {
+                    Console.WriteLine("Product not found.");
+                    return NotFound("Product not found.");
+                }
+
+                Console.WriteLine("Product status updated successfully.");
+                return Ok(updatedProduct);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating product status: {ex.Message}");  // Log the exception
+                return StatusCode(500, "Internal server error.");
+            }
+        }
+
+
+
     }
 }

@@ -9,5 +9,8 @@
         public int StockQuantity { get; set; }
         public bool IsActive { get; set; } = true;
         public string VendorID { get; set; }
+        public string UserId { get; set; }
+        public string Status { get; set; }
+        public string DeniedMessage { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Ecommerce.Models;
+using MongoDB.Driver;
 
 namespace Ecommerce.Repositories
 {
@@ -10,5 +11,6 @@ namespace Ecommerce.Repositories
         Task DeleteProduct(string productId);
         Task<Product> GetProductByProductId(string productId);
 
+        Task<Product> FindOneAndUpdateAsync(FilterDefinition<Product> filter, UpdateDefinition<Product> update);
     }
 }

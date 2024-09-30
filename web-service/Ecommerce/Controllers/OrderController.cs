@@ -25,7 +25,7 @@ namespace EcommercePlatform.Controllers
 
 
         [HttpPost]
-        [Authorize(Roles = Roles.Customer)]
+        //[Authorize(Roles = Roles.Customer)]
         public async Task<IActionResult> PlaceOrder([FromBody] OrderDto orderDto)
         {
             var order = await _orderService.CreateOrder(orderDto);
@@ -36,7 +36,7 @@ namespace EcommercePlatform.Controllers
 
         // Customer: Get orders by customer ID
         [HttpGet("customer/{customerId}")]
-        [Authorize(Roles = Roles.Customer)]
+        //[Authorize(Roles = Roles.Customer)]
         public async Task<IActionResult> GetOrdersByCustomer(string customerId)
         {
             var orders = await _orderRepository.GetOrdersByCustomerId(customerId);
@@ -45,7 +45,7 @@ namespace EcommercePlatform.Controllers
 
         //  Get orders by Vender ID
         [HttpGet("vendor/products/{vendorId}")]
-        [Authorize(Roles = Roles.Customer)]
+        //[Authorize(Roles = Roles.Customer)]
         public async Task<IActionResult> GetProductsByVendorId(string vendorId)
         {
             var vendorProducts = await _orderService.GetProductsByVendorId(vendorId);

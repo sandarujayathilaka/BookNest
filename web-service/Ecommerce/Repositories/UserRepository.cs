@@ -1,5 +1,6 @@
 ﻿using Ecommerce.DataAccess;
 using Ecommerce.Models;
+using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 
 namespace Ecommerce.Repositories
@@ -29,5 +30,11 @@ namespace Ecommerce.Repositories
             var update = Builders<ApplicationUser>.Update.Set(u => u.IsApproved, isApproved);
             await _users.UpdateOneAsync(filter, update);
         }
+
+        public async Task<IEnumerable<ApplicationUser>> GetAllUsersAsync()
+        {
+            return await _users.Find(_ => true).ToListAsync(); // This retrieves all users
+        }
+
     }
 }

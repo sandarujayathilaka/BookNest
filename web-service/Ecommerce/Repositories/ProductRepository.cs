@@ -37,5 +37,9 @@ namespace Ecommerce.Repositories
         {
             return await _products.Find(p => p.ProductID == productId).FirstOrDefaultAsync();
         }
+        public async Task<Product> FindOneAndUpdateAsync(FilterDefinition<Product> filter, UpdateDefinition<Product> update)
+        {
+            return await _products.FindOneAndUpdateAsync(filter, update);
+        }
     }
 }
