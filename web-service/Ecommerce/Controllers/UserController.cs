@@ -52,22 +52,24 @@ namespace Ecommerce.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] Ecommerce.Models.LoginRequest loginRequest)
         {
-            var user = await _userRepository.GetUserByEmail(loginRequest.Email);
-            if (user == null || !BCrypt.Net.BCrypt.Verify(loginRequest.Password, user.PasswordHash))
+            var result = await _userService.LoginService(loginRequest.Email, loginRequest.Password);
+
+            if (result.IsSuccess)
+            {
+                return Ok(new { Token = result.Token });
+            }
+            else if (result.ErrorMessage == "Unauthorized")
             {
                 return Unauthorized("Invalid email or password.");
             }
-
-            // Only allow login if the user is approved
-            if (!user.IsApproved)
+            else if (result.ErrorMessage == "Forbid")
             {
                 return Forbid("Your account is not approved.");
             }
 
-            // Generate JWT token
-            var token = _jwtService.GenerateToken(user);
-            return Ok(new { Token = token });
+            return BadRequest("An error occurred during login.");
         }
+
 
         // CSR: Approve user
         [HttpPatch("approve/{userId}")]

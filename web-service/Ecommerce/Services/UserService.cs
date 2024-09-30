@@ -3,6 +3,7 @@ using Ecommerce.Repositories;
 using MongoDB.Bson;
 using System.Net.Mail;
 using System.Net;
+using Microsoft.AspNetCore.Mvc;
 
 
 namespace Ecommerce.Services
@@ -11,11 +12,13 @@ namespace Ecommerce.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly EmailService _emailService;
+        private readonly JwtService _jwtService;
 
-        public UserService(IUserRepository userRepository, EmailService emailService)
+        public UserService(IUserRepository userRepository, EmailService emailService, JwtService jwtService)
         {
             _userRepository = userRepository;
             _emailService = emailService;
+            _jwtService = jwtService;
         }
 
         public async Task RegisterUser(ApplicationUser user,string password)
@@ -89,6 +92,39 @@ namespace Ecommerce.Services
         public async Task<bool> ActivateUserProfileAsync(string userId)
         {
             return await _userRepository.ActivateUserProfileAsync(userId);
+        }
+
+        public async Task<LoginResult> LoginService(string email, string password)
+        {
+            var user = await _userRepository.GetUserByEmail(email);
+            if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
+            {
+                return new LoginResult
+                {
+                    IsSuccess = false,
+                    ErrorMessage = "Unauthorized"
+                };
+            }
+
+            // Check if the user is approved before allowing login
+            if (!user.IsApproved)
+            {
+                return new LoginResult
+                {
+                    IsSuccess = false,
+                    ErrorMessage = "Forbid"
+                };
+            }
+
+            // Generate JWT token
+            var token = _jwtService.GenerateToken(user);
+
+            // Successful login result
+            return new LoginResult
+            {
+                IsSuccess = true,
+                Token = token
+            };
         }
     }
 }
