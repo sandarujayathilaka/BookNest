@@ -51,28 +51,6 @@ const sidebarItems = [
     submenuItems: [],
     link: "/settings", // Add link for Settings
   },
-  {
-    title: "Inventory",
-    icon: <FaClipboardList />, // Orders icon
-    submenu: false,
-    submenuItems: [],
-    link: "/inventory", // Add link for Orders
-  },
-  {
-    title: "Add Inventory",
-    icon: <FaClipboardList />, // Orders icon
-    submenu: false,
-    submenuItems: [],
-    link: "/inventory/new", // Add link for Orders
-  },
-  {
-    title: "Product Approval",
-    icon: <FaClipboardList />, // Orders icon
-    submenu: false,
-    submenuItems: [],
-    link: "/approval", // Add link for Orders
-  }
-  
 ];
 
 // Sidebar content with expandable menu

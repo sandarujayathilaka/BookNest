@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\94764\\OneDrive\\Desktop\\EAD aaign Final\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj": {}
+    "E:\\ead\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj": {}
   },
   "projects": {
-    "C:\\Users\\94764\\OneDrive\\Desktop\\EAD aaign Final\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj": {
+    "E:\\ead\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\94764\\OneDrive\\Desktop\\EAD aaign Final\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj",
+        "projectUniqueName": "E:\\ead\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj",
         "projectName": "Ecommerce",
-        "projectPath": "C:\\Users\\94764\\OneDrive\\Desktop\\EAD aaign Final\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj",
-        "packagesPath": "C:\\Users\\94764\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\94764\\OneDrive\\Desktop\\EAD aaign Final\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\obj\\",
+        "projectPath": "E:\\ead\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj",
+        "packagesPath": "C:\\Users\\isuru\\.nuget\\packages\\",
+        "outputPath": "E:\\ead\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\94764\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\isuru\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -53,6 +53,10 @@
               "target": "Package",
               "version": "[4.0.3, )"
             },
+            "CloudinaryDotNet": {
+              "target": "Package",
+              "version": "[1.26.2, )"
+            },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[8.0.8, )"
@@ -72,6 +76,10 @@
             "MongoDB.Driver": {
               "target": "Package",
               "version": "[2.29.0, )"
+            },
+            "Nanoid": {
+              "target": "Package",
+              "version": "[3.1.0, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

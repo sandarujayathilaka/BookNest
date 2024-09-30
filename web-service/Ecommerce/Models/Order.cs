@@ -20,8 +20,12 @@ namespace Ecommerce.Models
         public DateTime OrderDate { get; set; }
 
         public string Status { get; set; } // "Processing", "Dispatched", "Delivered", "Cancelled"
-        public int TotalItems { get; set; } 
+        public int TotalItems { get; set; }
+        public bool OrderCancelation { get; set; } = false;
+        public string cancelationNote { get; set; } = "NOT PROVIDED";
         public decimal TotalAmount { get; set; }
+        public DateTime LastStatusChange { get; set; }
+        public string CancelationOfficerNote { get; set; }
     }
 
     public class ProductOrder

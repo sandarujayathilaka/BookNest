@@ -1,11 +1,9 @@
-﻿using Ecommerce.Models;
+using Ecommerce.Dto;
 using Ecommerce.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using Ecommerce.Repositories;
 using Ecommerce.Services;
-using Ecommerce.Dto;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace EcommercePlatform.Controllers
 {
@@ -16,7 +14,7 @@ namespace EcommercePlatform.Controllers
         private readonly IProductRepository _productRepository;
         private readonly ProductService _productService;
 
-        public ProductController(IProductRepository productRepository,ProductService productService)
+        public ProductController(IProductRepository productRepository, ProductService productService)
         {
             _productRepository = productRepository;
             _productService = productService;
@@ -122,5 +120,13 @@ namespace EcommercePlatform.Controllers
 
 
 
+        // Vendor: Delete product
+        [HttpDelete("{pId}")]
+        [Authorize(Roles = Roles.Vendor)]
+        public async Task<IActionResult> DeleteProductById(string productId)
+        {
+            await _productRepository.DeleteProduct(productId);
+            return Ok("Product deleted.");
+        }
     }
 }

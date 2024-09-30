@@ -59,8 +59,11 @@ namespace Ecommerce.Repositories
         public async Task UpdateOrderStatus(string orderId, string status)
         {
             var filter = Builders<Order>.Filter.Eq(o => o.OrderID, orderId);
-            var update = Builders<Order>.Update.Set(o => o.Status, status);
 
+            var update = Builders<Order>.Update
+                .Set(o => o.Status, status)
+                .Set(o => o.LastStatusChange, DateTime.UtcNow); 
+            
             await _orders.UpdateOneAsync(filter, update);
         }
 
@@ -73,6 +76,47 @@ namespace Ecommerce.Repositories
              );
 
             return await _orders.Find(filter).ToListAsync();
+        }
+        public async Task<List<Order>> GetAllOrders()
+        {
+            return await _orders.Find(order => true).ToListAsync();
+        }
+
+        public async Task<bool> CancelOrderAsync(string orderId, string cancelationNote)
+        {
+            var filter = Builders<Order>.Filter.Eq(o => o.OrderID, orderId);
+            var update = Builders<Order>.Update
+                .Set(o => o.OrderCancelation, true)
+                .Set(o => o.cancelationNote, cancelationNote);
+
+            var result = await _orders.UpdateOneAsync(filter, update);
+
+            return result.ModifiedCount > 0;
+        }
+
+        public async Task<List<Order>> GetCanceledOrders()
+        {
+          
+            var filter = Builders<Order>.Filter.And(
+                Builders<Order>.Filter.Eq(o => o.OrderCancelation, true),
+                Builders<Order>.Filter.Ne(o => o.Status, "Canceled") 
+            );
+
+            return await _orders.Find(filter).ToListAsync();
+        }
+
+
+        public async Task<bool> CancelOrderbyOfficer(string orderId, string status, string cancelationOfficeNote)
+        {
+            var filter = Builders<Order>.Filter.Eq(o => o.OrderID, orderId);
+        var update = Builders<Order>.Update
+                .Set(o => o.Status, status)  
+                .Set(o => o.CancelationOfficerNote, cancelationOfficeNote)  
+                .Set(o => o.LastStatusChange, DateTime.UtcNow);  
+
+            var result = await _orders.UpdateOneAsync(filter, update);
+
+            return result.ModifiedCount > 0;
         }
 
     }

@@ -13,7 +13,8 @@ namespace Ecommerce.Models
         public string Email { get; set; }
         public string PasswordHash { get; set; }
         public string Role { get; set; }
-        public bool IsApproved { get; set; } = true;
-        public bool AccountActivated { get; set; } = true;
+        public Boolean IsApproved { get; set; } = false;
+
+        public Boolean AccountActivated = false;
     }
 }

@@ -45,11 +45,10 @@ namespace Ecommerce.Controllers
                 Email = registerUserDto.Email,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(registerUserDto.PasswordHash),
                 Role = registerUserDto.Role,
-                IsApproved = registerUserDto.IsApproved
             };
        
 
-            await _userService.RegisterUser(user);
+            await _userService.RegisterUser(user, registerUserDto.PasswordHash);
             return Ok("User registration successful. Please wait for approval.");
         }
 
@@ -57,14 +56,17 @@ namespace Ecommerce.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] Ecommerce.Models.LoginRequest loginRequest)
         {
-            var user = await _userRepository.GetUserByEmail(loginRequest.Email);
-            if (user == null || !BCrypt.Net.BCrypt.Verify(loginRequest.Password, user.PasswordHash))
+            var result = await _userService.LoginService(loginRequest.Email, loginRequest.Password);
+
+            if (result.IsSuccess)
+            {
+                return Ok(new { Token = result.Token });
+            }
+            else if (result.ErrorMessage == "Unauthorized")
             {
                 return Unauthorized("Invalid email or password.");
             }
-
-            // Only allow login if the user is approved
-            if (!user.IsApproved)
+            else if (result.ErrorMessage == "Forbid")
             {
                 return Forbid("Your account is not approved.");
             }
@@ -72,14 +74,17 @@ namespace Ecommerce.Controllers
             // Generate JWT token
             var token = _jwtService.GenerateToken(user);
             return Ok(new { Token = token });
+
+            return BadRequest("An error occurred during login.");
         }
+
 
         // CSR: Approve user
         [HttpPatch("approve/{userId}")]
-        [Authorize(Roles = Roles.CSR)]
-        public async Task<IActionResult> ApproveUser(string userId)
+        //[Authorize(Roles = Roles.CSR)]
+        public async Task<IActionResult> ApproveUser(string userId, UserApproveDto userDto)
         {
-            await _userService.ApproveUser(userId);
+            await _userService.ApproveUser(userId,userDto.FullName,userDto.Email);
             return Ok("User approved.");
         }
 
@@ -107,10 +112,41 @@ namespace Ecommerce.Controllers
             if (users == null || !users.Any())
             {
                 return NotFound("No users found.");
+        [HttpGet("unapproved")]
+        public async Task<ActionResult<List<ApplicationUser>>> GetUnapprovedUsers()
+        {
+            var users = await _userService.GetUnapprovedUsers();
+            if (users == null || users.Count == 0)
+            {
+                return NotFound("No unapproved accounts found.");
+            }
+            return Ok(users);
+        }
+
+        // GET: api/User/unactivated
+        [HttpGet("unactivated")]
+        public async Task<ActionResult<List<ApplicationUser>>> GetUnactivatedUserProfiles()
+        {
+            var users = await _userService.GetUnactivatedUserProfilesAsync();
+            if (users == null || users.Count == 0)
+            {
+                return NotFound("No unactivated user profiles found.");
             }
 
             return Ok(users);
         }
 
+        [HttpPut("{userId}/activate")]
+        public async Task<IActionResult> ActivateUserProfile(string userId)
+        {
+            bool result = await _userService.ActivateUserProfileAsync(userId);
+
+            if (result)
+            {
+                return Ok(new { message = "User profile activated successfully" });
+            }
+
+            return NotFound(new { message = "User not found" });
+        }
     }
 }
