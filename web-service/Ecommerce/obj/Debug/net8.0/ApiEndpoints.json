@@ -356,5 +356,58 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VendorFeedbackController",
+    "Method": "UpdateFeedbackComment",
+    "RelativePath": "api/VendorFeedback/{feedbackId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "feedbackId",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "newComment",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VendorFeedbackController",
+    "Method": "DeleteFeedback",
+    "RelativePath": "api/VendorFeedback/{feedbackId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "feedbackId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VendorFeedbackController",
+    "Method": "GetFeedbackByVendor",
+    "RelativePath": "api/VendorFeedback/{vendorUserId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "vendorUserId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

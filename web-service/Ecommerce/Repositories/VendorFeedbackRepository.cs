@@ -21,8 +21,8 @@ namespace Ecommerce.Repositories
 
         public async Task<List<VendorFeedback>> GetFeedbackByVendor(string vendorUserId)
         {
-            var feedbacks = await _vendorFeedbacks.Find(f => f.VendorUserId == vendorUserId).ToListAsync();
-            return feedbacks;
+            return await _vendorFeedbacks.Find(f => f.VendorUserId == vendorUserId).ToListAsync();
+             
         }
 
         public async Task UpdateComment(string feedbackId, string newComment)
@@ -32,7 +32,16 @@ namespace Ecommerce.Repositories
             await _vendorFeedbacks.UpdateOneAsync(filter, update);
         }
 
+        public async Task<VendorFeedback> GetFeedbackById(string feedbackId)
+        {
+            return await _vendorFeedbacks.Find(f => f.FeedbackId == feedbackId).FirstOrDefaultAsync();
+        }
 
+        public async Task DeleteFeedback(string feedbackId)
+        {
+            var filter = Builders<VendorFeedback>.Filter.Eq(f => f.FeedbackId, feedbackId);
+            await _vendorFeedbacks.DeleteOneAsync(filter); 
+        }
 
 
 
