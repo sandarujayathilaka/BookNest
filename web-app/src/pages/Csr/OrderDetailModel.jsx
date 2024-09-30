@@ -1,6 +1,8 @@
 import React from "react";
 
 const OrderDetailsModal = ({ order, onClose }) => {
+  console.log(order);
+
   return (
     <div className="modal fade show" style={{ display: "block" }} tabIndex="-1">
       <div className="modal-dialog">
@@ -15,33 +17,55 @@ const OrderDetailsModal = ({ order, onClose }) => {
           </div>
           <div className="modal-body">
             <p>
-              <strong>Order ID:</strong> {order.OrderID}
+              <strong>Order ID:</strong> {order.orderID}
             </p>
             <p>
-              <strong>Customer ID:</strong> {order.CustomerID}
+              <strong>Customer ID:</strong> {order.customerID}
             </p>
             <p>
               <strong>Order Date:</strong>{" "}
-              {new Date(order.OrderDate).toLocaleString()}
+              {new Date(order.orderDate).toLocaleString()}
             </p>
             <p>
-              <strong>Status:</strong> {order.Status}
+              <strong>Status:</strong> {order.status}
             </p>
             <p>
-              <strong>Total Items:</strong> {order.TotalItems}
+              <strong>Total Items:</strong> {order.totalItems}
             </p>
             <p>
-              <strong>Total Amount:</strong> {order.TotalAmount}
+              <strong>Total Amount:</strong> {order.totalAmount}
             </p>
             <h6>Products:</h6>
-            <ul>
-              {order.Products.map((product, index) => (
-                <li key={index}>
-                  {product.ProductID} - {product.TotalItems} pcs @{" "}
-                  {product.UnitPrice} each
-                </li>
-              ))}
-            </ul>
+            {/* Product Table */}
+            <table className="table table-striped">
+              <thead>
+                <tr>
+                  <th>Product ID</th>
+                  <th>Total Items</th>
+                  <th>Unit Price</th>
+                  <th>Total Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                {order.products.map((product, index) => (
+                  <tr key={index}>
+                    <td>{product.productID}</td>
+                    <td>{product.totalItems} pcs</td>
+                    <td>{product.unitPrice.toFixed(2)} each</td>
+                    <td>
+                      {(product.unitPrice * product.totalItems).toFixed(2)}
+                    </td>
+                  </tr>
+                ))}
+                {order.products.length === 0 && (
+                  <tr>
+                    <td colSpan="4" className="text-center">
+                      No products available
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

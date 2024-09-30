@@ -62,11 +62,18 @@ namespace EcommercePlatform.Controllers
 
 
         [HttpPut("{orderId}/status")]
-        public async Task<IActionResult> UpdateOrderStatus(string orderId, [FromBody] string status)
+        public async Task<IActionResult> UpdateOrderStatus(string orderId, [FromBody] OrderStatusUpdateDto update)
         {
-            await _orderService.UpdateOrderStatus(orderId, status);
+            if (string.IsNullOrEmpty(update?.Status))
+            {
+                return BadRequest("Status is required.");
+            }
+
+            await _orderService.UpdateOrderStatus(orderId, update.Status);
+
             return Ok("Order status updated.");
         }
+
 
         [HttpGet("all")]
         public async Task<IActionResult> GetAllOrders()
@@ -78,6 +85,48 @@ namespace EcommercePlatform.Controllers
             }
             return Ok(orders);
         }
+
+        //cancel order by customer
+        [HttpPut("{orderId}/cancel")]
+        public async Task<IActionResult> RequestOrderCancellation(string orderId, [FromBody] CancelOrderDto cancelOrderDto)
+        {
+            var result = await _orderService.RequestOrderCancellationAsync(orderId, cancelOrderDto.CancelationNote);
+
+            if (!result)
+            {
+                return BadRequest("Failed to cancel the order or order not found.");
+            }
+
+            return Ok("Order cancellation request has been successfully made.");
+        }
+
+        [HttpPut("{orderId}/cancelbyofficer")]
+        public async Task<IActionResult> OrderCancellationByOfficer (string orderId, [FromBody] CancelOrderCsrDto cancelOrderCsrDto)
+        {
+            var result = await _orderService.OrderOfficeCancellation(orderId, cancelOrderCsrDto.Status, cancelOrderCsrDto.CancelationOfficerNote);
+
+            if (!result)
+            {
+                return BadRequest("Failed to cancel the order or order not found.");
+            }
+
+            return Ok("Order cancellation successfully made.");
+        }
+
+
+        [HttpGet("cancele_order_req")]
+        public async Task<IActionResult> GetCanceledOrders()
+        {
+            var canceledOrders = await _orderService.GetCanceledOrders();
+            if (canceledOrders == null || !canceledOrders.Any())
+            {
+                return NotFound("No canceled orders found.");
+            }
+
+            return Ok(canceledOrders);
+        }
+
+
 
     }
 }

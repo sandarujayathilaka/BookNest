@@ -24,6 +24,7 @@ namespace Ecommerce.Services
                 CustomerID = orderDto.CustomerID,
                 OrderDate = orderDto.OrderDate,
                 Status = orderDto.Status,
+                LastStatusChange = DateTime.UtcNow,
                 Products = new List<ProductOrder>(),
                 TotalItems = 0,
                 TotalAmount = 0m 
@@ -71,6 +72,22 @@ namespace Ecommerce.Services
         public string GenerateNanoId()
         {
             return Nanoid.Generate(Nanoid.Alphabets.LowercaseLettersAndDigits, 10);
+        }
+
+        public async Task<bool> RequestOrderCancellationAsync(string orderId, string cancelationNote)
+        {
+           
+            return await _orderRepository.CancelOrderAsync(orderId, cancelationNote);
+        }
+
+        public async Task<bool>  OrderOfficeCancellation(string orderId,string Status, string cancelationOfficeNote)
+        {
+             
+            return await _orderRepository.CancelOrderbyOfficer(orderId, Status, cancelationOfficeNote);
+        }
+        public async Task<List<Order>> GetCanceledOrders()
+        {
+            return await _orderRepository.GetCanceledOrders();
         }
     }
 }
