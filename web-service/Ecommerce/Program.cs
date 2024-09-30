@@ -57,6 +57,8 @@ builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddSignalR();
+builder.Services.AddScoped<IVendorFeedbackRepository, VendorFeedbackRepository>();
+builder.Services.AddScoped<VendorFeedbackService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

@@ -277,5 +277,21 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "VendorFeedbackController",
+    "Method": "CreateFeedback",
+    "RelativePath": "api/VendorFeedback",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "vendorFeedbackDto",
+        "Type": "Ecommerce.Dto.VendorFeedbackDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]
