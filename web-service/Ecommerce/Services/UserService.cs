@@ -106,7 +106,6 @@ namespace Ecommerce.Services
                 };
             }
 
-            // Check if the user is approved before allowing login
             if (!user.IsApproved)
             {
                 return new LoginResult
@@ -116,10 +115,8 @@ namespace Ecommerce.Services
                 };
             }
 
-            // Generate JWT token
             var token = _jwtService.GenerateToken(user);
 
-            // Successful login result
             return new LoginResult
             {
                 IsSuccess = true,
