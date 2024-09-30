@@ -8,6 +8,9 @@ import Signin from "./pages/Login/Signin";
 import Signup from "./pages/Login/Signup";
 import NotFound from "./pages/General/NotFound";
 import AddProduct from "./pages/Products/AddProduct";
+import InventoryList from "./components/inventory/InventoryList";
+import InventoryAdd from "./pages/Inventory/InventoryAdd";
+import ProductApproval from "./components/inventory/ProductApproval";
 
 const App = () => {
   return (
@@ -22,8 +25,17 @@ const App = () => {
           <Route element={<AdminLayout />}>
             <Route path="/" element={<ProductsOverview />} />
             <Route path="/products/new" element={<AddProduct />} />
+            <Route path="/inventory" element={<InventoryList />} />
+          <Route path="/inventory/new" element={<InventoryAdd />} />
+          <Route path="/approval" element={<ProductApproval />} />
+         
           </Route>
 
+
+
+          
+
+          
           {/* 404 Not Found Page */}
           <Route path="*" element={<NotFound />} />
         </Routes>
