@@ -307,16 +307,11 @@
   {
     "ContainingType": "Ecommerce.Controllers.VendorController",
     "Method": "UpdateVendorProfile",
-    "RelativePath": "api/Vendor/{vendorUserId}",
+    "RelativePath": "api/Vendor",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
-      {
-        "Name": "vendorUserId",
-        "Type": "System.String",
-        "IsRequired": true
-      },
       {
         "Name": "vendorDto",
         "Type": "Ecommerce.Dto.VendorDto",

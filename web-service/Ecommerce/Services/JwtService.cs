@@ -36,7 +36,7 @@ namespace Ecommerce.Services
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-
+                    new Claim("UserId", user.UserId),
                     new Claim(ClaimTypes.NameIdentifier, user.UserId),
                     new Claim(ClaimTypes.Name, user.Email),
                     new Claim(ClaimTypes.Role, user.Role)

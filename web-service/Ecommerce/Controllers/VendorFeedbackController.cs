@@ -26,7 +26,8 @@ public class VendorFeedbackController : ControllerBase
     public async Task<IActionResult> CreateFeedback([FromBody] VendorFeedbackDto vendorFeedbackDto)
     {
         // Get the CustomerUserId from the logged-in user's claims
-        var customerUserId = User.FindFirst("UserId")?.Value; 
+        var customerUserId = User.FindFirst("UserId")?.Value;
+        Console.WriteLine(customerUserId);
 
         if (customerUserId == null)
         {

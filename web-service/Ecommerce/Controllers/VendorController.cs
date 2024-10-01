@@ -28,14 +28,25 @@ namespace Ecommerce.Controllers
             return Ok(vendors);
         }
 
+
+
         // Create a new vendor profile
         [HttpPost]
-        //[Authorize(Roles = Roles.Vendor)]
+        [Authorize(Roles = Roles.Vendor)]
         public async Task<IActionResult> CreateVendorProfile([FromBody] VendorDto vendorDto)
         {
+            // Get the VendorUserId from the logged-in user's claims
+            var vendorUserId = User.FindFirst("UserId")?.Value;
+            Console.WriteLine(vendorUserId);
+
+            if (vendorUserId == null)
+            {
+                return Unauthorized("User is not authenticated.");
+            }
+
             var vendor = new Vendor
             {
-                VendorUserId = vendorDto.VendorUserId,
+                VendorUserId = vendorUserId,
                 PhoneNumber = vendorDto.PhoneNumber,
                 Address = vendorDto.Address,
                 AverageRating = vendorDto.AverageRating,
@@ -45,27 +56,38 @@ namespace Ecommerce.Controllers
             return Ok("Vendor profile created.");
         }
 
-        // Update vendor profile
-        [HttpPut("{vendorUserId}")]
-        //[Authorize(Roles = Roles.Vendor)]
-        public async Task<IActionResult> UpdateVendorProfile(string vendorUserId, [FromBody] VendorDto vendorDto)
+        [HttpPut]
+        [Authorize(Roles = Roles.Vendor)]
+        public async Task<IActionResult> UpdateVendorProfile([FromBody] VendorDto vendorDto)
         {
-            var existingVendor = await _vendorService.GetVendorById(vendorUserId);
+            // Get the VendorUserId from the token (claims)
+            var loggedInUserId = User.FindFirst("UserId")?.Value;
+
+            if (loggedInUserId == null)
+            {
+                return Unauthorized("User is not authenticated.");
+            }
+
+            // Retrieve the vendor profile using the logged-in user's ID 
+            var existingVendor = await _vendorService.GetVendorById(loggedInUserId);
             if (existingVendor == null)
             {
                 return NotFound("Vendor profile not found.");
             }
 
+            // Update the vendor profile
             existingVendor.PhoneNumber = vendorDto.PhoneNumber ?? existingVendor.PhoneNumber;
-            existingVendor.Address = vendorDto.Address ?? existingVendor.Address;  
+            existingVendor.Address = vendorDto.Address ?? existingVendor.Address;
 
             await _vendorService.UpdateVendorProfile(existingVendor);
-            return Ok("Vendor profile updated.");
+            return Ok("Vendor profile updated successfully.");
         }
+
+
 
         // Delete vendor profile
         [HttpDelete("{vendorUserId}")]
-        //[Authorize(Roles = Roles.Vendor)]
+        [Authorize(Roles = Roles.Vendor)]
         public async Task<IActionResult> DeleteVendorProfile(string vendorUserId)
         {
             await _vendorService.DeleteVendorProfile(vendorUserId);
