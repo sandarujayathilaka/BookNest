@@ -11,6 +11,7 @@ namespace Ecommerce.Models
         public string FeedbackId { get; set; }
         public string VendorUserId { get; set; }
         public string CustomerUserId { get; set; }
+        public string CustomerName { get; set; }
         public string Comment { get; set; }
         public double Rating { get; set; }
 

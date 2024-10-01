@@ -49,7 +49,7 @@ namespace Ecommerce.Controllers
                 VendorUserId = vendorUserId,
                 PhoneNumber = vendorDto.PhoneNumber,
                 Address = vendorDto.Address,
-                AverageRating = vendorDto.AverageRating,
+                AverageRating = 0,
             };
 
             await _vendorService.CreateVendorProfile(vendor);

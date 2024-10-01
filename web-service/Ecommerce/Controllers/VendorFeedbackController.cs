@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Ecommerce.Repositories;
 using Ecommerce.Services;
+using System.Security.Claims;
 
 
 [ApiController]
@@ -12,11 +13,13 @@ public class VendorFeedbackController : ControllerBase
 {
     private readonly IVendorFeedbackRepository _vendorFeedbackRepository;
     private readonly VendorFeedbackService _vendorfeedbackService;
+    private readonly IUserRepository _userService;
 
-    public VendorFeedbackController(IVendorFeedbackRepository vendorFeedbackRepository, VendorFeedbackService vendorfeedbackService)
+    public VendorFeedbackController(IVendorFeedbackRepository vendorFeedbackRepository, VendorFeedbackService vendorfeedbackService, IUserRepository userService)
     {
         _vendorFeedbackRepository = vendorFeedbackRepository;
         _vendorfeedbackService = vendorfeedbackService;
+        _userService = userService;
     }
 
 
@@ -25,28 +28,49 @@ public class VendorFeedbackController : ControllerBase
     [Authorize(Roles = Roles.Customer)]
     public async Task<IActionResult> CreateFeedback([FromBody] VendorFeedbackDto vendorFeedbackDto)
     {
-        // Get the CustomerUserId from the logged-in user's claims
+        // Get the CustomerUserId from the token
         var customerUserId = User.FindFirst("UserId")?.Value;
-        Console.WriteLine(customerUserId);
 
         if (customerUserId == null)
         {
             return Unauthorized("User is not authenticated.");
         }
 
+
+        // Get the email from the token 
+        var customerEmail = User.FindFirst(ClaimTypes.Name)?.Value;
+
+        if (string.IsNullOrEmpty(customerEmail))
+        {
+            return BadRequest("User email is not available.");
+        }
+
+        // Get the customer details using the email
+        var customer = await _userService.GetUserByEmail(customerEmail);
+
+        if (customer == null)
+        {
+            return NotFound("Customer not found.");
+        }
+
+        var customerName = customer.FullName;
+
+
+
         var vendorFeedback = new VendorFeedback
         {
             VendorUserId = vendorFeedbackDto.VendorUserId,
             CustomerUserId = customerUserId,
+            CustomerName = customerName,
             Comment = vendorFeedbackDto.Comment,
             Rating = vendorFeedbackDto.Rating,
             CreatedDate = DateTime.UtcNow,
-
         };
 
         await _vendorfeedbackService.AddFeedback(vendorFeedback);
         return Ok("Feedback submitted successfully.");
     }
+
 
 
 
