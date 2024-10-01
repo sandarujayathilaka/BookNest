@@ -25,12 +25,12 @@ namespace Ecommerce.Repositories
              
         }
 
-        public async Task UpdateComment(string feedbackId, string newComment)
-        {
-            var filter = Builders<VendorFeedback>.Filter.Eq(f => f.FeedbackId, feedbackId);
-            var update = Builders<VendorFeedback>.Update.Set(f => f.Comment, newComment);
-            await _vendorFeedbacks.UpdateOneAsync(filter, update);
-        }
+        //public async Task UpdateComment(string feedbackId, string newComment)
+        //{
+        //    var filter = Builders<VendorFeedback>.Filter.Eq(f => f.FeedbackId, feedbackId);
+        //    var update = Builders<VendorFeedback>.Update.Set(f => f.Comment, newComment);
+        //    await _vendorFeedbacks.UpdateOneAsync(filter, update);
+        //}
 
         public async Task<VendorFeedback> GetFeedbackById(string feedbackId)
         {
@@ -41,6 +41,18 @@ namespace Ecommerce.Repositories
         {
             var filter = Builders<VendorFeedback>.Filter.Eq(f => f.FeedbackId, feedbackId);
             await _vendorFeedbacks.DeleteOneAsync(filter); 
+        }
+
+
+        public async Task UpdateFeedback(VendorFeedback updatedFeedback)
+        {
+            var filter = Builders<VendorFeedback>.Filter.Eq(f => f.FeedbackId, updatedFeedback.FeedbackId);
+            var update = Builders<VendorFeedback>.Update
+                .Set(f => f.Comment, updatedFeedback.Comment)
+                .Set(f => f.Rating, updatedFeedback.Rating)
+                .Set(f => f.CreatedDate, updatedFeedback.CreatedDate);
+
+            await _vendorFeedbacks.UpdateOneAsync(filter, update);
         }
 
 

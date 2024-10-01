@@ -30,7 +30,7 @@ namespace Ecommerce.Controllers
 
 
 
-        // Create a new vendor profile
+        // Vendor : Create a new vendor profile
         [HttpPost]
         [Authorize(Roles = Roles.Vendor)]
         public async Task<IActionResult> CreateVendorProfile([FromBody] VendorDto vendorDto)
@@ -55,6 +55,9 @@ namespace Ecommerce.Controllers
             await _vendorService.CreateVendorProfile(vendor);
             return Ok("Vendor profile created.");
         }
+
+
+        //Vendor : Update own profile
 
         [HttpPut]
         [Authorize(Roles = Roles.Vendor)]
@@ -85,7 +88,7 @@ namespace Ecommerce.Controllers
 
 
 
-        // Delete vendor profile
+        // Vendor : Delete vendor profile
         [HttpDelete("{vendorUserId}")]
         [Authorize(Roles = Roles.Vendor)]
         public async Task<IActionResult> DeleteVendorProfile(string vendorUserId)

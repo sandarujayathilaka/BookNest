@@ -354,7 +354,7 @@
   },
   {
     "ContainingType": "VendorFeedbackController",
-    "Method": "UpdateFeedbackComment",
+    "Method": "UpdateFeedback",
     "RelativePath": "api/VendorFeedback/{feedbackId}",
     "HttpMethod": "PUT",
     "IsController": true,
@@ -366,8 +366,8 @@
         "IsRequired": true
       },
       {
-        "Name": "newComment",
-        "Type": "System.String",
+        "Name": "updatedFeedbackDto",
+        "Type": "Ecommerce.Dto.VendorFeedbackDto",
         "IsRequired": true
       }
     ],

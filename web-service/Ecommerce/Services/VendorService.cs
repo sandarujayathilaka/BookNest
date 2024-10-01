@@ -36,10 +36,14 @@ namespace Ecommerce.Services
             await _vendorRepository.DeleteVendorProfile(vendorUserId);
         }
 
+
+
         public async Task<Vendor> GetVendorById(string vendorUserId)
         {
             return await _vendorRepository.GetVendorById(vendorUserId);
         }
+
+
 
         public async Task<IEnumerable<Vendor>> GetAllVendors()
         {
@@ -48,15 +52,5 @@ namespace Ecommerce.Services
 
 
 
-
-        public async Task UpdateVendorAverageRating(string vendorUserId, double newAverageRating)
-        {
-            var existingVendor = await _vendorRepository.GetVendorById(vendorUserId);
-            if (existingVendor != null)
-            {
-                existingVendor.AverageRating = newAverageRating;
-                await _vendorRepository.UpdateVendorProfile(existingVendor); // Update the vendor profile with the new rating
-            }
-        }
     }
 }

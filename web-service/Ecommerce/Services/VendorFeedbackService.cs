@@ -47,18 +47,31 @@ namespace Ecommerce.Services
 
 
 
-        //Get all feedbacks for a vendor
+        // Get all feedbacks for a vendor
         public async Task<List<VendorFeedback>> GetFeedbackByVendor (string vendorUserId)
         {
             return await _vendorFeedbackRepository.GetFeedbackByVendor(vendorUserId);
         }
 
 
-        //Update feedback comment
-        public async Task UpdateComment(string feedbackId, string newComment)
+
+        // Update the feedback
+        public async Task UpdateFeedback(VendorFeedback updatedFeedback)
         {
-            await _vendorFeedbackRepository.UpdateComment(feedbackId, newComment);
+            await _vendorFeedbackRepository.UpdateFeedback(updatedFeedback);
+            await UpdateVendorAverageRating(updatedFeedback.VendorUserId);
         }
+
+
+
+        // Delete the feedback
+        public async Task DeleteFeedbackAndUpdateRating(string feedbackId, string vendorUserId)
+        {
+           
+            await _vendorFeedbackRepository.DeleteFeedback(feedbackId);
+            await UpdateVendorAverageRating(vendorUserId);
+        }
+
 
 
         private async Task UpdateVendorAverageRating(string vendorUserId)
@@ -67,10 +80,12 @@ namespace Ecommerce.Services
             if (feedbacks.Count() > 0)
             {
                 double averageRating = feedbacks.Average(f => f.Rating);
-                // Update vendor's average rating in the Vendor collection (you'll need a method in your VendorRepository for this)
                 await _vendorRepository.UpdateVendorAverageRating(vendorUserId, averageRating);
             }
         }
+
+
+
 
 
     }

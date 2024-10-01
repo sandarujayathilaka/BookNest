@@ -38,14 +38,7 @@ namespace Ecommerce.Repositories
             return await _vendors.Find(v => true).ToListAsync();
         }
 
-
-        public async Task UpdateAverageRating(string vendorUserId, double newAverageRating)
-        {
-            var update = Builders<Vendor>.Update.Set(v => v.AverageRating, newAverageRating);
-            await _vendors.UpdateOneAsync(v => v.VendorUserId == vendorUserId, update);
-        }
-
-        // Update the vendor's average rating
+        
         public async Task UpdateVendorAverageRating(string vendorUserId, double newAverageRating)
         {
             var filter = Builders<Vendor>.Filter.Eq(v => v.VendorUserId, vendorUserId);

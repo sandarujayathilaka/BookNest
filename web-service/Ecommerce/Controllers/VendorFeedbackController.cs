@@ -75,7 +75,7 @@ public class VendorFeedbackController : ControllerBase
 
 
 
-    // Customer: Get all feedback for a vendor
+    //Get all feedback for a vendor
     [HttpGet("{vendorUserId}")]
     public async Task<IActionResult> GetFeedbackByVendor(string vendorUserId)
     {
@@ -88,10 +88,13 @@ public class VendorFeedbackController : ControllerBase
         return Ok(feedbacks);
     }
 
-    // Customer: Update feedback comment
+
+
+
+    // Customer: Update full feedback
     [HttpPut("{feedbackId}")]
     [Authorize(Roles = Roles.Customer)]
-    public async Task<IActionResult> UpdateFeedbackComment(string feedbackId, [FromBody] string newComment)
+    public async Task<IActionResult> UpdateFeedback(string feedbackId, [FromBody] VendorFeedbackDto updatedFeedbackDto)
     {
         var customerUserId = User.FindFirst("UserId")?.Value;
 
@@ -100,15 +103,29 @@ public class VendorFeedbackController : ControllerBase
             return Unauthorized("User is not authenticated.");
         }
 
-        var feedback = await _vendorFeedbackRepository.GetFeedbackById(feedbackId);
-        if (feedback == null || feedback.CustomerUserId != customerUserId)
+        // Fetch existing feedback
+        var existingFeedback = await _vendorFeedbackRepository.GetFeedbackById(feedbackId);
+        if (existingFeedback == null || existingFeedback.CustomerUserId != customerUserId)
         {
             return NotFound("Feedback not found or user not authorized to update this feedback.");
         }
 
-        await _vendorfeedbackService.UpdateComment(feedbackId, newComment);
-        return Ok("Feedback comment updated successfully.");
+        // Update the feedback properties
+        existingFeedback.Comment = updatedFeedbackDto.Comment;
+        existingFeedback.Rating = updatedFeedbackDto.Rating;
+        existingFeedback.CreatedDate = DateTime.UtcNow; 
+
+        // Call service to update feedback in repository
+        await _vendorfeedbackService.UpdateFeedback(existingFeedback);
+
+
+        return Ok("Feedback updated successfully.");
     }
+
+
+
+
+
 
     // Customer: Delete feedback
     [HttpDelete("{feedbackId}")]
@@ -122,15 +139,20 @@ public class VendorFeedbackController : ControllerBase
             return Unauthorized("User is not authenticated.");
         }
 
+        // Fetch the feedback to get the vendor's ID
         var feedback = await _vendorFeedbackRepository.GetFeedbackById(feedbackId);
         if (feedback == null || feedback.CustomerUserId != customerUserId)
         {
             return NotFound("Feedback not found or user not authorized to delete this feedback.");
         }
 
-        await _vendorFeedbackRepository.DeleteFeedback(feedbackId);
-        return Ok("Feedback deleted successfully.");
+        // Delete the feedback and recalculate the vendor's average rating
+        await _vendorfeedbackService.DeleteFeedbackAndUpdateRating(feedbackId, feedback.VendorUserId);
+
+        return Ok("Feedback deleted and vendor's average rating updated.");
     }
+
+
 
 
 
