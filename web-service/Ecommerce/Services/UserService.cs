@@ -62,5 +62,11 @@ namespace Ecommerce.Services
         {
             return await _userRepository.GetUnapprovedUsers();
         }
+
+
+        public async Task<ApplicationUser> GetUserById(string userId)
+        {
+            return await _userRepository.GetUserById(userId);
+        }
     }
 }

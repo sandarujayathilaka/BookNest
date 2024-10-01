@@ -104,5 +104,20 @@ namespace Ecommerce.Controllers
             }
             return Ok(users);
         }
+
+
+
+        // Get user by ID
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> GetUserById(string userId)
+        {
+            var user = await _userService.GetUserById(userId);
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+            return Ok(user);
+        }
+
     }
 }

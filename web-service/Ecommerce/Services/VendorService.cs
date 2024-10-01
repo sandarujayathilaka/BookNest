@@ -45,9 +45,9 @@ namespace Ecommerce.Services
 
 
 
-        public async Task<IEnumerable<Vendor>> GetAllVendors()
+        public async Task<List<Vendor>> GetAllVendors()
         {
-           return await _vendorRepository.GetAllVendors();
+            return await _vendorRepository.GetAllVendors();
         }
 
 

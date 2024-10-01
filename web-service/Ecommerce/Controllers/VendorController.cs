@@ -13,11 +13,13 @@ namespace Ecommerce.Controllers
     {
         private readonly IVendorRepository _vendorRepository;
         private readonly VendorService _vendorService;
+        private readonly IUserRepository _userRepository; // Inject IUserRepository
 
-        public VendorController(IVendorRepository vendorRepository, VendorService vendorService)
+        public VendorController(IVendorRepository vendorRepository, VendorService vendorService, IUserRepository userRepository)
         {
             _vendorRepository = vendorRepository;
             _vendorService = vendorService;
+            _userRepository = userRepository; // Initialize the user repository
         }
 
         // Get all vendors
@@ -25,7 +27,27 @@ namespace Ecommerce.Controllers
         public async Task<IActionResult> GetVendors()
         {
             var vendors = await _vendorService.GetAllVendors();
-            return Ok(vendors);
+            var vendorDtos = new List<VendorDto>();
+
+            foreach (var vendor in vendors)
+            {
+                // Fetch user details based on VendorUserId
+                var user = await _userRepository.GetUserById(vendor.VendorUserId);
+
+                // Combine vendor and user details into VendorDto
+                var vendorDto = new VendorDto
+                {
+                    VendorUserId = vendor.VendorUserId,
+                    Address = vendor.Address,
+                    FullName = user?.FullName,
+                    Email = user?.Email,
+                    PhoneNumber = vendor.PhoneNumber
+                };
+
+                vendorDtos.Add(vendorDto);
+            }
+
+            return Ok(vendorDtos);
         }
 
 

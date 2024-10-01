@@ -35,5 +35,11 @@ namespace Ecommerce.Repositories
         {
             return await _users.Find(user => user.IsApproved == false).ToListAsync();
         }
+
+        // Get user by user id
+        public async Task<ApplicationUser> GetUserById(string userId)
+        {
+            return await _users.Find(user => user.UserId == userId).FirstOrDefaultAsync();
+        }
     }
 }

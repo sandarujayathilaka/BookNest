@@ -212,6 +212,22 @@
   },
   {
     "ContainingType": "Ecommerce.Controllers.UserController",
+    "Method": "GetUserById",
+    "RelativePath": "api/User/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecommerce.Controllers.UserController",
     "Method": "ApproveUser",
     "RelativePath": "api/User/approve/{userId}",
     "HttpMethod": "PATCH",
