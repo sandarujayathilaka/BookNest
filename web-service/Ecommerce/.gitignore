@@ -1,6 +1,9 @@
 # Ignore build output directories
 bin/
 obj/
+/Ecommerce/obj/
+/Ecommerce/bin/
+
 
 # Ignore user-specific files
 *.user
