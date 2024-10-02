@@ -5,7 +5,7 @@ using MongoDB.Driver;
 
 namespace Ecommerce.Repositories
 {
-    public class UserRepository: IUserRepository
+    public class UserRepository : IUserRepository
     {
         private readonly IMongoCollection<ApplicationUser> _users;
 
@@ -31,7 +31,9 @@ namespace Ecommerce.Repositories
             var update = Builders<ApplicationUser>.Update
                 .Combine(
                     Builders<ApplicationUser>.Update.Set(u => u.IsApproved, isApproved),
+
                     Builders<ApplicationUser>.Update.Set(u => u.AccountActivated, true) 
+
                 );
 
             await _users.UpdateOneAsync(filter, update);
@@ -64,5 +66,14 @@ namespace Ecommerce.Repositories
 
             return result.ModifiedCount > 0;
         }
+
+
+
+        // Get user by user id
+        public async Task<ApplicationUser> GetUserById(string userId)
+        {
+            return await _users.Find(user => user.UserId == userId).FirstOrDefaultAsync();
+        }
+
     }
 }
