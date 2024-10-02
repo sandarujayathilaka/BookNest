@@ -24,7 +24,7 @@ public class VendorFeedbackController : ControllerBase
 
 
     //Customer : Create a new feedback
-    [HttpPost]
+    [HttpPost("addfeedback")]
     [Authorize(Roles = Roles.Customer)]
     public async Task<IActionResult> CreateFeedback([FromBody] VendorFeedbackDto vendorFeedbackDto)
     {
@@ -37,16 +37,16 @@ public class VendorFeedbackController : ControllerBase
         }
 
 
-        // Get the email from the token 
-        var customerEmail = User.FindFirst(ClaimTypes.Name)?.Value;
+        //// Get the email from the token 
+        //var customerEmail = User.FindFirst(ClaimTypes.Name)?.Value;
 
-        if (string.IsNullOrEmpty(customerEmail))
-        {
-            return BadRequest("User email is not available.");
-        }
+        //if (string.IsNullOrEmpty(customerEmail))
+        //{
+        //    return BadRequest("User email is not available.");
+        //}
 
         // Get the customer details using the email
-        var customer = await _userService.GetUserByEmail(customerEmail);
+        var customer = await _userService.GetUserById(customerUserId);
 
         if (customer == null)
         {
@@ -76,7 +76,7 @@ public class VendorFeedbackController : ControllerBase
 
 
     //Get all feedback for a vendor
-    [HttpGet("{vendorUserId}")]
+    [HttpGet("getallfeedbacks/{vendorUserId}")]
     public async Task<IActionResult> GetFeedbackByVendor(string vendorUserId)
     {
         var feedbacks = await _vendorfeedbackService.GetFeedbackByVendor(vendorUserId);
@@ -92,7 +92,7 @@ public class VendorFeedbackController : ControllerBase
 
 
     // Customer: Update full feedback
-    [HttpPut("{feedbackId}")]
+    [HttpPut("updatefeedback/{feedbackId}")]
     [Authorize(Roles = Roles.Customer)]
     public async Task<IActionResult> UpdateFeedback(string feedbackId, [FromBody] VendorFeedbackDto updatedFeedbackDto)
     {
@@ -128,7 +128,7 @@ public class VendorFeedbackController : ControllerBase
 
 
     // Customer: Delete feedback
-    [HttpDelete("{feedbackId}")]
+    [HttpDelete("removefeedback/{feedbackId}")]
     [Authorize(Roles = Roles.Customer)]
     public async Task<IActionResult> DeleteFeedback(string feedbackId)
     {

@@ -13,21 +13,21 @@ namespace Ecommerce.Controllers
     {
         private readonly IVendorRepository _vendorRepository;
         private readonly VendorService _vendorService;
-        private readonly IUserRepository _userRepository; // Inject IUserRepository
+        private readonly IUserRepository _userRepository;
 
         public VendorController(IVendorRepository vendorRepository, VendorService vendorService, IUserRepository userRepository)
         {
             _vendorRepository = vendorRepository;
             _vendorService = vendorService;
-            _userRepository = userRepository; // Initialize the user repository
+            _userRepository = userRepository; 
         }
 
         // Get all vendors
-        [HttpGet]
+        [HttpGet("allvendors")]
         public async Task<IActionResult> GetVendors()
         {
             var vendors = await _vendorService.GetAllVendors();
-            var vendorDtos = new List<VendorDto>();
+            var vendorUserDtos = new List<VendorUserDto>();
 
             foreach (var vendor in vendors)
             {
@@ -35,25 +35,28 @@ namespace Ecommerce.Controllers
                 var user = await _userRepository.GetUserById(vendor.VendorUserId);
 
                 // Combine vendor and user details into VendorDto
-                var vendorDto = new VendorDto
+                var vendorUserDto = new VendorUserDto
                 {
                     VendorUserId = vendor.VendorUserId,
                     Address = vendor.Address,
                     FullName = user?.FullName,
                     Email = user?.Email,
-                    PhoneNumber = vendor.PhoneNumber
+                    PhoneNumber = vendor.PhoneNumber,
+                    AverageRating = vendor.AverageRating,
                 };
 
-                vendorDtos.Add(vendorDto);
+
+
+                vendorUserDtos.Add(vendorUserDto);
             }
 
-            return Ok(vendorDtos);
+            return Ok(vendorUserDtos);
         }
 
 
 
         // Vendor : Create a new vendor profile
-        [HttpPost]
+        [HttpPost("createprofile")]
         [Authorize(Roles = Roles.Vendor)]
         public async Task<IActionResult> CreateVendorProfile([FromBody] VendorDto vendorDto)
         {
@@ -81,7 +84,7 @@ namespace Ecommerce.Controllers
 
         //Vendor : Update own profile
 
-        [HttpPut]
+        [HttpPut("updateprofile")]
         [Authorize(Roles = Roles.Vendor)]
         public async Task<IActionResult> UpdateVendorProfile([FromBody] VendorDto vendorDto)
         {
@@ -111,7 +114,7 @@ namespace Ecommerce.Controllers
 
 
         // Vendor : Delete vendor profile
-        [HttpDelete("{vendorUserId}")]
+        [HttpDelete("removeprofile/{vendorUserId}")]
         [Authorize(Roles = Roles.Vendor)]
         public async Task<IActionResult> DeleteVendorProfile(string vendorUserId)
         {

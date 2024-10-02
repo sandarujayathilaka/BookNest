@@ -297,7 +297,7 @@
   {
     "ContainingType": "Ecommerce.Controllers.VendorController",
     "Method": "GetVendors",
-    "RelativePath": "api/Vendor",
+    "RelativePath": "api/Vendor/allvendors",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -307,24 +307,8 @@
   {
     "ContainingType": "Ecommerce.Controllers.VendorController",
     "Method": "CreateVendorProfile",
-    "RelativePath": "api/Vendor",
+    "RelativePath": "api/Vendor/createprofile",
     "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "vendorDto",
-        "Type": "Ecommerce.Dto.VendorDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Ecommerce.Controllers.VendorController",
-    "Method": "UpdateVendorProfile",
-    "RelativePath": "api/Vendor",
-    "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -339,7 +323,7 @@
   {
     "ContainingType": "Ecommerce.Controllers.VendorController",
     "Method": "DeleteVendorProfile",
-    "RelativePath": "api/Vendor/{vendorUserId}",
+    "RelativePath": "api/Vendor/removeprofile/{vendorUserId}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -353,9 +337,25 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Ecommerce.Controllers.VendorController",
+    "Method": "UpdateVendorProfile",
+    "RelativePath": "api/Vendor/updateprofile",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "vendorDto",
+        "Type": "Ecommerce.Dto.VendorDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "VendorFeedbackController",
     "Method": "CreateFeedback",
-    "RelativePath": "api/VendorFeedback",
+    "RelativePath": "api/VendorFeedback/addfeedback",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -370,20 +370,15 @@
   },
   {
     "ContainingType": "VendorFeedbackController",
-    "Method": "UpdateFeedback",
-    "RelativePath": "api/VendorFeedback/{feedbackId}",
-    "HttpMethod": "PUT",
+    "Method": "GetFeedbackByVendor",
+    "RelativePath": "api/VendorFeedback/getallfeedbacks/{vendorUserId}",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "feedbackId",
+        "Name": "vendorUserId",
         "Type": "System.String",
-        "IsRequired": true
-      },
-      {
-        "Name": "updatedFeedbackDto",
-        "Type": "Ecommerce.Dto.VendorFeedbackDto",
         "IsRequired": true
       }
     ],
@@ -392,7 +387,7 @@
   {
     "ContainingType": "VendorFeedbackController",
     "Method": "DeleteFeedback",
-    "RelativePath": "api/VendorFeedback/{feedbackId}",
+    "RelativePath": "api/VendorFeedback/removefeedback/{feedbackId}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -407,15 +402,20 @@
   },
   {
     "ContainingType": "VendorFeedbackController",
-    "Method": "GetFeedbackByVendor",
-    "RelativePath": "api/VendorFeedback/{vendorUserId}",
-    "HttpMethod": "GET",
+    "Method": "UpdateFeedback",
+    "RelativePath": "api/VendorFeedback/updatefeedback/{feedbackId}",
+    "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "vendorUserId",
+        "Name": "feedbackId",
         "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "updatedFeedbackDto",
+        "Type": "Ecommerce.Dto.VendorFeedbackDto",
         "IsRequired": true
       }
     ],
