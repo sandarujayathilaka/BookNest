@@ -64,10 +64,12 @@ namespace Ecommerce.Controllers
             {
                 return Forbid("Your account is not approved.");
             }
-
+           
             // Generate JWT token
             var token = _jwtService.GenerateToken(user);
             return Ok(new { Token = token });
+
+            return BadRequest("An error occurred during login.");
         }
 
         // CSR: Approve user
@@ -92,6 +94,21 @@ namespace Ecommerce.Controllers
             }
 
             return Ok(user);
+        }
+
+        // Admin: Get all users
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var users = await _userRepository.GetAllUsersAsync();
+
+            if (users == null || !users.Any())
+            {
+                return NotFound("No users found.");
+            }
+
+            return Ok(users);
+
         }
 
         [HttpGet("unapproved")]
