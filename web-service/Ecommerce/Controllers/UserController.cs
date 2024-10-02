@@ -112,6 +112,13 @@ namespace Ecommerce.Controllers
             if (users == null || !users.Any())
             {
                 return NotFound("No users found.");
+            }
+
+            return Ok(users);
+
+        }
+
+
         [HttpGet("unapproved")]
         public async Task<ActionResult<List<ApplicationUser>>> GetUnapprovedUsers()
         {
@@ -122,6 +129,7 @@ namespace Ecommerce.Controllers
             }
             return Ok(users);
         }
+
 
         // GET: api/User/unactivated
         [HttpGet("unactivated")]
@@ -148,5 +156,21 @@ namespace Ecommerce.Controllers
 
             return NotFound(new { message = "User not found" });
         }
+
+
+
+        // Get user by ID
+        [HttpGet("getuser{userId}")]
+        public async Task<IActionResult> GetUserById(string userId)
+        {
+            var user = await _userService.GetUserById(userId);
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+            return Ok(user);
+        }
+
+
     }
 }

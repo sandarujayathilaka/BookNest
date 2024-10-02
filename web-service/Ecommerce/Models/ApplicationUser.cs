@@ -16,5 +16,8 @@ namespace Ecommerce.Models
         public Boolean IsApproved { get; set; } = false;
 
         public Boolean AccountActivated = false;
+
+
+
     }
 }

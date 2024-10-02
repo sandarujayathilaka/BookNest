@@ -72,9 +72,16 @@ builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddSignalR();
+<<<<<<< HEAD
 builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 builder.Services.AddScoped<StockService>();
 builder.Services.AddScoped<StockRepository>();
+=======
+builder.Services.AddScoped<IVendorRepository, VendorRepository>();
+builder.Services.AddScoped<VendorService>();
+builder.Services.AddScoped<IVendorFeedbackRepository, VendorFeedbackRepository>();
+builder.Services.AddScoped<VendorFeedbackService>();
+>>>>>>> e83b2aa9054b625acc50852a7bedbd7853f1aa82
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

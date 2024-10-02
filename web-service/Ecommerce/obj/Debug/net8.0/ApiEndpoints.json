@@ -469,6 +469,7 @@
   {
     "ContainingType": "Ecommerce.Controllers.UserController",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "Method": "GetAllUsers",
     "RelativePath": "api/User/all",
     "HttpMethod": "GET",
@@ -481,6 +482,13 @@
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
+=======
+    "Method": "GetUserById",
+    "RelativePath": "api/User/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+>>>>>>> e83b2aa9054b625acc50852a7bedbd7853f1aa82
     "Parameters": [
       {
         "Name": "userId",
@@ -488,7 +496,10 @@
         "IsRequired": true
       }
     ],
+<<<<<<< HEAD
 >>>>>>> 6cd6ee367ac9a596dd5b02d7d987be27fb903292
+=======
+>>>>>>> e83b2aa9054b625acc50852a7bedbd7853f1aa82
     "ReturnTypes": []
   },
   {
@@ -583,5 +594,132 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "Ecommerce.Controllers.VendorController",
+    "Method": "GetVendors",
+    "RelativePath": "api/Vendor/allvendors",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecommerce.Controllers.VendorController",
+    "Method": "CreateVendorProfile",
+    "RelativePath": "api/Vendor/createprofile",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "vendorDto",
+        "Type": "Ecommerce.Dto.VendorDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecommerce.Controllers.VendorController",
+    "Method": "DeleteVendorProfile",
+    "RelativePath": "api/Vendor/removeprofile/{vendorUserId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "vendorUserId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecommerce.Controllers.VendorController",
+    "Method": "UpdateVendorProfile",
+    "RelativePath": "api/Vendor/updateprofile",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "vendorDto",
+        "Type": "Ecommerce.Dto.VendorDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VendorFeedbackController",
+    "Method": "CreateFeedback",
+    "RelativePath": "api/VendorFeedback/addfeedback",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "vendorFeedbackDto",
+        "Type": "Ecommerce.Dto.VendorFeedbackDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VendorFeedbackController",
+    "Method": "GetFeedbackByVendor",
+    "RelativePath": "api/VendorFeedback/getallfeedbacks/{vendorUserId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "vendorUserId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VendorFeedbackController",
+    "Method": "DeleteFeedback",
+    "RelativePath": "api/VendorFeedback/removefeedback/{feedbackId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "feedbackId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VendorFeedbackController",
+    "Method": "UpdateFeedback",
+    "RelativePath": "api/VendorFeedback/updatefeedback/{feedbackId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "feedbackId",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "updatedFeedbackDto",
+        "Type": "Ecommerce.Dto.VendorFeedbackDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]
