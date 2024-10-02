@@ -1,3 +1,12 @@
+# Android specific
+.gradle/
+build/
+**/build/
+local.properties
+captures/
+.externalNativeBuild/
+.cxx/
+
 # Ignore build output directories
 bin/
 obj/
@@ -38,4 +47,10 @@ secrets.json
 
 # Others to ignore
 *.DS_Store
-*.idea/
+.idea/
+*.iml
+*.bak
+*.swp
+*.tmp
+*.diff
+Thumbs.db
