@@ -6370,6 +6370,7 @@
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 8.0.8",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 8.0.8",
       "Microsoft.AspNetCore.SignalR >= 1.1.0",
+      "Microsoft.EntityFrameworkCore >= 8.0.8",
       "Microsoft.IdentityModel.Tokens >= 8.0.2",
       "MongoDB.Driver >= 2.29.0",
       "Nanoid >= 3.1.0",
@@ -6378,46 +6379,12 @@
     ]
   },
   "packageFolders": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "C:\\Users\\94764\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
-=======
-    "C:\\Users\\isuru\\.nuget\\packages\\": {}
->>>>>>> 6cd6ee367ac9a596dd5b02d7d987be27fb903292
-=======
     "C:\\Users\\ASUS\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
->>>>>>> e83b2aa9054b625acc50852a7bedbd7853f1aa82
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "projectUniqueName": "C:\\Users\\94764\\OneDrive\\Desktop\\EAD aaign Final\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj",
-      "projectName": "Ecommerce",
-      "projectPath": "C:\\Users\\94764\\OneDrive\\Desktop\\EAD aaign Final\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj",
-      "packagesPath": "C:\\Users\\94764\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\94764\\OneDrive\\Desktop\\EAD aaign Final\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\obj\\",
-=======
-      "projectUniqueName": "E:\\ead\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj",
-      "projectName": "Ecommerce",
-      "projectPath": "E:\\ead\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj",
-      "packagesPath": "C:\\Users\\isuru\\.nuget\\packages\\",
-      "outputPath": "E:\\ead\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\obj\\",
->>>>>>> 6cd6ee367ac9a596dd5b02d7d987be27fb903292
-      "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
-      "configFilePaths": [
-<<<<<<< HEAD
-        "C:\\Users\\94764\\AppData\\Roaming\\NuGet\\NuGet.Config",
-=======
-        "C:\\Users\\isuru\\AppData\\Roaming\\NuGet\\NuGet.Config",
->>>>>>> 6cd6ee367ac9a596dd5b02d7d987be27fb903292
-=======
       "projectUniqueName": "F:\\Y4 S1\\EAD\\Assignment\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj",
       "projectName": "Ecommerce",
       "projectPath": "F:\\Y4 S1\\EAD\\Assignment\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj",
@@ -6430,7 +6397,6 @@
       "configFilePaths": [
         "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
->>>>>>> e83b2aa9054b625acc50852a7bedbd7853f1aa82
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -6481,6 +6447,10 @@
           "Microsoft.AspNetCore.SignalR": {
             "target": "Package",
             "version": "[1.1.0, )"
+          },
+          "Microsoft.EntityFrameworkCore": {
+            "target": "Package",
+            "version": "[8.0.8, )"
           },
           "Microsoft.IdentityModel.Tokens": {
             "target": "Package",

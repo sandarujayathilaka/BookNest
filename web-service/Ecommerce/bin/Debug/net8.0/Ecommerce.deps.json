@@ -13,6 +13,7 @@
           "Microsoft.AspNetCore.Authentication.JwtBearer": "8.0.8",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "8.0.8",
           "Microsoft.AspNetCore.SignalR": "1.1.0",
+          "Microsoft.EntityFrameworkCore": "8.0.8",
           "Microsoft.IdentityModel.Tokens": "8.0.2",
           "MongoDB.Driver": "2.29.0",
           "Nanoid": "3.1.0",

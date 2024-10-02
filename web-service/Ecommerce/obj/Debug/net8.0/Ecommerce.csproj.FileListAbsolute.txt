@@ -266,9 +266,7 @@ E:\ead\EAD-Ecommerce-Project\web-service\Ecommerce\obj\Debug\net8.0\Ecommerce.pd
 E:\ead\EAD-Ecommerce-Project\web-service\Ecommerce\obj\Debug\net8.0\Ecommerce.genruntimeconfig.cache
 E:\ead\EAD-Ecommerce-Project\web-service\Ecommerce\obj\Debug\net8.0\ref\Ecommerce.dll
 E:\ead\EAD-Ecommerce-Project\web-service\Ecommerce\bin\Debug\net8.0\CloudinaryDotNet.dll
-<<<<<<< HEAD
 >>>>>>> 6cd6ee367ac9a596dd5b02d7d987be27fb903292
-=======
 F:\Y4 S1\EAD\Assignment\EAD-Ecommerce-Project\web-service\Ecommerce\bin\Debug\net8.0\appsettings.Development.json
 F:\Y4 S1\EAD\Assignment\EAD-Ecommerce-Project\web-service\Ecommerce\bin\Debug\net8.0\appsettings.json
 F:\Y4 S1\EAD\Assignment\EAD-Ecommerce-Project\web-service\Ecommerce\bin\Debug\net8.0\Ecommerce.exe

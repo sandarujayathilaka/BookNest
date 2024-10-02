@@ -72,8 +72,8 @@ namespace Ecommerce.Controllers
             }
            
             // Generate JWT token
-            var token = _jwtService.GenerateToken(user);
-            return Ok(new { Token = token });
+            //var token = _jwtService.GenerateToken(user);
+            //return Ok(new { Token = token });
 
             return BadRequest("An error occurred during login.");
         }
