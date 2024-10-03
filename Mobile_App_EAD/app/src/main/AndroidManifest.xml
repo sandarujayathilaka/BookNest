@@ -25,6 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ProductListActivity" />
+        <activity android:name=".ProfileActivity" />
 
         <activity
             android:name=".RegisterActivity"

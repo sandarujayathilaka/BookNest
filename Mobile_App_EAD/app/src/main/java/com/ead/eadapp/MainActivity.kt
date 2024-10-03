@@ -9,7 +9,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         // Start RegisterActivity directly
-        val intent = Intent(this, ProductListActivity::class.java)
+        val intent = Intent(this, ProfileActivity::class.java)
         startActivity(intent)
 
         // Finish MainActivity so it can't be returned to

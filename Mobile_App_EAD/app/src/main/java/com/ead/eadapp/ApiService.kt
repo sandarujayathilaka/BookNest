@@ -7,6 +7,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Path
 
 // Define the API endpoints
 interface ApiService {
@@ -15,6 +17,12 @@ interface ApiService {
 
     @GET("api/Product")  // Adjust the URL to your actual ASP.NET API route for fetching products
     fun fetchProducts(): Call<List<Product>>
+
+    @GET("api/User/{email}")
+    fun fetchCustomerDetails(@Path("email") email: String): Call<Customer>
+
+    @PUT("api/User/{email}")
+    fun updateCustomerDetails(@Path("email") email: String, @Body customer: Customer): Call<Void>
 
 }
 
