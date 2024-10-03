@@ -3,7 +3,7 @@ package com.ead.eadapp
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,7 +20,7 @@ class ProductListActivity : ComponentActivity() {
 
         // Initialize RecyclerView
         recyclerView = findViewById(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = GridLayoutManager(this, 2)
         productAdapter = ProductAdapter(emptyList()) // Initialize with an empty list
         recyclerView.adapter = productAdapter
 
