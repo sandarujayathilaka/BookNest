@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "r94GNRyPrXg=",
+  "dgSpecHash": "eJy/CT/QZ8U=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Asus\\Desktop\\EAD Project\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj",
+  "projectFilePath": "C:\\Users\\Asus\\Desktop\\EAD_Project\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Asus\\.nuget\\packages\\awssdk.core\\3.7.100.14\\awssdk.core.3.7.100.14.nupkg.sha512",
     "C:\\Users\\Asus\\.nuget\\packages\\awssdk.securitytoken\\3.7.100.14\\awssdk.securitytoken.3.7.100.14.nupkg.sha512",

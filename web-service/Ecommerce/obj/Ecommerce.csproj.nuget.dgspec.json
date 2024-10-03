@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Asus\\Desktop\\EAD Project\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj": {}
+    "C:\\Users\\Asus\\Desktop\\EAD_Project\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Asus\\Desktop\\EAD Project\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj": {
+    "C:\\Users\\Asus\\Desktop\\EAD_Project\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Asus\\Desktop\\EAD Project\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj",
+        "projectUniqueName": "C:\\Users\\Asus\\Desktop\\EAD_Project\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj",
         "projectName": "Ecommerce",
-        "projectPath": "C:\\Users\\Asus\\Desktop\\EAD Project\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj",
+        "projectPath": "C:\\Users\\Asus\\Desktop\\EAD_Project\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj",
         "packagesPath": "C:\\Users\\Asus\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Asus\\Desktop\\EAD Project\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\obj\\",
+        "outputPath": "C:\\Users\\Asus\\Desktop\\EAD_Project\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Asus\\AppData\\Roaming\\NuGet\\NuGet.Config",
