@@ -8,7 +8,7 @@ const NotFound = () => {
 
   // Redirect back to the home or any other page
   const handleGoBack = () => {
-    navigate("/");
+    navigate("/dashboard");
   };
 
   return (

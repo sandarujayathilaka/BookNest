@@ -4,7 +4,7 @@ using MongoDB.Driver;
 
 namespace Ecommerce.Repositories
 {
-    public class UserRepository: IUserRepository
+    public class UserRepository : IUserRepository
     {
         private readonly IMongoCollection<ApplicationUser> _users;
 
@@ -20,13 +20,18 @@ namespace Ecommerce.Repositories
 
         public async Task CreateUser(ApplicationUser user)
         {
+            user.CreatedAt = DateTime.Now;
+            user.UpdatedAt = DateTime.Now;
+
             await _users.InsertOneAsync(user);
         }
 
         public async Task UpdateUserApprovalStatus(string userId, bool isApproved)
         {
             var filter = Builders<ApplicationUser>.Filter.Eq(u => u.UserId, userId);
-            var update = Builders<ApplicationUser>.Update.Set(u => u.IsApproved, isApproved);
+            var update = Builders<ApplicationUser>.Update.Set(u => u.IsApproved, isApproved).Set(u => u.UpdatedAt, DateTime.Now); ;
+
+
             await _users.UpdateOneAsync(filter, update);
         }
 

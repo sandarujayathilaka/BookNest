@@ -1,12 +1,12 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { Form, Button, Container, Spinner } from "react-bootstrap";
 import { api } from "../../services/api.service";
 import { FaTrashAlt } from "react-icons/fa"; // Import trash icon for delete action
-import { faker } from "@faker-js/faker"; // Import Faker
 import { toast } from "react-toastify";
+import { useNavigate, useParams } from "react-router-dom"; // Import useParams
 
 // Validation schema using Yup
 const validationSchema = Yup.object().shape({
@@ -16,7 +16,7 @@ const validationSchema = Yup.object().shape({
   price: Yup.number()
     .required("Book price is required")
     .positive("Price must be a positive number")
-    .min(0.01, "Price must be at least Rs. 0.01") // Optional: Ensure minimum price
+    .min(0.01, "Price must be at least Rs. 0.01")
     .typeError("Book price is required"),
   stockQuantity: Yup.number()
     .required("Stock quantity is required")
@@ -30,15 +30,13 @@ const validationSchema = Yup.object().shape({
   }),
 });
 
-const AddProduct = () => {
-  const [imageData, setImageData] = useState({
-    publicId: "",
-    url: "",
-  });
-  const [isUploading, setIsUploading] = useState(false); // Track upload status
-  const [isDeleting, setIsDeleting] = useState(false); // Track delete status
-  const [isSubmitting, setIsSubmitting] = useState(false); // Track submission status
-  const fileInputRef = useRef(null); // Reference to file input for clearing
+const EditProduct = () => {
+  const { id } = useParams(); // Get the product ID from the URL parameters
+  const [imageData, setImageData] = useState({ publicId: "", url: "" });
+  const [isUploading, setIsUploading] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const fileInputRef = useRef(null);
 
   const {
     register,
@@ -46,34 +44,70 @@ const AddProduct = () => {
     setValue,
     setError,
     clearErrors,
-    reset, // Import reset function
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(validationSchema),
   });
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Fetch product details when the component mounts
+    const fetchProduct = async () => {
+      try {
+        const response = await api.get(`/product/${id}`); // Adjust the endpoint as needed
+        const product = response.data;
+
+        // Set the fetched product data into the form
+        reset({
+          title: product.title,
+          author: product.author,
+          ISBN: product.isbn,
+          price: product.price,
+          stockQuantity: product.stockQuantity,
+          category: product.category,
+          description: product.description,
+          image: {
+            publicId: product.image.publicId,
+            url: product.image.url,
+          },
+        });
+        setImageData(product.image); // Set image data
+      } catch (error) {
+        console.error("Error fetching product:", error);
+        toast.error("Error fetching product data");
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
+
   const onSubmit = async (data) => {
-    setIsSubmitting(true); // Start loading
+    console.log("Product updated", data);
+    setIsSubmitting(true);
 
     try {
-      await api.post("/product", {
+      await api.put(`/product/${id}`, {
         ...data,
       });
 
-      toast.success("Product added successfully");
+      toast.success("Product updated successfully");
 
       // Reset the form fields after successful submission
       reset();
-      setImageData({ publicId: "", url: "" }); // Clear image data as well
+      setImageData({ publicId: "", url: "" });
 
       if (fileInputRef.current) {
-        fileInputRef.current.value = ""; // Clear file input
+        fileInputRef.current.value = "";
       }
+
+      navigate("/products/my");
     } catch (error) {
-      console.error("Error adding product:", error);
-      toast.error("Error adding product");
+      console.error("Error updating product:", error);
+      toast.error("Error updating product");
     } finally {
-      setIsSubmitting(false); // End loading
+      setIsSubmitting(false);
     }
   };
 
@@ -83,7 +117,7 @@ const AddProduct = () => {
       const formData = new FormData();
       formData.append("file", file);
 
-      setIsUploading(true); // Start loading
+      setIsUploading(true);
       try {
         const response = await api.post("/image/upload", formData, {
           headers: { "Content-Type": "multipart/form-data" },
@@ -95,7 +129,7 @@ const AddProduct = () => {
             publicId: response.data.publicId,
             url: response.data.url,
           });
-          clearErrors("image"); // Clear image-related errors when successfully uploaded
+          clearErrors("image");
           console.log("Image uploaded successfully");
         } else {
           toast.error("Error uploading image");
@@ -105,13 +139,13 @@ const AddProduct = () => {
         toast.error("Error uploading image");
         console.error("Error uploading image:", error);
       } finally {
-        setIsUploading(false); // End loading
+        setIsUploading(false);
       }
     }
   };
 
   const handleDeleteImage = async (publicId) => {
-    setIsDeleting(true); // Start delete loading
+    setIsDeleting(true);
     try {
       const response = await api.delete("/image/delete/" + publicId);
 
@@ -119,7 +153,7 @@ const AddProduct = () => {
         setImageData({ publicId: "", url: "" });
         setValue("image", { publicId: "", url: "" });
         if (fileInputRef.current) {
-          fileInputRef.current.value = ""; // Clear file input
+          fileInputRef.current.value = "";
         }
         console.log("Image deleted successfully");
       } else {
@@ -128,54 +162,12 @@ const AddProduct = () => {
     } catch (error) {
       console.error("Error deleting image:", error);
     } finally {
-      setIsDeleting(false); // End delete loading
+      setIsDeleting(false);
     }
-  };
-
-  const generateBookTitle = () => {
-    const themes = [
-      "The Secrets of",
-      "A Journey Through",
-      "The Chronicles of",
-      "Tales of",
-      "The Adventures of",
-      "Whispers of",
-      "Lost in",
-      "Reflections on",
-      "The Last",
-      "Beyond the",
-    ];
-
-    const noun = faker.lorem.words(2);
-    const randomTheme = faker.helpers.arrayElement(themes);
-
-    return `${randomTheme} ${noun}`;
-  };
-
-  // Function to generate fake data
-  const fillWithFakeData = () => {
-    setValue("title", generateBookTitle());
-    setValue("author", faker.person.fullName());
-    setValue("ISBN", faker.commerce.isbn(10));
-    setValue("price", faker.commerce.price(10, 50, 2));
-    setValue("stockQuantity", faker.number.int({ min: 1, max: 100 }));
-    setValue(
-      "category",
-      faker.helpers.arrayElement([
-        "fiction",
-        "non-fiction",
-        "mystery",
-        "fantasy",
-        "biography",
-      ])
-    );
-    setValue("description", faker.lorem.paragraph());
-    clearErrors(); // Clear any existing form errors
   };
 
   const handleReset = () => {
     reset(); // Reset form fields
-    setImageData({ publicId: "", url: "" }); // Clear image data
     if (fileInputRef.current) {
       fileInputRef.current.value = ""; // Clear file input
     }
@@ -183,12 +175,7 @@ const AddProduct = () => {
 
   return (
     <Container className="my-4">
-      <div className="d-flex justify-content-between align-items-center mb-2">
-        <h2>Add Product</h2>
-        <Button variant="secondary" className="mb-3" onClick={fillWithFakeData}>
-          Fill with Fake Data
-        </Button>
-      </div>
+      <h2>Edit Product</h2>
       <Form onSubmit={handleSubmit(onSubmit)}>
         {/* Book Title Field */}
         <Form.Group controlId="formBookTitle" className="mb-3">
@@ -289,8 +276,8 @@ const AddProduct = () => {
             accept="image/*"
             onChange={handleImageUpload}
             isInvalid={!!errors.image}
-            ref={fileInputRef} // Attach file input reference
-            disabled={isUploading} // Disable during upload
+            ref={fileInputRef}
+            disabled={isUploading}
           />
           <Form.Control.Feedback type="invalid">
             {errors.image &&
@@ -311,7 +298,7 @@ const AddProduct = () => {
                 <img
                   src={imageData.url}
                   alt="Uploaded"
-                  className="img-fluid rounded" // Bootstrap class for responsive image and rounded corners
+                  className="img-fluid rounded"
                   style={{
                     width: "150px",
                     height: "150px",
@@ -364,10 +351,10 @@ const AddProduct = () => {
           {isSubmitting ? (
             <>
               <Spinner animation="border" size="sm" />
-              <span className="ms-2">Adding...</span>
+              <span className="ms-2">Updating...</span>
             </>
           ) : (
-            "Add"
+            "Update"
           )}
         </Button>
 
@@ -385,4 +372,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default EditProduct;

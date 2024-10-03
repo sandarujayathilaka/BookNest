@@ -1,13 +1,9 @@
-﻿using Ecommerce.DataAccess;
+﻿using Ecommerce.Dto;
 using Ecommerce.Models;
 using Ecommerce.Repositories;
+using Ecommerce.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using Ecommerce.Services;
-using BCrypt.Net;
-using Microsoft.AspNetCore.Identity.Data;
-using Ecommerce.Dto;
 
 namespace Ecommerce.Controllers
 {
@@ -19,7 +15,7 @@ namespace Ecommerce.Controllers
         private readonly UserService _userService;
         private readonly JwtService _jwtService;
 
-        public UserController(IUserRepository userRepository, JwtService jwtService,UserService userService)
+        public UserController(IUserRepository userRepository, JwtService jwtService, UserService userService)
         {
             _userRepository = userRepository;
             _userService = userService;
@@ -62,12 +58,26 @@ namespace Ecommerce.Controllers
             // Only allow login if the user is approved
             if (!user.IsApproved)
             {
-                return Forbid("Your account is not approved.");
+                return BadRequest("Your account is not approved.");
             }
 
             // Generate JWT token
             var token = _jwtService.GenerateToken(user);
-            return Ok(new { Token = token });
+
+            // Return user details without PasswordHash, similar to how you'd omit fields in JS
+            var userResponse = new
+            {
+                user.Id,
+                user.UserId,
+                user.FullName,
+                user.Email,
+                user.Role,
+                user.IsApproved,
+                user.CreatedAt,
+                user.UpdatedAt
+            };
+
+            return Ok(new { Token = token, User = userResponse });
         }
 
         // CSR: Approve user

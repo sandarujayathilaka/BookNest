@@ -130,7 +130,7 @@
     "Parameters": [
       {
         "Name": "productDto",
-        "Type": "Ecommerce.Dto.ProductDto",
+        "Type": "Ecommerce.Dto.CreateProductDto",
         "IsRequired": true
       }
     ],
@@ -138,20 +138,15 @@
   },
   {
     "ContainingType": "EcommercePlatform.Controllers.ProductController",
-    "Method": "DeleteProductById",
-    "RelativePath": "api/Product/{pId}",
-    "HttpMethod": "DELETE",
+    "Method": "GetProductById",
+    "RelativePath": "api/Product/{productId}",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "productId",
         "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "pId",
-        "Type": "",
         "IsRequired": true
       }
     ],
@@ -172,7 +167,7 @@
       },
       {
         "Name": "productDto",
-        "Type": "Ecommerce.Dto.ProductDto",
+        "Type": "Ecommerce.Dto.CreateProductDto",
         "IsRequired": true
       }
     ],
@@ -192,6 +187,16 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EcommercePlatform.Controllers.ProductController",
+    "Method": "GetVendorProducts",
+    "RelativePath": "api/Product/vendor/products",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {

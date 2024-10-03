@@ -1,7 +1,6 @@
 ﻿using Ecommerce.Models;
 using Ecommerce.Repositories;
 using MongoDB.Bson;
-using System.Threading.Tasks;
 
 namespace Ecommerce.Services
 {
@@ -17,7 +16,7 @@ namespace Ecommerce.Services
         public async Task RegisterUser(ApplicationUser user)
         {
             user.Id = ObjectId.GenerateNewId().ToString();
-            
+
             user.UserId = GenerateUserId(user.Role);
 
             await _userRepository.CreateUser(user);
@@ -31,7 +30,7 @@ namespace Ecommerce.Services
                 "CSR" => "CSR",
                 "Vendor" => "VEN",
                 "Admin" => "ADM",
-                _ => "GEN" 
+                _ => "GEN"
             };
 
             var randomLetters = GenerateRandomLetters(2);

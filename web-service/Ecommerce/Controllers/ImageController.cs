@@ -49,7 +49,7 @@ namespace Ecommerce.Controllers
 
                 if (uploadResult.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    return Ok(new { publicId = uploadResult.PublicId, url = uploadResult.SecureUri });
+                    return Ok(new { publicId = uploadResult.PublicId, url = uploadResult.SecureUrl });
                 }
                 else
                 {

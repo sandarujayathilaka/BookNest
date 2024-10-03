@@ -1,12 +1,28 @@
 import React from "react";
 import { Navbar, Button, Dropdown, Nav, Image } from "react-bootstrap";
 import { FaBell } from "react-icons/fa"; // Importing notification bell icon
+import useUserStore from "../../stores/auth";
+import { api } from "../../services/api.service";
+import { useNavigate } from "react-router-dom";
 
 const TopNavbar = ({ handleShow }) => {
-  // Replace with your user's data
-  const user = {
-    name: "John Doe",
-    avatarUrl: "https://via.placeholder.com/40", // Sample avatar URL
+  const { user, setUser, setToken } = useUserStore();
+  console.log(user);
+  // // Replace with your user's data
+  // const user = {
+  //   name: "John Doe",
+  //   avatarUrl: "https://via.placeholder.com/40", // Sample avatar URL
+  // };
+
+  // Fallback image URL (placeholder image)
+  const defaultAvatarUrl = "https://github.com/shadcn.png";
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    setToken(null);
+    setUser(null);
+    navigate("/signin");
   };
 
   return (
@@ -31,21 +47,23 @@ const TopNavbar = ({ handleShow }) => {
             className="d-flex border-0 align-items-center p-0"
           >
             <Image
-              src={user.avatarUrl}
+              src={user.avatarUrl || defaultAvatarUrl}
               roundedCircle
               width="40"
               height="40"
               alt="User Avatar"
               className="me-2"
             />
-            <span className="text-dark d-none d-md-block">{user.name}</span>
+            <span className="text-dark d-none d-md-block">
+              {user?.fullName}
+            </span>
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
             <Dropdown.Item href="/profile">Profile</Dropdown.Item>
             <Dropdown.Item href="/settings">Settings</Dropdown.Item>
             <Dropdown.Divider />
-            <Dropdown.Item href="/logout">Sign out</Dropdown.Item>
+            <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </div>

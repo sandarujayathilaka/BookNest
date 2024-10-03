@@ -1,7 +1,6 @@
 // App.js
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import AdminLayout from "./layouts/AdminLayout";
 import ProductsOverview from "./pages/Products/ProductsOverview";
 import ScrollToTop from "./components/general/ScrollToTop";
 import Signin from "./pages/Login/Signin";
@@ -10,28 +9,62 @@ import NotFound from "./pages/General/NotFound";
 import AddProduct from "./pages/Products/AddProduct";
 import AccountApproval from "./pages/Csr/AccountApproval";
 import Orders from "./pages/Csr/Orders";
-
-
+import ProtectedRoute from "./middleware/ProtectedRoute";
+import { Roles } from "./constants/roles";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import MyProducts from "./pages/Products/MyProducts";
+import EditProduct from "./pages/Products/EditProduct";
 
 const App = () => {
   return (
     <BrowserRouter>
       <ScrollToTop>
+        <ToastContainer />
         <Routes>
           {/* Public Routes */}
-          <Route path="/login" element={<Signin />} />
+          <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/" element={<Signin />} />
 
-          {/* Admin Layout with Nested Routes */}
-          <Route element={<AdminLayout />}>
-            <Route path="/" element={<ProductsOverview />} />
-            <Route path="/products/new" element={<AddProduct />} />
+          {/* common routes - for all roles */}
+          <Route
+            element={
+              <ProtectedRoute
+                roles={[Roles.ADMIN, Roles.CSR, Roles.VENDOR]}
+                redirectPath="/404"
+              />
+            }
+          >
+            <Route path="/dashboard" element={<ProductsOverview />} />
+          </Route>
+
+          {/* common routes - for admin and csr roles */}
+          <Route
+            element={
+              <ProtectedRoute
+                roles={[Roles.ADMIN, Roles.CSR]}
+                redirectPath="/404"
+              />
+            }
+          >
             <Route path="/accapprove" element={<AccountApproval />} />
-            <Route path="/orders" element={<Orders />} />
+          </Route>
+
+          {/* vendor routes */}
+          <Route
+            element={
+              <ProtectedRoute roles={[Roles.VENDOR]} redirectPath="/404" />
+            }
+          >
+            <Route path="/products/new" element={<AddProduct />} />
+            <Route path="/products/edit/:id" element={<EditProduct />} />
+            <Route path="/products/my" element={<MyProducts />} />
           </Route>
 
           {/* 404 Not Found Page */}
           <Route path="*" element={<NotFound />} />
+          <Route path="/404" element={<NotFound />} />
         </Routes>
       </ScrollToTop>
     </BrowserRouter>
