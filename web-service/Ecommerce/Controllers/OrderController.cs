@@ -128,5 +128,21 @@ namespace EcommercePlatform.Controllers
 
 
 
+        [HttpGet("GetVendorInfo/{vendorId}")]
+        public async Task<IActionResult> GetVendorInfo(string vendorId)
+        {
+            try
+            {
+                Console.WriteLine($"controller {vendorId}");
+                var vendorInfo = await _orderService.GetVendorInfoFromOrders(vendorId);
+                Console.WriteLine($"controller res {vendorInfo}");
+                return Ok(vendorInfo);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
     }
 }

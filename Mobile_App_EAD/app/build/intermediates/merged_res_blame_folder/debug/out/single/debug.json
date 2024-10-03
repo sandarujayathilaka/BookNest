@@ -1,0 +1,86 @@
+[
+    {
+        "merged": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-merged_res-46:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-main-48:\\mipmap-xxxhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-merged_res-46:\\xml_backup_rules.xml.flat",
+        "source": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-main-48:\\xml\\backup_rules.xml"
+    },
+    {
+        "merged": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-merged_res-46:\\layout_activity_register.xml.flat",
+        "source": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-main-48:\\layout\\activity_register.xml"
+    },
+    {
+        "merged": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-merged_res-46:\\mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-main-48:\\mipmap-xhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-merged_res-46:\\xml_network_security_config.xml.flat",
+        "source": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-main-48:\\xml\\network_security_config.xml"
+    },
+    {
+        "merged": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-merged_res-46:\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-main-48:\\mipmap-xxhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-merged_res-46:\\mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-main-48:\\mipmap-xxhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-merged_res-46:\\drawable_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-main-48:\\drawable\\ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-merged_res-46:\\mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-main-48:\\mipmap-mdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-merged_res-46:\\mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-main-48:\\mipmap-mdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-merged_res-46:\\mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-main-48:\\mipmap-hdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-merged_res-46:\\layout_item_product.xml.flat",
+        "source": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-main-48:\\layout\\item_product.xml"
+    },
+    {
+        "merged": "com.ead.eadapp-merged_res-46:/layout_activity_profile.xml.flat",
+        "source": "com.ead.eadapp-main-48:/layout/activity_profile.xml"
+    },
+    {
+        "merged": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-merged_res-46:\\mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-main-48:\\mipmap-hdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-merged_res-46:\\drawable_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-main-48:\\drawable\\ic_launcher_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-merged_res-46:\\mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-main-48:\\mipmap-xhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-merged_res-46:\\xml_data_extraction_rules.xml.flat",
+        "source": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-main-48:\\xml\\data_extraction_rules.xml"
+    },
+    {
+        "merged": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-merged_res-46:\\layout_activity_product_list.xml.flat",
+        "source": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-main-48:\\layout\\activity_product_list.xml"
+    },
+    {
+        "merged": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-merged_res-46:\\mipmap-anydpi_ic_launcher.xml.flat",
+        "source": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-main-48:\\mipmap-anydpi\\ic_launcher.xml"
+    },
+    {
+        "merged": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-merged_res-46:\\mipmap-anydpi_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-main-48:\\mipmap-anydpi\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-merged_res-46:\\mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\94764\\.gradle\\daemon\\8.0\\com.ead.eadapp-main-48:\\mipmap-xxxhdpi\\ic_launcher_round.webp"
+    }
+]

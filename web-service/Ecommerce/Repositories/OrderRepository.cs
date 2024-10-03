@@ -118,6 +118,12 @@ namespace Ecommerce.Repositories
 
             return result.ModifiedCount > 0;
         }
+        public async Task<List<Order>> GetVendorOrdersWithDetails(string vendorId)
+        {
+            var filter = Builders<Order>.Filter.ElemMatch(order => order.Products, product => product.VendorID == vendorId);
+            var result = await _orders.Find(filter).ToListAsync();
+            return result;
+        }
 
     }
 }

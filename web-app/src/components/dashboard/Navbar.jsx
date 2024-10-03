@@ -3,6 +3,7 @@ import { Navbar, Button, Dropdown, Nav, Image,Modal,Badge   } from "react-bootst
 import { FaBell } from "react-icons/fa"; // Importing notification bell icon
 import axios from "axios"; // For API calls
 import * as signalR from "@microsoft/signalr";
+import { auto } from "@popperjs/core";
 const TopNavbar = ({ handleShow }) => {
   // Replace with your user's data
   const user = {
@@ -118,57 +119,60 @@ const markAsRead = async (index) => {
   return (
     <>
     <Navbar bg="light" expand="lg" className="mb-4 px-3">
-      {/* Sidebar toggle button for mobile screens */}
       <Button variant="primary" className="d-lg-none me-2" onClick={handleShow}>
         ☰
       </Button>
       <Navbar.Brand href="#">Dashboard</Navbar.Brand>
 
-      {/* Use a flexbox container for right-side content */}
       <div className="ms-auto d-flex align-items-center">
-        {/* Notification icon */}
-        <Nav.Item className="me-3 position-relative">
-          <Dropdown>
-            <Dropdown.Toggle variant="none" className="d-flex align-items-center" id="dropdown-basic">
-              <FaBell size={20} className="text-dark" />
-              {unreadCount > 0 && (
-                <Badge pill bg="danger" className="position-absolute top-0 start-100 translate-middle">
-                  {unreadCount}
-                </Badge>
-              )}
-            </Dropdown.Toggle>
+      <Nav.Item className="me-3 position-relative">
+  <Dropdown 
+    align="end" 
+    drop="down" 
+    container="body"  // Ensures dropdown is not restricted by parent elements
+    popperConfig={{ modifiers: [{ name: 'computeStyles', options: { adaptive: true } }] }}
+  >
+    <Dropdown.Toggle variant="none" className="d-flex align-items-center" id="dropdown-basic">
+      <FaBell size={20} className="text-dark" />
+      {unreadCount > 0 && (
+        <Badge pill bg="danger" className="position-absolute top-0 start-100 translate-middle">
+          {unreadCount}
+        </Badge>
+      )}
+    </Dropdown.Toggle>
 
-            <Dropdown.Menu align="end" style={{ width: '500px', minWidth: '200px' }}>
-              {notifications.length === 0 ? (
-                <Dropdown.Item disabled>No notifications received yet.</Dropdown.Item>
-              ) : (
-                notifications.map((notification, index) => (
-                  <React.Fragment key={index}>
-                  <Dropdown.Item
-                    key={index}
-                    onClick={() => markAsRead(index)}
-                    style={{
-                      backgroundColor: notification.isRead ? "#f0f0f0" : "#d1e7dd",
-                      cursor: "pointer",
-                    }}
-                  >
-                    <p style={{ margin: 0 }}>Message: {notification.message}</p>
-                    <p style={{ margin: 0 }}>{new Date(notification.timestamp).toLocaleString()}</p>
-                  </Dropdown.Item>
-                  {index < notifications.length - 1 && <div className="dropdown-divider"></div>}
-                  </React.Fragment>
-                ))
-              )}
-            </Dropdown.Menu>
-          </Dropdown>
-        </Nav.Item>
+    <Dropdown.Menu 
+      className="dropdown-menu-end"
+     // Enable both vertical and horizontal scrolling
+    >
+      {notifications.length === 0 ? (
+        <Dropdown.Item disabled>No notifications received yet.</Dropdown.Item>
+      ) : (
+        notifications.map((notification, index) => (
+          <React.Fragment key={index}>
+            <Dropdown.Item
+              onClick={() => markAsRead(index)}
+              style={{
+                backgroundColor: notification.isRead ? "white" : "#d1e7dd",
+                cursor: "pointer",
+              }}
+            >
+              <p style={{ margin: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{notification.message}</p>
+              <p style={{ margin: 0, fontSize: "small" }}>{new Date(notification.timestamp).toLocaleString()}</p>
+            </Dropdown.Item>
+            {index < notifications.length - 1 && <div className="dropdown-divider"></div>}
+          </React.Fragment>
+        ))
+      )}
+    </Dropdown.Menu>
+  </Dropdown>
+</Nav.Item>
 
-        {/* User avatar and dropdown */}
+
+
+
         <Dropdown align="end">
-          <Dropdown.Toggle
-            variant="none"
-            className="d-flex border-0 align-items-center p-0"
-          >
+          <Dropdown.Toggle variant="none" className="d-flex border-0 align-items-center p-0">
             <Image
               src={user.avatarUrl}
               roundedCircle
@@ -190,40 +194,9 @@ const markAsRead = async (index) => {
       </div>
     </Navbar>
     
-    <Modal show={showNotificationModal} onHide={handleClose} backdrop="static">
-        <Modal.Header closeButton>
-          <Modal.Title>Notifications</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-  {notifications.length === 0 ? (
-    <p className="text-center">No notifications received yet.</p> // Message to show when there are no notifications
-  ) : (
-    <ul>
-      {notifications.map((notification, index) => (
-        <li
-          key={index}
-          onClick={() => markAsRead(index)}
-          style={{
-            backgroundColor: notification.isRead ? "#f0f0f0" : "#d1e7dd", // Highlight unread notifications
-            padding: "10px",
-            marginBottom: "5px",
-            cursor: "pointer"
-          }}
-        >
-          <p>Message: {notification.message}</p>
-          <p>Timestamp: {new Date(notification.timestamp).toLocaleString()}</p>
-        </li>
-      ))}
-    </ul>
-  )}
-</Modal.Body>
-
-        <Modal.Footer>
-         
-        </Modal.Footer>
-      </Modal>
+   
   </>
-  );
+);
 };
 
 export default TopNavbar;

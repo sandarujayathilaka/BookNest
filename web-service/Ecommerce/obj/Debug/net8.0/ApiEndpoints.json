@@ -1,5 +1,89 @@
 [
   {
+    "ContainingType": "NotificationController",
+    "Method": "GetAllNotifications",
+    "RelativePath": "api/Notification/getAll",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NotificationController",
+    "Method": "GetNotificationsForUser",
+    "RelativePath": "api/Notification/getNotificationsForUser",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NotificationController",
+    "Method": "MarkAsRead",
+    "RelativePath": "api/Notification/markAsRead/{userid}",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userid",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "updatedNotification",
+        "Type": "Ecommerce.Models.Notification",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NotificationController",
+    "Method": "SendNotification",
+    "RelativePath": "api/Notification/send",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "message",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NotificationController",
+    "Method": "SendNotificationToVendor",
+    "RelativePath": "api/Notification/sendToVendor",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "vendorId",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "message",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
 <<<<<<< HEAD
     "ContainingType": "NotificationController",
     "Method": "GetAllNotifications",
@@ -223,6 +307,22 @@
     "Parameters": [
       {
         "Name": "customerId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EcommercePlatform.Controllers.OrderController",
+    "Method": "GetVendorInfo",
+    "RelativePath": "api/Order/GetVendorInfo/{vendorId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "vendorId",
         "Type": "System.String",
         "IsRequired": true
       }
@@ -464,31 +564,6 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Ecommerce.Controllers.UserController",
-<<<<<<< HEAD
-    "Method": "GetAllUsers",
-    "RelativePath": "api/User/all",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-=======
-    "Method": "ActivateUserProfile",
-    "RelativePath": "api/User/{userId}/activate",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "userId",
-        "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
->>>>>>> 6cd6ee367ac9a596dd5b02d7d987be27fb903292
     "ReturnTypes": []
   },
   {

@@ -4,20 +4,21 @@
     "E:\\ead\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj": {}
   },
   "projects": {
-    "E:\\ead\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj": {
+    "C:\\Users\\94764\\OneDrive\\Desktop\\EAD aaign Final - Copy\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\ead\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj",
+        "projectUniqueName": "C:\\Users\\94764\\OneDrive\\Desktop\\EAD aaign Final - Copy\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj",
         "projectName": "Ecommerce",
-        "projectPath": "E:\\ead\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj",
-        "packagesPath": "C:\\Users\\isuru\\.nuget\\packages\\",
-        "outputPath": "E:\\ead\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\obj\\",
+        "projectPath": "C:\\Users\\94764\\OneDrive\\Desktop\\EAD aaign Final - Copy\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\Ecommerce.csproj",
+        "packagesPath": "C:\\Users\\94764\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\94764\\OneDrive\\Desktop\\EAD aaign Final - Copy\\EAD-Ecommerce-Project\\web-service\\Ecommerce\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
           "C:\\Users\\isuru\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\94764\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

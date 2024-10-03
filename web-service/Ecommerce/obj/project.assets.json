@@ -6405,6 +6405,9 @@
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
 <<<<<<< HEAD
         "C:\\Users\\94764\\AppData\\Roaming\\NuGet\\NuGet.Config",

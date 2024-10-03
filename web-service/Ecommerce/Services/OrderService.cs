@@ -64,7 +64,64 @@ namespace Ecommerce.Services
             return await _orderRepository.GetOrdersByVendorId(vendorId);
         }
 
-        public async Task<List<Order>> GetAllOrders()
+        public async Task<object> GetVendorInfoFromOrders(string vendorId)
+        {
+            Console.WriteLine($"service {vendorId}");
+            // Fetch vendor orders using the new method
+            var orders = await _orderRepository.GetVendorOrdersWithDetails(vendorId);
+            Console.WriteLine($"service order {orders}");
+            // Variables to calculate success and failure rates
+            int totalOrders = 0;
+            int successfulDeliveries = 0;
+            int failedDeliveries = 0;
+            int pendingOrders = 0;
+            var reasonsForFailure = new List<string>();
+
+            foreach (var order in orders)
+            {
+                foreach (var product in order.Products)
+                {
+                    Console.WriteLine($"service order {product.VendorID}");
+                    if (product.VendorID == vendorId)
+                    {
+                        Console.WriteLine($"service order {orders}");
+                        totalOrders++;
+
+                        if (product.Status == "Delivered")
+                        {
+                            successfulDeliveries++;
+                        }
+                        else if (product.Status == "Cancelled")
+                        {
+                            failedDeliveries++;
+                            reasonsForFailure.Add($"Order {order.OrderID} failed due to {product.Status}");
+                        }
+                        else if (product.Status == "Pending")
+                        {
+                            pendingOrders++;
+                        }
+                    }
+                }
+            }
+
+            // Calculate success and failure rates
+            decimal successRate = totalOrders > 0 ? (successfulDeliveries / (decimal)totalOrders) * 100 : 0;
+            decimal unsuccessRate = totalOrders > 0 ? (failedDeliveries / (decimal)totalOrders) * 100 : 0;
+            decimal pendingRate = totalOrders > 0 ? (pendingOrders / (decimal)totalOrders) * 100 : 0;
+
+            // Constructing the response object
+            var vendorInfo = new
+            {
+                VendorId = vendorId,
+                SuccessRate = successRate,
+                UnsuccessRate = unsuccessRate,
+                PendingRate = pendingRate,
+                ReasonsForUnsuccessfulDeliveries = reasonsForFailure
+            };
+
+            return vendorInfo;
+        }
+           public async Task<List<Order>> GetAllOrders()
         {
             return await _orderRepository.GetAllOrders();
         }
@@ -88,6 +145,6 @@ namespace Ecommerce.Services
         public async Task<List<Order>> GetCanceledOrders()
         {
             return await _orderRepository.GetCanceledOrders();
-        }
+        }    
     }
 }

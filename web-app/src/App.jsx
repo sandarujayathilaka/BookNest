@@ -19,7 +19,6 @@ import DeactivatedProfile from "./pages/Csr/DeactivatedProfile";
 import UserAccounts from "./pages/Csr/UserAccounts";
 
 
-
 const App = () => {
   return (
     <BrowserRouter>
@@ -42,7 +41,10 @@ const App = () => {
             <Route path="/unapprovedUser" element={<UnApprovedUsers />} />
             <Route path="/deactivatedacc" element={<DeactivatedProfile />} />
             <Route path="/useracc" element={<UserAccounts />} />
+            
+         
           </Route>
+
           {/* 404 Not Found Page */}
           <Route path="*" element={<NotFound />} />
         </Routes>

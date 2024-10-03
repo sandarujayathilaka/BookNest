@@ -24,5 +24,6 @@ namespace Ecommerce.Repositories
         
 
 
+        Task<List<Order>> GetVendorOrdersWithDetails(string vendorId);
     }
 }
