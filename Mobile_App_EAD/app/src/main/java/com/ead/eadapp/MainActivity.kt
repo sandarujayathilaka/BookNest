@@ -8,11 +8,15 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Start RegisterActivity directly
-        val intent = Intent(this, ProfileActivity::class.java)
+        val customerId = "string" // Replace with actual customer ID
+        val intent = Intent(this, OrderHistoryActivity::class.java)
+        intent.putExtra("customer_id", customerId)
         startActivity(intent)
-
-        // Finish MainActivity so it can't be returned to
         finish()
+
+        // Start RegisterActivity directly
+//        val intent = Intent(this, OrderHistoryActivity::class.java)
+//        startActivity(intent)
+        //finish()
     }
 }

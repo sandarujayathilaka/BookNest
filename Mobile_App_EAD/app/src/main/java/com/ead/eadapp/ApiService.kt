@@ -23,6 +23,8 @@ interface ApiService {
 
     @PUT("api/User/{email}")
     fun updateCustomerDetails(@Path("email") email: String, @Body customer: Customer): Call<Void>
+    @GET("/api/Order/customer/{customerId}/history")
+    fun fetchOrderHistory(@Path("customerId") customerId: String): Call<List<Order>>
 
 }
 
