@@ -125,5 +125,25 @@ namespace Ecommerce.Repositories
             return result;
         }
 
+        public async Task<List<Order>> GetOrdersByCustomerIdAndStatus(string customerId)
+        {
+            var filter = Builders<Order>.Filter.And(
+                Builders<Order>.Filter.Eq(order => order.CustomerID, customerId),
+                Builders<Order>.Filter.In(order => order.Status, new[] { "Canceled", "Delivered" })
+            );
+
+            return await _orders.Find(filter).ToListAsync();
+        }
+
+        public async Task<List<Order>> GetCurrentOrdersByCustomer(string customerId)
+        {
+            var filter = Builders<Order>.Filter.And(
+                Builders<Order>.Filter.Eq(order => order.CustomerID, customerId),
+                Builders<Order>.Filter.In(order => order.Status, new[] { "Pending", "Dispatched" })
+            );
+
+            return await _orders.Find(filter).ToListAsync();
+        }
+
     }
 }

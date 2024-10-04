@@ -2,6 +2,7 @@
 using Ecommerce.Models;
 using Ecommerce.Repositories;
 using MongoDB.Bson;
+using MongoDB.Driver;
 using NanoidDotNet;
 
 namespace Ecommerce.Services
@@ -145,6 +146,18 @@ namespace Ecommerce.Services
         public async Task<List<Order>> GetCanceledOrders()
         {
             return await _orderRepository.GetCanceledOrders();
-        }    
+        }
+
+        public async Task<List<Order>> GetOrdersByCustomerIdAndStatus(string customerId)
+        {
+           
+            return await _orderRepository.GetOrdersByCustomerIdAndStatus(customerId);
+        }
+
+        public async Task<List<Order>> GetCurrentOrdersByCustomer(string customerId)
+        {
+
+            return await _orderRepository.GetCurrentOrdersByCustomer(customerId);
+        }
     }
 }

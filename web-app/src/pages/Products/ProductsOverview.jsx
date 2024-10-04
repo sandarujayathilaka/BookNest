@@ -11,9 +11,6 @@ const ProductsOverview = () => {
     <div>
       <DashboardOverview />
       <Row>
-        <Col md={8}>
-          <ProductList />
-        </Col>
         <Col md={4}>
           <Orders />
         </Col>
