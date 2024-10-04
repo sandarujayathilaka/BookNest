@@ -70,5 +70,14 @@ namespace Ecommerce.Repositories
 
             return result.ModifiedCount > 0;
         }
+
+
+
+        // Get user by user id
+        public async Task<ApplicationUser> GetUserById(string userId)
+        {
+            return await _users.Find(user => user.UserId == userId).FirstOrDefaultAsync();
+        }
+
     }
 }

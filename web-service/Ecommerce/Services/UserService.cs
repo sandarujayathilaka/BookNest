@@ -123,5 +123,14 @@ namespace Ecommerce.Services
                 Token = token
             };
         }
+
+
+        public async Task<ApplicationUser> GetUserById(string userId)
+        {
+            return await _userRepository.GetUserById(userId);
+        }
+
+
+
     }
 }

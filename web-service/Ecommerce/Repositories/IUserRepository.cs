@@ -11,5 +11,7 @@ namespace Ecommerce.Repositories
         Task<List<ApplicationUser>> GetUnapprovedUsers();
         Task<List<ApplicationUser>> GetUnactivatedUserProfilesAsync();
         Task<bool> ActivateUserProfileAsync(string userId);
+        Task<ApplicationUser> GetUserById(string userId);
+
     }
 }

@@ -22,6 +22,7 @@ import UserAccounts from "./pages/Csr/UserAccounts";
 import InventoryList from "./components/inventory/InventoryList";
 import InventoryAdd from "./pages/Inventory/InventoryAdd";
 import ProductApproval from "./components/inventory/ProductApproval";
+import CreateProfile from "./pages/Vendor/CreateProfile";
 const App = () => {
   return (
     <BrowserRouter>
@@ -75,6 +76,9 @@ const App = () => {
             <Route path="/inventory" element={<InventoryList />} />
             <Route path="/inventory/new" element={<InventoryAdd />} />
             <Route path="/approval" element={<ProductApproval />} />
+
+
+            <Route path="/account" element={<CreateProfile />} />
           </Route>
           {/* 404 Not Found Page */}
           <Route path="*" element={<NotFound />} />

@@ -75,6 +75,10 @@ builder.Services.AddSignalR();
 builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 builder.Services.AddScoped<StockService>();
 builder.Services.AddScoped<StockRepository>();
+builder.Services.AddScoped<IVendorRepository, VendorRepository>();
+builder.Services.AddScoped<VendorService>();
+builder.Services.AddScoped<IVendorFeedbackRepository, VendorFeedbackRepository>();
+builder.Services.AddScoped<VendorFeedbackService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
