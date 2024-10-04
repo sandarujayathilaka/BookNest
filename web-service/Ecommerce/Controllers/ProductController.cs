@@ -4,6 +4,7 @@ using Ecommerce.Repositories;
 using Ecommerce.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace EcommercePlatform.Controllers
 {
@@ -29,20 +30,39 @@ namespace EcommercePlatform.Controllers
             return Ok(products);
         }
 
+        // Get a product by ID
+        [HttpGet("{productId}")]
+        public async Task<IActionResult> GetProductById(string productId)
+        {
+            var product = await _productRepository.GetProductByProductId(productId);
+            if (product == null)
+            {
+                return NotFound("Product not found.");
+            }
+            return Ok(product);
+        }
+
         // Vendor: Create a new product
         [HttpPost]
         [Authorize(Roles = Roles.Vendor)]
-        public async Task<IActionResult> CreateProduct([FromBody] ProductDto productDto)
+        public async Task<IActionResult> CreateProduct([FromBody] CreateProductDto productDto)
         {
+
+            // Extract UserId (VendorId) from JWT claims using ClaimTypes.NameIdentifier
+            var userIdFromToken = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
             var product = new Product
             {
-                ProductID = productDto.ProductID,
+                Title = productDto.Title,
+                Author = productDto.Author,
+                ISBN = productDto.ISBN,
+                Category = productDto.Category,
                 Description = productDto.Description,
-                Name = productDto.Name,
                 Price = productDto.Price,
                 StockQuantity = productDto.StockQuantity,
-                IsActive = productDto.IsActive,
-                VendorID = productDto.VendorID
+                Image = productDto.Image,
+                VendorID = userIdFromToken!,
+                IsActive = false,
             };
 
             await _productService.CreateNewProduct(product);
@@ -52,7 +72,7 @@ namespace EcommercePlatform.Controllers
         // Vendor: Update product
         [HttpPut("{productId}")]
         [Authorize(Roles = Roles.Vendor)]
-        public async Task<IActionResult> UpdateProduct(string productId, [FromBody] ProductDto productDto)
+        public async Task<IActionResult> UpdateProduct(string productId, [FromBody] CreateProductDto productDto)
         {
             var existingProduct = await _productRepository.GetProductByProductId(productId);
             if (existingProduct == null)
@@ -60,11 +80,25 @@ namespace EcommercePlatform.Controllers
                 return NotFound("Product not found.");
             }
 
-            existingProduct.Name = productDto.Name ?? existingProduct.Name;
+            // Extract UserId (VendorId) from JWT claims using ClaimTypes.NameIdentifier
+            var userIdFromToken = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            // Check if the product's VendorID matches the logged-in user's UserId (acting as VendorID)
+            if (existingProduct.VendorID.ToString() != userIdFromToken)
+            {
+                return BadRequest("You do not have permission to update this product.");
+            }
+
+            existingProduct.Title = productDto.Title ?? existingProduct.Title;
+            existingProduct.Author = productDto.Author ?? existingProduct.Author;
+            existingProduct.ISBN = productDto.ISBN ?? existingProduct.ISBN;
+            existingProduct.Category = productDto.Category ?? existingProduct.Category;
             existingProduct.Description = productDto.Description ?? existingProduct.Description;
             existingProduct.Price = productDto.Price != default ? productDto.Price : existingProduct.Price;
             existingProduct.StockQuantity = productDto.StockQuantity != default ? productDto.StockQuantity : existingProduct.StockQuantity;
+            existingProduct.Image = productDto.Image ?? existingProduct.Image;
             existingProduct.IsActive = productDto.IsActive;
+
 
             await _productService.UpdateProduct(existingProduct);
             return Ok("Product updated.");
@@ -75,17 +109,48 @@ namespace EcommercePlatform.Controllers
         [Authorize(Roles = Roles.Vendor)]
         public async Task<IActionResult> DeleteProduct(string productId)
         {
+            // Retrieve the existing product
+            var existingProduct = await _productRepository.GetProductByProductId(productId);
+
+            // Check if the product exists
+            if (existingProduct == null)
+            {
+                return NotFound("Product not found.");
+            }
+
+            // Extract UserId (VendorId) from JWT claims using ClaimTypes.NameIdentifier
+            var userIdFromToken = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            // Check if the product's VendorID matches the logged-in user's UserId (acting as VendorID)
+            if (existingProduct.VendorID.ToString() != userIdFromToken)
+            {
+                return BadRequest("You do not have permission to delete this product.");
+            }
+
+
+            // Proceed to delete the product
             await _productRepository.DeleteProduct(productId);
             return Ok("Product deleted.");
         }
 
-        // Vendor: Delete product
-        [HttpDelete("{pId}")]
+        // Vendor: Get vendor's products
+        [HttpGet("vendor/products")]
         [Authorize(Roles = Roles.Vendor)]
-        public async Task<IActionResult> DeleteProductById(string productId)
+        public async Task<IActionResult> GetVendorProducts()
         {
-            await _productRepository.DeleteProduct(productId);
-            return Ok("Product deleted.");
+            // Extract VendorID (UserId from the JWT token)
+            var vendorIdFromToken = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(vendorIdFromToken))
+            {
+                return BadRequest("Unable to retrieve vendor information.");
+            }
+
+            // Fetch products associated with the vendor
+            var vendorProducts = await _productRepository.GetProductsByVendorId(vendorIdFromToken);
+
+            return Ok(vendorProducts);
         }
+
     }
 }
