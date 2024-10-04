@@ -43,6 +43,8 @@
         </activity>
         <activity android:name="com.ead.eadapp.ProductListActivity" />
         <activity android:name="com.ead.eadapp.ProfileActivity" />
+        <activity android:name="com.ead.eadapp.LoginActivity" />
+        <activity android:name="com.ead.eadapp.ForgetPasswordActivity" />
         <activity
             android:name="com.ead.eadapp.RegisterActivity"
             android:exported="true"

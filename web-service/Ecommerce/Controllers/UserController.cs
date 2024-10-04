@@ -70,10 +70,6 @@ namespace Ecommerce.Controllers
             {
                 return Forbid("Your account is not approved.");
             }
-           
-            // Generate JWT token
-            var token = _jwtService.GenerateToken(user);
-            return Ok(new { Token = token });
 
             return BadRequest("An error occurred during login.");
         }
@@ -112,7 +108,10 @@ namespace Ecommerce.Controllers
             if (users == null || !users.Any())
             {
                 return NotFound("No users found.");
-        [HttpGet("unapproved")]
+            }
+                return Ok(users);
+            }
+            [HttpGet("unapproved")]
         public async Task<ActionResult<List<ApplicationUser>>> GetUnapprovedUsers()
         {
             var users = await _userService.GetUnapprovedUsers();
