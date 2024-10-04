@@ -19,7 +19,9 @@ import CancelOrder from "./pages/Csr/CancelOrder";
 import UnApprovedUsers from "./pages/Csr/UnApprovedUsers";
 import DeactivatedProfile from "./pages/Csr/DeactivatedProfile";
 import UserAccounts from "./pages/Csr/UserAccounts";
-
+import InventoryList from "./components/inventory/InventoryList";
+import InventoryAdd from "./pages/Inventory/InventoryAdd";
+import ProductApproval from "./components/inventory/ProductApproval";
 const App = () => {
   return (
     <BrowserRouter>
@@ -52,12 +54,13 @@ const App = () => {
               />
             }
           >
-            <Route path="/accapprove" element={<AccountApproval />} />
+          {/* <Route path="/accapprove" element={<AccountApproval />} />*/}  
             <Route path="/orders" element={<Orders />} />
             <Route path="/cancelreq" element={<CancelOrder />} />
             <Route path="/unapprovedUser" element={<UnApprovedUsers />} />
             <Route path="/deactivatedacc" element={<DeactivatedProfile />} />
             <Route path="/useracc" element={<UserAccounts />} />
+            
           </Route>
 
           {/* vendor routes */}
@@ -69,6 +72,9 @@ const App = () => {
             <Route path="/products/new" element={<AddProduct />} />
             <Route path="/products/edit/:id" element={<EditProduct />} />
             <Route path="/products/my" element={<MyProducts />} />
+            <Route path="/inventory" element={<InventoryList />} />
+            <Route path="/inventory/new" element={<InventoryAdd />} />
+            <Route path="/approval" element={<ProductApproval />} />
           </Route>
           {/* 404 Not Found Page */}
           <Route path="*" element={<NotFound />} />

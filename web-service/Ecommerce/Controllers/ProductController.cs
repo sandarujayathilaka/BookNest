@@ -63,6 +63,7 @@ namespace EcommercePlatform.Controllers
                 Image = productDto.Image,
                 VendorID = userIdFromToken!,
                 IsActive = false,
+                Status = "Pending",
             };
 
             await _productService.CreateNewProduct(product);
@@ -133,6 +134,45 @@ namespace EcommercePlatform.Controllers
             return Ok("Product deleted.");
         }
 
+        // PUT: api/Product/updateStatus
+        [HttpPut("updateStatus")]
+        public async Task<IActionResult> UpdateProductStatus([FromQuery] string productID, [FromQuery] string status, [FromBody] string deniedMessage = null)
+        {
+            if (string.IsNullOrEmpty(productID) || string.IsNullOrEmpty(status))
+            {
+                Console.WriteLine("Invalid product data");
+                return BadRequest("Product ID and status are required.");
+            }
+
+            try
+            {
+                // Handle product approval or denial
+                string finalStatus = status.ToLower() == "denied" && !string.IsNullOrEmpty(deniedMessage)
+                    ? "Denied"
+                    : status;
+
+                // Update product status and set deniedMessage only if the status is "Denied"
+                var updatedProduct = await _productService.UpdateProductStatusAsync(productID, finalStatus, finalStatus == "Denied" ? deniedMessage : null);
+
+                if (updatedProduct == null)
+                {
+                    Console.WriteLine("Product not found.");
+                    return NotFound("Product not found.");
+                }
+
+                Console.WriteLine("Product status updated successfully.");
+                return Ok(updatedProduct);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating product status: {ex.Message}");  // Log the exception
+                return StatusCode(500, "Internal server error.");
+            }
+        }
+
+
+
+       
         // Vendor: Get vendor's products
         [HttpGet("vendor/products")]
         [Authorize(Roles = Roles.Vendor)]

@@ -23,9 +23,11 @@ namespace Ecommerce.DataAccess
 
         public IMongoCollection<Order> Orders => _database.GetCollection<Order>("Orders");
         public IMongoCollection<Product> Products => _database.GetCollection<Product>("Products");
-        public IMongoCollection<ApplicationUser> Users => _database.GetCollection<ApplicationUser>("Users");
+        public IMongoCollection<Stock> Stocks => _database.GetCollection<Stock>("Stocks");
 
-     
+        public IMongoCollection<Notification> Notifications => _database.GetCollection<Notification>("Notifications");
+
+
     }
 
 }

@@ -7,12 +7,25 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using Microsoft.AspNetCore.SignalR;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigins", builder =>
+    {
+        builder.WithOrigins("http://localhost:5173")  // Allow requests from any domain
+               .AllowAnyMethod()  // Allow any HTTP method (GET, POST, etc.)
+               .AllowAnyHeader() // Allow any headers (e.g., Authorization, Content-Type)
+               .AllowCredentials();
+    });
+});
 
 // Swagger configuration with JWT Bearer Authentication
 builder.Services.AddSwaggerGen(c =>
@@ -52,12 +65,16 @@ builder.Services.AddSingleton<MongoDbContext>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<EmailService>();
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddSignalR();
+builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
+builder.Services.AddScoped<StockService>();
+builder.Services.AddScoped<StockRepository>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -70,7 +87,36 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]))
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"])),
+            NameClaimType = "nameid"
+        };
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                // Get the token from the query string when connecting to the SignalR hub
+                var accessToken = context.Request.Query["access_token"];
+                var path = context.HttpContext.Request.Path;
+
+                // If the request is for the SignalR hub, attach the token
+                if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/notificationHub"))
+                {
+                    context.Token = accessToken;
+                }
+
+                return Task.CompletedTask;
+            },
+            OnTokenValidated = context =>
+            {
+                // Log the claims for debugging purposes
+                Console.WriteLine("Token validated, claims:");
+                var claimsIdentity = (ClaimsIdentity)context.Principal.Identity;
+                foreach (var claim in claimsIdentity.Claims)
+                {
+                    Console.WriteLine($"Claim Type: {claim.Type}, Claim Value: {claim.Value}");
+                }
+                return Task.CompletedTask;
+            }
         };
     });
 
@@ -99,13 +145,20 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseRouting();
+app.UseCors("AllowSpecificOrigins");
 
 app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.MapHub<NotificationHub>("/notificationHub");
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapHub<NotificationHub>("/notificationHub");
+});
 
-app.MapControllers();
 
 app.Run();
+//app.MapHub<NotificationHub>("/notificationHub");
+//app.MapControllers();

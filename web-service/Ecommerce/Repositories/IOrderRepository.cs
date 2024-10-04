@@ -16,6 +16,7 @@ namespace Ecommerce.Repositories
         Task UpdateOrderStatus(string orderId, string status);
 
         Task<List<VendorProductDto>> GetOrdersByVendorId(string vendorId);
+        Task<List<Order>> GetPendingOrdersByProductIdAsync(string productId);
         Task<List<Order>> GetAllOrders();
         Task<bool> CancelOrderAsync(string orderId, string cancelationNote);
         Task<bool> CancelOrderbyOfficer(string orderId, string Status, string cancelationOfficeNote);
@@ -23,5 +24,6 @@ namespace Ecommerce.Repositories
         Task<List<Order>> GetOrdersByCustomerIdAndStatus(string customerId);
         Task<List<Order>> GetCurrentOrdersByCustomer(string customerId);
 
+        Task<List<Order>> GetVendorOrdersWithDetails(string vendorId);
     }
 }

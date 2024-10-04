@@ -39,7 +39,9 @@ namespace Ecommerce.Services
 
                     new Claim(ClaimTypes.NameIdentifier, user.UserId),
                     new Claim(ClaimTypes.Name, user.Email),
-                    new Claim(ClaimTypes.Role, user.Role)
+                    new Claim(ClaimTypes.Role, user.Role),
+                   
+
                 }),
                 NotBefore = DateTime.UtcNow,
                 Expires = DateTime.UtcNow.AddDays(_expirationDays),

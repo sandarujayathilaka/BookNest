@@ -4,6 +4,13 @@ using Ecommerce.Repositories;
 using Ecommerce.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+using Ecommerce.Services;
+using BCrypt.Net;
+using Microsoft.AspNetCore.Identity.Data;
+using Ecommerce.Dto;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Security.Claims;
 
 namespace Ecommerce.Controllers
 {
@@ -34,11 +41,13 @@ namespace Ecommerce.Controllers
 
             var user = new ApplicationUser
             {
+               
                 FullName = registerUserDto.FullName,
                 Email = registerUserDto.Email,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(registerUserDto.PasswordHash),
                 Role = registerUserDto.Role,
             };
+       
 
             await _userService.RegisterUser(user, registerUserDto.PasswordHash);
             return Ok("User registration successful. Please wait for approval.");
@@ -91,6 +100,7 @@ namespace Ecommerce.Controllers
 
         // Admin: Get user by email
         [HttpGet("{email}")]
+        //[Authorize(Roles = Roles.Admin)]
         public async Task<IActionResult> GetUserByEmail(string email)
         {
             var user = await _userService.GetOneUserByEmail(email);
@@ -103,7 +113,19 @@ namespace Ecommerce.Controllers
             return Ok(user);
         }
 
-        [HttpGet("unapproved")]
+        // Admin: Get all users
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var users = await _userRepository.GetAllUsersAsync();
+
+            if (users == null || !users.Any())
+            {
+                return NotFound("No users found.");
+            }
+                return Ok(users);
+            }
+            [HttpGet("unapproved")]
         public async Task<ActionResult<List<ApplicationUser>>> GetUnapprovedUsers()
         {
             var users = await _userService.GetUnapprovedUsers();

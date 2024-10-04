@@ -61,48 +61,28 @@ const sidebarItems = [
     submenuItems: [],
     link: "/settings", // Add link for Settings
   },
-  // {
-  //   title: "Account Approval",
-  //   icon: <FaCog />, // Settings icon
-  //   submenu: false,
-  //   submenuItems: [],
-  //   link: "/accapprove", // Add link for Settings
-  // },
   {
-    title: "Orders",
-    icon: <FaCog />, // Settings icon
+    title: "Inventory",
+    icon: <FaClipboardList />, // Orders icon
     submenu: false,
     submenuItems: [],
-    link: "/orders", // Add link for Settings
+    link: "/inventory", // Add link for Orders
   },
   {
-    title: "Cancel Request",
-    icon: <FaCog />, // Settings icon
+    title: "Add Inventory",
+    icon: <FaClipboardList />, // Orders icon
     submenu: false,
     submenuItems: [],
-    link: "/cancelreq", // Add link for Settings
+    link: "/inventory/new", // Add link for Orders
   },
   {
-    title: "Pending Approvel Account",
-    icon: <FaCog />, // Settings icon
+    title: "Product Approval",
+    icon: <FaClipboardList />, // Orders icon
     submenu: false,
     submenuItems: [],
-    link: "/unapprovedUser", // Add link for Settings
-  },
-  {
-    title: "Deactivated Account",
-    icon: <FaCog />, // Settings icon
-    submenu: false,
-    submenuItems: [],
-    link: "/deactivatedacc", // Add link for Settings
-  },
-  {
-    title: "User Accounts",
-    icon: <FaCog />, // Settings icon
-    submenu: false,
-    submenuItems: [],
-    link: "/useracc", // Add link for Settings
-  },
+    link: "/approval", // Add link for Orders
+  }
+  
 ];
 
 // Sidebar content with expandable menu

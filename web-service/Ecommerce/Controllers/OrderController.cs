@@ -36,7 +36,7 @@ namespace EcommercePlatform.Controllers
 
         // Customer: Get orders by customer ID
         [HttpGet("customer/{customerId}")]
-        [Authorize(Roles = Roles.Customer)]
+        //[Authorize(Roles = Roles.Customer)]
         public async Task<IActionResult> GetOrdersByCustomer(string customerId)
         {
             var orders = await _orderRepository.GetOrdersByCustomerId(customerId);
@@ -45,7 +45,7 @@ namespace EcommercePlatform.Controllers
 
         //  Get orders by Vender ID
         [HttpGet("vendor/products/{vendorId}")]
-        [Authorize(Roles = Roles.Customer)]
+        //[Authorize(Roles = Roles.Customer)]
         public async Task<IActionResult> GetProductsByVendorId(string vendorId)
         {
             var vendorProducts = await _orderService.GetProductsByVendorId(vendorId);
@@ -151,6 +151,22 @@ namespace EcommercePlatform.Controllers
             }
 
             return Ok(orders);
+        }
+
+        [HttpGet("GetVendorInfo/{vendorId}")]
+        public async Task<IActionResult> GetVendorInfo(string vendorId)
+        {
+            try
+            {
+                Console.WriteLine($"controller {vendorId}");
+                var vendorInfo = await _orderService.GetVendorInfoFromOrders(vendorId);
+                Console.WriteLine($"controller res {vendorInfo}");
+                return Ok(vendorInfo);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
     }

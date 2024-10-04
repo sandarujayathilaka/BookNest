@@ -67,6 +67,16 @@ namespace Ecommerce.Repositories
             await _orders.UpdateOneAsync(filter, update);
         }
 
+        public async Task<List<Order>> GetPendingOrdersByProductIdAsync(string productId)
+        {
+
+            var filter = Builders<Order>.Filter.And(
+                 Builders<Order>.Filter.Eq(o => o.Status, "Pending"),  
+                 Builders<Order>.Filter.ElemMatch(o => o.Products, p => p.ProductID == productId) 
+             );
+
+            return await _orders.Find(filter).ToListAsync();
+        }
         public async Task<List<Order>> GetAllOrders()
         {
             return await _orders.Find(order => true).ToListAsync();
@@ -107,6 +117,12 @@ namespace Ecommerce.Repositories
             var result = await _orders.UpdateOneAsync(filter, update);
 
             return result.ModifiedCount > 0;
+        }
+        public async Task<List<Order>> GetVendorOrdersWithDetails(string vendorId)
+        {
+            var filter = Builders<Order>.Filter.ElemMatch(order => order.Products, product => product.VendorID == vendorId);
+            var result = await _orders.Find(filter).ToListAsync();
+            return result;
         }
 
         public async Task<List<Order>> GetOrdersByCustomerIdAndStatus(string customerId)

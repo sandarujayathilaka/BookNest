@@ -18,16 +18,31 @@ interface ApiService {
     @GET("api/Product")  // Adjust the URL to your actual ASP.NET API route for fetching products
     fun fetchProducts(): Call<List<Product>>
 
+//    @GET("api/User/{email}")
+//    fun fetchCustomerDetails(@Path("email") email: String): Call<Customer>
+//
+//    @PUT("api/User/{email}")
+//    fun updateCustomerDetails(@Path("email") email: String, @Body customer: Customer): Call<Void>
+
+    @POST("api/User/login")
+    fun loginUser(@Body request: LoginRequest): Call<LoginResponse>
+
     @GET("api/User/{email}")
-    fun fetchCustomerDetails(@Path("email") email: String): Call<Customer>
+    fun fetchCustomerDetails(
+        @Header("Authorization") token: String,
+        @Path("email") email: String
+    ): Call<Customer>
+//@GET("api/User/{email}")
+//fun fetchCustomerDetails(
+//    @Path("email") email: String
+//): Call<Customer>
 
     @PUT("api/User/{email}")
-    fun updateCustomerDetails(@Path("email") email: String, @Body customer: Customer): Call<Void>
-    @GET("/api/Order/customer/{customerId}/history")
-    fun fetchOrderHistory(@Path("customerId") customerId: String): Call<List<Order>>
-
-    @GET("/api/Order/customer/{customerId}/currentOrder")
-    fun fetchCurrentOrder(@Path("customerId") customerId: String): Call<List<Order>>
+    fun updateCustomerDetails(
+        @Header("Authorization") token: String,
+        @Path("email") email: String,
+        @Body customer: Customer
+    ): Call<Void>
 
 }
 

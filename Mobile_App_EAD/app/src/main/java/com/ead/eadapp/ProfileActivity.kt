@@ -14,10 +14,17 @@ class ProfileActivity : ComponentActivity() {
 
     private lateinit var customerName: EditText
     private lateinit var customerEmail: EditText
+    private lateinit var customerAddress: EditText
+    private lateinit var customerNumber: EditText
     private lateinit var updateProfileButton: Button
 
-    // Assume email is passed via intent or retrieved from shared preferences, etc.
-    private val customerEmailValue: String by lazy {
+    // Retrieve the token and email from Intent extras
+    private val token: String by lazy {
+        intent.getStringExtra("token") ?: ""
+    }
+
+    // This is the original email used for fetching and updating customer details.
+    private val originalCustomerEmail: String by lazy {
         intent.getStringExtra("customer_email") ?: "sandarujayathilaka26@gmail.com"
     }
 
@@ -27,10 +34,12 @@ class ProfileActivity : ComponentActivity() {
 
         customerName = findViewById(R.id.customerName)
         customerEmail = findViewById(R.id.customerEmail)
+        customerNumber = findViewById(R.id.customerNumber)
+        customerAddress = findViewById(R.id.customerAddress)
         updateProfileButton = findViewById(R.id.updateProfileButton)
 
         // Disable email editing as it's typically a unique field
-        customerEmail.setText(customerEmailValue)
+        customerEmail.setText(originalCustomerEmail)
         customerEmail.isEnabled = false
 
         // Fetch customer details when activity starts
@@ -43,12 +52,16 @@ class ProfileActivity : ComponentActivity() {
     }
 
     private fun fetchCustomerDetails() {
-        ApiClient.apiService.fetchCustomerDetails(customerEmailValue).enqueue(object : Callback<Customer> {
+        ApiClient.apiService.fetchCustomerDetails("Bearer $token", originalCustomerEmail).enqueue(object : Callback<Customer> {
             override fun onResponse(call: Call<Customer>, response: Response<Customer>) {
-                Log.d("ProfileActivity", "Response: $response")
                 if (response.isSuccessful) {
+                    Log.d("ProfileActivity", "Response: ${response.body().toString()}")
+
                     response.body()?.let { customer ->
                         customerName.setText(customer.fullName)
+                        customerNumber.setText(customer.phoneNumber)
+                        customerAddress.setText(customer.address)
+                        customerEmail.setText(customer.email)
                     }
                 } else {
                     Toast.makeText(this@ProfileActivity, "Failed to load profile", Toast.LENGTH_SHORT).show()
@@ -63,7 +76,9 @@ class ProfileActivity : ComponentActivity() {
 
     private fun enableEditing() {
         customerName.isEnabled = true
-
+        customerAddress.isEnabled = true
+        customerNumber.isEnabled = true
+        customerEmail.isEnabled = true // Enable email editing since user can change it.
         updateProfileButton.text = "Save Changes"
         updateProfileButton.setOnClickListener {
             updateCustomerDetails()
@@ -72,15 +87,28 @@ class ProfileActivity : ComponentActivity() {
 
     private fun updateCustomerDetails() {
         val updatedName = customerName.text.toString()
+        val updatedAddress = customerAddress.text.toString()
+        val updatedNumber = customerNumber.text.toString()
+        val updatedEmail = customerEmail.text.toString()
 
-        val updatedCustomer = Customer(updatedName, customerEmailValue)
+        // Create an updated customer object with the new values
+        val updatedCustomer = Customer(
+            fullName = updatedName,
+            address = updatedAddress,
+            phoneNumber = updatedNumber,
+            email = updatedEmail
+        )
 
-        ApiClient.apiService.updateCustomerDetails(customerEmailValue, updatedCustomer).enqueue(object : Callback<Void> {
+        // Use the original email as the path parameter to identify the user
+        ApiClient.apiService.updateCustomerDetails("Bearer $token", originalCustomerEmail, updatedCustomer).enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (response.isSuccessful) {
                     Toast.makeText(this@ProfileActivity, "Profile updated successfully", Toast.LENGTH_SHORT).show()
                     // Disable editing again
                     customerName.isEnabled = false
+                    customerAddress.isEnabled = false
+                    customerNumber.isEnabled = false
+                    customerEmail.isEnabled = false // Disable email again
                     updateProfileButton.text = "Update Profile"
                 } else {
                     Toast.makeText(this@ProfileActivity, "Failed to update profile", Toast.LENGTH_SHORT).show()

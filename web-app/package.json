@@ -12,6 +12,7 @@
   "dependencies": {
     "@faker-js/faker": "^9.0.3",
     "@hookform/resolvers": "^3.9.0",
+    "@microsoft/signalr": "^8.0.7",
     "@popperjs/core": "^2.11.8",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
