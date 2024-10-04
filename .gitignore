@@ -8,8 +8,8 @@ captures/
 .cxx/
 
 # Ignore build output directories
-bin/
-obj/
+**/bin/
+**/obj/
 
 # Ignore user-specific files
 *.user
