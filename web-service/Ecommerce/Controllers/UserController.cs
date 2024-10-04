@@ -82,7 +82,6 @@ namespace Ecommerce.Controllers
 
         // Admin: Get user by email
         [HttpGet("{email}")]
-        [Authorize(Roles = Roles.Admin)]
         public async Task<IActionResult> GetUserByEmail(string email)
         {
             var user = await _userService.GetOneUserByEmail(email);

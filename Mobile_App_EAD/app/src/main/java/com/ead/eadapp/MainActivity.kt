@@ -9,7 +9,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val customerId = "string" // Replace with actual customer ID
-        val intent = Intent(this, OrderHistoryActivity::class.java)
+        val intent = Intent(this, CurrentOrderActivity::class.java)
         intent.putExtra("customer_id", customerId)
         startActivity(intent)
         finish()

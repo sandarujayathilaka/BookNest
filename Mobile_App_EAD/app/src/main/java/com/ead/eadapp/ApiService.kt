@@ -26,6 +26,9 @@ interface ApiService {
     @GET("/api/Order/customer/{customerId}/history")
     fun fetchOrderHistory(@Path("customerId") customerId: String): Call<List<Order>>
 
+    @GET("/api/Order/customer/{customerId}/currentOrder")
+    fun fetchCurrentOrder(@Path("customerId") customerId: String): Call<List<Order>>
+
 }
 
 // Singleton object to initialize Retrofit and create the ApiService instance
