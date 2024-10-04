@@ -181,7 +181,7 @@ const markAsRead = async (index) => {
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
-            <Dropdown.Item href="/profile">Profile</Dropdown.Item>
+            <Dropdown.Item href="/account">Profile</Dropdown.Item>
             <Dropdown.Item href="/settings">Settings</Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Item href="/logout">Sign out</Dropdown.Item>

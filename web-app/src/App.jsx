@@ -17,6 +17,9 @@ import CancelOrder from "./pages/Csr/CancelOrder";
 import UnApprovedUsers from "./pages/Csr/UnApprovedUsers";
 import DeactivatedProfile from "./pages/Csr/DeactivatedProfile";
 import UserAccounts from "./pages/Csr/UserAccounts";
+import VendorLayout from "./layouts/VendorLayout";
+import CreateProfile from "./pages/Vendor/CreateProfile";
+import AccountPage from "./pages/General/AccountPage";
 
 
 
@@ -28,6 +31,7 @@ const App = () => {
           {/* Public Routes */}
           <Route path="/login" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
+
           {/* Admin Layout with Nested Routes */}
           <Route element={<AdminLayout />}>
             <Route path="/" element={<ProductsOverview />} />
@@ -42,7 +46,18 @@ const App = () => {
             <Route path="/unapprovedUser" element={<UnApprovedUsers />} />
             <Route path="/deactivatedacc" element={<DeactivatedProfile />} />
             <Route path="/useracc" element={<UserAccounts />} />
+            <Route path="/account" element={<AccountPage />} />
+
+            
           </Route>
+            
+          {/* Vendor Layout with Nested Routes */}
+          <Route element={<VendorLayout/>}>
+
+            <Route path="/createvendorprofile" element={<CreateProfile />} />
+
+          </Route>
+
           {/* 404 Not Found Page */}
           <Route path="*" element={<NotFound />} />
         </Routes>
