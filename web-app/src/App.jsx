@@ -7,7 +7,7 @@ import Signin from "./pages/Login/Signin";
 import Signup from "./pages/Login/Signup";
 import NotFound from "./pages/General/NotFound";
 import AddProduct from "./pages/Products/AddProduct";
-import AccountApproval from "./pages/Csr/AccountApproval";
+// import AccountApproval from "./pages/Csr/AccountApproval";
 import Orders from "./pages/Csr/Orders";
 import ProtectedRoute from "./middleware/ProtectedRoute";
 import { Roles } from "./constants/roles";
@@ -15,6 +15,10 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import MyProducts from "./pages/Products/MyProducts";
 import EditProduct from "./pages/Products/EditProduct";
+import CancelOrder from "./pages/Csr/CancelOrder";
+import UnApprovedUsers from "./pages/Csr/UnApprovedUsers";
+import DeactivatedProfile from "./pages/Csr/DeactivatedProfile";
+import UserAccounts from "./pages/Csr/UserAccounts";
 
 const App = () => {
   return (
@@ -49,6 +53,11 @@ const App = () => {
             }
           >
             <Route path="/accapprove" element={<AccountApproval />} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/cancelreq" element={<CancelOrder />} />
+            <Route path="/unapprovedUser" element={<UnApprovedUsers />} />
+            <Route path="/deactivatedacc" element={<DeactivatedProfile />} />
+            <Route path="/useracc" element={<UserAccounts />} />
           </Route>
 
           {/* vendor routes */}
@@ -61,7 +70,6 @@ const App = () => {
             <Route path="/products/edit/:id" element={<EditProduct />} />
             <Route path="/products/my" element={<MyProducts />} />
           </Route>
-
           {/* 404 Not Found Page */}
           <Route path="*" element={<NotFound />} />
           <Route path="/404" element={<NotFound />} />

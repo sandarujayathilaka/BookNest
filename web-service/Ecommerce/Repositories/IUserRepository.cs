@@ -8,6 +8,7 @@ namespace Ecommerce.Repositories
         Task CreateUser(ApplicationUser user);
         Task UpdateUserApprovalStatus(string userId, bool isApproved);
         Task<List<ApplicationUser>> GetUnapprovedUsers();
-
+        Task<List<ApplicationUser>> GetUnactivatedUserProfilesAsync();
+        Task<bool> ActivateUserProfileAsync(string userId);
     }
 }

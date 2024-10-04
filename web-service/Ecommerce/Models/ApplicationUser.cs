@@ -22,5 +22,9 @@ namespace Ecommerce.Models
         [BsonElement("updatedAt")]
         [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
         public DateTime UpdatedAt { get; set; }
+        
+        public Boolean IsApproved { get; set; } = false;
+
+        public Boolean AccountActivated = false;
     }
 }
