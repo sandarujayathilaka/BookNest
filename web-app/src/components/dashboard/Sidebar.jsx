@@ -1,6 +1,7 @@
 // Sidebar.js
 import React, { useState } from "react";
 import { Offcanvas, Nav } from "react-bootstrap";
+import { NavLink } from "react-router-dom"; // 1. Import NavLink
 import {
   FaTachometerAlt,
   FaBoxOpen,
@@ -8,7 +9,8 @@ import {
   FaChartLine,
   FaCog,
   FaAngleDown,
-} from "react-icons/fa"; // Importing icons
+} from "react-icons/fa";
+import { MdLibraryAdd } from "react-icons/md";
 
 // Sample sidebar items array
 const sidebarItems = [
@@ -24,8 +26,12 @@ const sidebarItems = [
     icon: <FaBoxOpen />, // Products icon
     submenu: true,
     submenuItems: [
-      { title: "Add Product", link: "/products/new" },
-      { title: "View Products", link: "/products/view" },
+      { title: "Add", link: "/products/new", icon: <MdLibraryAdd /> },
+      {
+        title: "List",
+        link: "/products/my",
+        icon: <FaClipboardList />,
+      },
     ],
   },
   {
@@ -40,8 +46,12 @@ const sidebarItems = [
     icon: <FaChartLine />, // Analytics icon
     submenu: true,
     submenuItems: [
-      { title: "Sales Analytics", link: "/analytics/sales" },
-      { title: "User Analytics", link: "/analytics/user" },
+      {
+        title: "Sales Analytics",
+        link: "/analytics/sales",
+        icon: <FaChartLine />,
+      },
+      { title: "User Analytics", link: "/analytics/user", icon: <FaCog /> },
     ],
   },
   {
@@ -51,6 +61,28 @@ const sidebarItems = [
     submenuItems: [],
     link: "/settings", // Add link for Settings
   },
+  {
+    title: "Inventory",
+    icon: <FaClipboardList />, // Orders icon
+    submenu: false,
+    submenuItems: [],
+    link: "/inventory", // Add link for Orders
+  },
+  {
+    title: "Add Inventory",
+    icon: <FaClipboardList />, // Orders icon
+    submenu: false,
+    submenuItems: [],
+    link: "/inventory/new", // Add link for Orders
+  },
+  {
+    title: "Product Approval",
+    icon: <FaClipboardList />, // Orders icon
+    submenu: false,
+    submenuItems: [],
+    link: "/approval", // Add link for Orders
+  }
+  
 ];
 
 // Sidebar content with expandable menu
@@ -68,7 +100,7 @@ const SidebarContent = () => {
     <Nav className="flex-column">
       {sidebarItems.map((item, index) => (
         <div key={index}>
-          {item.submenu ? ( // Render Nav.Link only for items without submenu
+          {item.submenu ? (
             <Nav.Link
               onClick={() => toggleItem(item.title)}
               className="text-white d-flex py-3 justify-content-between align-items-center rounded hover-bg"
@@ -87,32 +119,42 @@ const SidebarContent = () => {
               />
             </Nav.Link>
           ) : (
-            <Nav.Link
-              href={item.link}
-              className="text-white d-flex py-3 justify-content-between align-items-center rounded hover-bg"
+            <NavLink
+              to={item.link}
+              className={
+                ({ isActive }) =>
+                  isActive
+                    ? "active px-3 d-flex py-3 justify-content-between text-decoration-none align-items-center rounded" // Highlighted style for active link
+                    : "text-white px-3 d-flex py-3 justify-content-between text-decoration-none align-items-center rounded hover-bg" // Default style
+              }
             >
               <span className="d-flex align-items-center">
                 <span className="me-3">{item.icon}</span>
                 {item.title}
               </span>
-            </Nav.Link>
+            </NavLink>
           )}
 
-          {item.submenu &&
-            openItems[item.title] && ( // Check if item has submenu and is open
-              <Nav className="flex-column">
-                {/* Indent subitems */}
-                {item.submenuItems.map((subItem, subIndex) => (
-                  <Nav.Link
-                    key={subIndex}
-                    href={subItem.link}
-                    className="text-white rounded hover-bg ps-5"
-                  >
-                    {subItem.title}
-                  </Nav.Link>
-                ))}
-              </Nav>
-            )}
+          {item.submenu && openItems[item.title] && (
+            <Nav className="flex-column">
+              {/* Indent subitems */}
+              {item.submenuItems.map((subItem, subIndex) => (
+                <NavLink
+                  key={subIndex}
+                  to={subItem.link}
+                  className={
+                    ({ isActive }) =>
+                      isActive
+                        ? "rounded text-decoration-none active ps-5 py-2 d-flex align-items-center" // Highlighted style for active submenu item
+                        : "text-white rounded hover-bg text-decoration-none ps-5 py-2 d-flex align-items-center" // Default style
+                  }
+                >
+                  <span className="me-3">{subItem.icon}</span>
+                  {subItem.title}
+                </NavLink>
+              ))}
+            </Nav>
+          )}
         </div>
       ))}
     </Nav>
@@ -124,7 +166,7 @@ const Sidebar = ({ show, handleClose }) => {
   return (
     <>
       {/* Sidebar for large screens (lg and above) */}
-      <div className="bg-dark text-white p-3 w-25 sidebar vh-100 d-none d-lg-block">
+      <div className="bg-dark text-white p-3 w-25 sidebar min-vh-100 d-none d-lg-block">
         <h3 className="mb-4 text-center">{appName}</h3>
         <SidebarContent /> {/* Reusing the common content */}
       </div>

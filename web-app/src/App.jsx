@@ -1,65 +1,88 @@
 // App.js
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import AdminLayout from "./layouts/AdminLayout";
 import ProductsOverview from "./pages/Products/ProductsOverview";
 import ScrollToTop from "./components/general/ScrollToTop";
 import Signin from "./pages/Login/Signin";
 import Signup from "./pages/Login/Signup";
 import NotFound from "./pages/General/NotFound";
 import AddProduct from "./pages/Products/AddProduct";
-import InventoryList from "./components/inventory/InventoryList";
-import InventoryAdd from "./pages/Inventory/InventoryAdd";
-import ProductApproval from "./components/inventory/ProductApproval";
 // import AccountApproval from "./pages/Csr/AccountApproval";
 import Orders from "./pages/Csr/Orders";
+import ProtectedRoute from "./middleware/ProtectedRoute";
+import { Roles } from "./constants/roles";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import MyProducts from "./pages/Products/MyProducts";
+import EditProduct from "./pages/Products/EditProduct";
 import CancelOrder from "./pages/Csr/CancelOrder";
 import UnApprovedUsers from "./pages/Csr/UnApprovedUsers";
 import DeactivatedProfile from "./pages/Csr/DeactivatedProfile";
 import UserAccounts from "./pages/Csr/UserAccounts";
-import VendorLayout from "./layouts/VendorLayout";
+import InventoryList from "./components/inventory/InventoryList";
+import InventoryAdd from "./pages/Inventory/InventoryAdd";
+import ProductApproval from "./components/inventory/ProductApproval";
 import CreateProfile from "./pages/Vendor/CreateProfile";
-import AccountPage from "./pages/General/AccountPage";
-
-
-
 const App = () => {
   return (
     <BrowserRouter>
       <ScrollToTop>
+        <ToastContainer />
         <Routes>
           {/* Public Routes */}
-          <Route path="/login" element={<Signin />} />
+          <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/" element={<Signin />} />
 
-          {/* Admin Layout with Nested Routes */}
-          <Route element={<AdminLayout />}>
-            <Route path="/" element={<ProductsOverview />} />
-            <Route path="/products/new" element={<AddProduct />} />
-            <Route path="/inventory" element={<InventoryList />} />
-          <Route path="/inventory/new" element={<InventoryAdd />} />
-          <Route path="/approval" element={<ProductApproval />} />
-          
-            {/* <Route path="/accapprove" element={<AccountApproval />} /> */}
+          {/* common routes - for all roles */}
+          <Route
+            element={
+              <ProtectedRoute
+                roles={[Roles.ADMIN, Roles.CSR, Roles.VENDOR]}
+                redirectPath="/404"
+              />
+            }
+          >
+            <Route path="/dashboard" element={<ProductsOverview />} />
+          </Route>
+
+          {/* common routes - for admin and csr roles */}
+          <Route
+            element={
+              <ProtectedRoute
+                roles={[Roles.ADMIN, Roles.CSR]}
+                redirectPath="/404"
+              />
+            }
+          >
+          {/* <Route path="/accapprove" element={<AccountApproval />} />*/}  
             <Route path="/orders" element={<Orders />} />
             <Route path="/cancelreq" element={<CancelOrder />} />
             <Route path="/unapprovedUser" element={<UnApprovedUsers />} />
             <Route path="/deactivatedacc" element={<DeactivatedProfile />} />
             <Route path="/useracc" element={<UserAccounts />} />
-            <Route path="/account" element={<AccountPage />} />
-
             
           </Route>
-            
-          {/* Vendor Layout with Nested Routes */}
-          <Route element={<VendorLayout/>}>
 
-            <Route path="/createvendorprofile" element={<CreateProfile />} />
+          {/* vendor routes */}
+          <Route
+            element={
+              <ProtectedRoute roles={[Roles.VENDOR]} redirectPath="/404" />
+            }
+          >
+            <Route path="/products/new" element={<AddProduct />} />
+            <Route path="/products/edit/:id" element={<EditProduct />} />
+            <Route path="/products/my" element={<MyProducts />} />
+            <Route path="/inventory" element={<InventoryList />} />
+            <Route path="/inventory/new" element={<InventoryAdd />} />
+            <Route path="/approval" element={<ProductApproval />} />
 
+
+            <Route path="/account" element={<CreateProfile />} />
           </Route>
-
           {/* 404 Not Found Page */}
           <Route path="*" element={<NotFound />} />
+          <Route path="/404" element={<NotFound />} />
         </Routes>
       </ScrollToTop>
     </BrowserRouter>

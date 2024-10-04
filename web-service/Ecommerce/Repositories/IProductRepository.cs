@@ -10,6 +10,7 @@ namespace Ecommerce.Repositories
         Task UpdateProduct(Product product);
         Task DeleteProduct(string productId);
         Task<Product> GetProductByProductId(string productId);
+        Task<List<Product>> GetProductsByVendorId(string vendorId);
 
         Task<Product> FindOneAndUpdateAsync(FilterDefinition<Product> filter, UpdateDefinition<Product> update);
     }

@@ -24,7 +24,7 @@ namespace Ecommerce.Services
         public async Task RegisterUser(ApplicationUser user,string password)
         {
             user.Id = ObjectId.GenerateNewId().ToString();
-            
+
             user.UserId = GenerateUserId(user.Role);
 
             if (user.Role == "CSR" || user.Role == "Vendor")
@@ -47,7 +47,7 @@ namespace Ecommerce.Services
                 "CSR" => "CSR",
                 "Vendor" => "VEN",
                 "Admin" => "ADM",
-                _ => "GEN" 
+                _ => "GEN"
             };
 
             var randomLetters = GenerateRandomLetters(2);

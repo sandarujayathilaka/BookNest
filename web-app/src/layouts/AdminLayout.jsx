@@ -5,7 +5,7 @@ import TopNavbar from "../components/dashboard/Navbar";
 import { useState } from "react";
 import { Outlet } from "react-router-dom"; // Import Outlet for nested routes
 
-const AdminLayout = () => {
+const AdminLayout = ({ children }) => {
   const [showSidebar, setShowSidebar] = useState(false);
 
   const handleShowSidebar = () => setShowSidebar(true);
@@ -16,8 +16,7 @@ const AdminLayout = () => {
       <Sidebar show={showSidebar} handleClose={handleCloseSidebar} />
       <Container fluid>
         <TopNavbar handleShow={handleShowSidebar} />
-        {/* Render nested routes here */}
-        <Outlet />
+        {children}
       </Container>
     </div>
   );

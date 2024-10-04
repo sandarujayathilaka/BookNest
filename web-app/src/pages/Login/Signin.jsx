@@ -1,10 +1,12 @@
 // Signin.js
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { api } from "../../services/api.service";
+import useUserStore from "../../stores/auth";
 
 // Validation schema using Yup
 const validationSchema = Yup.object().shape({
@@ -12,7 +14,7 @@ const validationSchema = Yup.object().shape({
     .email("Please enter a valid email address")
     .required("Email is required"),
   password: Yup.string()
-    .min(6, "Password must be at least 6 characters")
+    .min(3, "Password must be at least 3 characters")
     .required("Password is required"),
 });
 
@@ -28,10 +30,41 @@ const Signin = () => {
 
   const navigate = useNavigate();
 
+  const { setToken, setUser } = useUserStore();
+
+  const [error, setError] = useState(null);
+
   // Handle form submission
   const onSubmit = (data) => {
     console.log(data); // Placeholder for form submission logic
-    navigate("/"); // Redirect to home page after login
+
+    // Make API call to login
+    api
+      .post("/user/login", data)
+      .then((response) => {
+        console.log(response.data);
+
+        // Assuming the token and user data are part of the response
+        const { token, user } = response.data;
+
+        if (user.role === "Customer") {
+          setError("Invalid email or password");
+          return;
+        }
+
+        // Save token and user data to the zustand store
+        setToken(token);
+        setUser(user);
+
+        // Redirect to home page after login
+        navigate("/dashboard");
+      })
+      .catch((error) => {
+        console.error("Login failed", error);
+        error.response.status === 401
+          ? setError("Invalid email or password")
+          : setError(error.response.data);
+      });
   };
 
   return (
@@ -39,6 +72,13 @@ const Signin = () => {
       <Row className="w-100">
         <Col md={6} className="mx-auto">
           <h2 className="text-center mb-4">Sign in</h2>
+
+          {/* Display error message */}
+          {error && (
+            <Alert variant="danger" onClose={() => setError(null)} dismissible>
+              {error}
+            </Alert>
+          )}
 
           {/* Form with React Hook Form handling */}
           <Form onSubmit={handleSubmit(onSubmit)}>

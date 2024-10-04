@@ -126,7 +126,48 @@ namespace EcommercePlatform.Controllers
             return Ok(canceledOrders);
         }
 
+        [HttpGet("customer/{customerId}/history")]
+        public async Task<IActionResult> GetOrdersByCustomerAndStatus(string customerId)
+        {
+            var orders = await _orderService.GetOrdersByCustomerIdAndStatus(customerId);
 
+            if (orders == null || !orders.Any())
+            {
+                return NotFound(new { message = "No orders found for the specified customer with the given statuses." });
+            }
+
+            return Ok(orders);
+        }
+
+
+        [HttpGet("customer/{customerId}/currentOrder")]
+        public async Task<IActionResult> GetCurrentOrdersByCustomer(string customerId)
+        {
+            var orders = await _orderService.GetCurrentOrdersByCustomer(customerId);
+
+            if (orders == null || !orders.Any())
+            {
+                return NotFound(new { message = "No orders found for the specified customer with the given statuses." });
+            }
+
+            return Ok(orders);
+        }
+
+        [HttpGet("GetVendorInfo/{vendorId}")]
+        public async Task<IActionResult> GetVendorInfo(string vendorId)
+        {
+            try
+            {
+                Console.WriteLine($"controller {vendorId}");
+                var vendorInfo = await _orderService.GetVendorInfoFromOrders(vendorId);
+                Console.WriteLine($"controller res {vendorInfo}");
+                return Ok(vendorInfo);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
 
     }
 }

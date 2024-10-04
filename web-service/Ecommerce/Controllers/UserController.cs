@@ -1,6 +1,7 @@
-﻿using Ecommerce.DataAccess;
+﻿using Ecommerce.Dto;
 using Ecommerce.Models;
 using Ecommerce.Repositories;
+using Ecommerce.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace Ecommerce.Controllers
         private readonly UserService _userService;
         private readonly JwtService _jwtService;
 
-        public UserController(IUserRepository userRepository, JwtService jwtService,UserService userService)
+        public UserController(IUserRepository userRepository, JwtService jwtService, UserService userService)
         {
             _userRepository = userRepository;
             _userService = userService;
@@ -56,26 +57,35 @@ namespace Ecommerce.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] Ecommerce.Models.LoginRequest loginRequest)
         {
-            var result = await _userService.LoginService(loginRequest.Email, loginRequest.Password);
-
-            if (result.IsSuccess)
-            {
-                return Ok(new { Token = result.Token });
-            }
-            else if (result.ErrorMessage == "Unauthorized")
+            var user = await _userRepository.GetUserByEmail(loginRequest.Email);
+            if (user == null || !BCrypt.Net.BCrypt.Verify(loginRequest.Password, user.PasswordHash))
             {
                 return Unauthorized("Invalid email or password.");
             }
-            else if (result.ErrorMessage == "Forbid")
-            {
-                return Forbid("Your account is not approved.");
-            }
-           
-            // Generate JWT token
-            //var token = _jwtService.GenerateToken(user);
-            //return Ok(new { Token = token });
 
-            return BadRequest("An error occurred during login.");
+            // Only allow login if the user is approved
+            if (!user.IsApproved)
+            {
+                return BadRequest("Your account is not approved.");
+            }
+
+            // Generate JWT token
+            var token = _jwtService.GenerateToken(user);
+
+            // Return user details without PasswordHash, similar to how you'd omit fields in JS
+            var userResponse = new
+            {
+                user.Id,
+                user.UserId,
+                user.FullName,
+                user.Email,
+                user.Role,
+                user.IsApproved,
+                user.CreatedAt,
+                user.UpdatedAt
+            };
+
+            return Ok(new { Token = token, User = userResponse });
         }
 
 
