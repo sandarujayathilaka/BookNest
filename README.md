@@ -1,2 +1,2 @@
-# EAD-Ecommerce-Project
+# BookNest-Ecommerce-Project
 Y4S1
